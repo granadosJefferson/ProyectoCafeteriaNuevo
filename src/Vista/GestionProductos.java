@@ -17,7 +17,7 @@ import javax.swing.JTextField;
  * @author dh057
  */
 public class GestionProductos extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GestionProductos.class.getName());
 
     /**
@@ -39,8 +39,8 @@ public class GestionProductos extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jButton8 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         txtPrecio = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -62,18 +62,18 @@ public class GestionProductos extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Gestion Productos");
 
-        jButton8.setBackground(new java.awt.Color(204, 204, 204));
-        jButton8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Cancelar");
-        jButton8.addActionListener(this::jButton8ActionPerformed);
+        btnCancelar.setBackground(new java.awt.Color(204, 204, 204));
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(0, 0, 0));
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
-        jButton11.setBackground(new java.awt.Color(33, 150, 243));
-        jButton11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setText("Guardar Producto");
-        jButton11.setPreferredSize(new java.awt.Dimension(100, 31));
-        jButton11.addActionListener(this::jButton11ActionPerformed);
+        btnGuardar.setBackground(new java.awt.Color(33, 150, 243));
+        btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardar.setText("Guardar Producto");
+        btnGuardar.setPreferredSize(new java.awt.Dimension(100, 31));
+        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Precio$");
@@ -119,9 +119,9 @@ public class GestionProductos extends javax.swing.JFrame {
                 .addContainerGap(223, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
-                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -160,8 +160,8 @@ public class GestionProductos extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 300, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -206,13 +206,67 @@ public class GestionProductos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if (txtIDProduct.getText().trim().isEmpty() || txtNombre.getText().trim().isEmpty() || txtPrecio.getText().trim().isEmpty() || txtCantidad.getText().trim().isEmpty()) {
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Por favor, complete todos los campos obligatorios",
+                    "Campos vacíos",
+                    javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        try {
+            // Obtener datos del formulario
+            String id = txtIDProduct.getText().trim();
+            String nombre = txtNombre.getText().trim();
+            String categoria = comboCategoria.getSelectedItem().toString();
+            double precio = Double.parseDouble(txtPrecio.getText().trim());
+            int cantidad = Integer.parseInt(txtCantidad.getText().trim());
+            String descripcion = txtDescripcion.getText().trim();
+
+            // Crear el producto (usando descripción como estado por ahora, o podrías guardarla en otro lado)
+            Modelo.Products nuevoProducto = new Modelo.Products(
+                    id, nombre, categoria, precio, cantidad, "Activo"
+            );
+
+            // Guardar usando DAO
+            Modelo.productosDAO dao = new Modelo.productosDAO();
+
+            if (dao.insertarProducto(nuevoProducto)) {
+                javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        "Producto guardado exitosamente",
+                        "Éxito",
+                        javax.swing.JOptionPane.INFORMATION_MESSAGE
+                );
+
+                limpiarFormulario();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        "Ya existe un producto con ese ID",
+                        "Error",
+                        javax.swing.JOptionPane.ERROR_MESSAGE
+                );
+            }
+
+        } catch (NumberFormatException ex) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Precio y cantidad deben ser números válidos",
+                    "Error de formato",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+        }
+
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpiarFormulario();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
         // TODO add your handling code here:
@@ -243,11 +297,11 @@ public class GestionProductos extends javax.swing.JFrame {
     }
 
     public JButton getjButton11() {
-        return jButton11;
+        return btnGuardar;
     }
 
     public JButton getjButton8() {
-        return jButton8;
+        return btnCancelar;
     }
 
     public JLabel getjLabel1() {
@@ -306,6 +360,15 @@ public class GestionProductos extends javax.swing.JFrame {
         return txtPrecio;
     }
 
+    public void limpiarFormulario() {
+        txtIDProduct.setText("");
+        txtNombre.setText("");
+        txtPrecio.setText("");
+        txtCantidad.setText("");
+        txtDescripcion.setText("");
+        comboCategoria.setSelectedIndex(0);
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -332,9 +395,9 @@ public class GestionProductos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> comboCategoria;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
