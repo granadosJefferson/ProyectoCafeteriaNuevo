@@ -51,10 +51,9 @@ public class controladorProductos {
             double precio = Double.parseDouble(vista.getTxtPrecio().getText().trim());
             int cantidad = Integer.parseInt(vista.getTxtCantidad().getText().trim());
             String descripcion = vista.getTxtDescripcion().getText().trim();
+            String imagen = vista.getTxtImagen().getText().trim(); 
 
-            // Crear objeto Producto
-            Product nuevo = new Product(id, nombre, categoria, precio, cantidad, "Activo");
-
+            Product nuevo = new Product(id, nombre, categoria, precio, cantidad, "Activo", imagen);
             // Verificar si el producto ya existe
             Product existente = dao.buscarProductoPorId(id);
 
@@ -124,3 +123,4 @@ public class controladorProductos {
     }
 
 }
+

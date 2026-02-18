@@ -6,6 +6,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Vista.Products;
+import java.awt.Image;
+import java.net.URL;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 public class controladorProductosPanel {
 
@@ -156,7 +160,8 @@ public class controladorProductosPanel {
                 p.getCategory(),
                 p.getPrice(),
                 p.getCant(),
-                p.getStatus()
+                p.getStatus(),
+                cargarIcono(p.getImage())
             });
         }
 
@@ -164,4 +169,21 @@ public class controladorProductosPanel {
         vista.getTableProductos().revalidate();
         vista.getTableProductos().repaint();
     }
+
+    private Icon cargarIcono(String nombreImg) {
+        if (nombreImg == null || nombreImg.isBlank()) {
+            return null;
+        }
+
+        URL url = getClass().getResource("/img/" + nombreImg);
+        if (url == null) {
+            return null;
+        }
+
+        Image img = new ImageIcon(url).getImage()
+                .getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+
+        return new ImageIcon(img);
+    }
+
 }

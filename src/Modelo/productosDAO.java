@@ -11,18 +11,16 @@ import java.util.ArrayList;
 
 public class productosDAO {
 
-    
     private static productosDAO instancia;
     private ArrayList<Product> list;
     private static final String ARCHIVO = "products.txt";
-    
-    
+
     private productosDAO() {
         list = new ArrayList<>();
         cargarProductos(); // Cargar productos del archivo al iniciar
     }
-    
-     public static productosDAO getInstancia() {
+
+    public static productosDAO getInstancia() {
         if (instancia == null) {
             instancia = new productosDAO();
         }
@@ -113,13 +111,14 @@ public class productosDAO {
     private void guardarProductos() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO))) {
             for (Product p : list) {
-                // Formato: id,nombre,categoria,precio,cantidad,estado
+                // Formato: id,nombre,categoria,precio,cantidad,estado, imagen
                 String linea = p.getIdProduct() + ","
                         + p.getNameProduct() + ","
                         + p.getCategory() + ","
                         + p.getPrice() + ","
                         + p.getCant() + ","
-                        + p.getStatus();
+                        + p.getStatus() + ","
+                        + (p.getImage() == null ? "" : p.getImage());
                 bw.write(linea);
                 bw.newLine();
             }
@@ -138,7 +137,7 @@ public class productosDAO {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");
-                if (partes.length == 6) {
+                if (partes.length >= 6) {
                     String id = partes[0].trim();
                     String nombre = partes[1].trim();
                     String categoria = partes[2].trim();
@@ -146,7 +145,10 @@ public class productosDAO {
                     int cantidad = Integer.parseInt(partes[4].trim());
                     String estado = partes[5].trim();
 
-                    list.add(new Product(id, nombre, categoria, precio, cantidad, estado));
+                    String imagen = (partes.length >= 7) ? partes[6].trim() : ""; // 👈 NUEVO
+
+                    list.add(new Product(id, nombre, categoria, precio, cantidad, estado, imagen));
+
                 }
             }
         } catch (IOException | NumberFormatException e) {

@@ -1,3 +1,2 @@
-12,Queque De mierdaX2,Postres,0.0,1,Activo
-123,Cafe,Café,1700.0,2,Activo
-123456,comida de mierda 2,lacteos,0.0,1,Activo
+998631,Cafe Expreso,lacteos,2000.0,100,Activo,TazaCafe.png
+1234567898764,nuevo,lacteos,1500.0,12,Activo,TazaCafe.png
