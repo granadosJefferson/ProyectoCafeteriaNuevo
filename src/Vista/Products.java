@@ -52,13 +52,11 @@ public class Products extends javax.swing.JPanel {
 
         lblDay3.setBackground(new java.awt.Color(215, 227, 225));
         lblDay3.setForeground(new java.awt.Color(0, 0, 0));
-        lblDay3.setIcon(new javax.swing.ImageIcon("C:\\Users\\dh057\\OneDrive\\Documentos\\NetBeansProjects\\Cafeteria\\img\\calendario.png")); // NOI18N
         lblDay3.setText("dia");
         lblDay3.setOpaque(true);
 
         lblTime3.setBackground(new java.awt.Color(215, 227, 225));
         lblTime3.setForeground(new java.awt.Color(0, 0, 0));
-        lblTime3.setIcon(new javax.swing.ImageIcon("C:\\Users\\dh057\\OneDrive\\Documentos\\NetBeansProjects\\Cafeteria\\img\\reloj.png")); // NOI18N
         lblTime3.setText("hora");
         lblTime3.setOpaque(true);
 
@@ -74,7 +72,6 @@ public class Products extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\dh057\\OneDrive\\Documentos\\NetBeansProjects\\Cafeteria\\img\\list.png")); // NOI18N
         jLabel1.setText("Seleccionar producto");
 
         jSeparator2.setForeground(new java.awt.Color(215, 227, 225));
@@ -117,15 +114,14 @@ public class Products extends javax.swing.JPanel {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         jButton8.setBackground(new java.awt.Color(204, 0, 0));
         jButton8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setIcon(new javax.swing.ImageIcon("C:\\Users\\dh057\\OneDrive\\Documentos\\NetBeansProjects\\Cafeteria\\img\\contenedor-de-basura.png")); // NOI18N
         jButton8.setText("Eliminar");
         jButton8.addActionListener(this::jButton8ActionPerformed);
 
@@ -141,13 +137,11 @@ public class Products extends javax.swing.JPanel {
 
         lblDay4.setBackground(new java.awt.Color(215, 227, 225));
         lblDay4.setForeground(new java.awt.Color(0, 0, 0));
-        lblDay4.setIcon(new javax.swing.ImageIcon("C:\\Users\\dh057\\OneDrive\\Documentos\\NetBeansProjects\\Cafeteria\\img\\calendario.png")); // NOI18N
         lblDay4.setText("dia");
         lblDay4.setOpaque(true);
 
         lblTime4.setBackground(new java.awt.Color(215, 227, 225));
         lblTime4.setForeground(new java.awt.Color(0, 0, 0));
-        lblTime4.setIcon(new javax.swing.ImageIcon("C:\\Users\\dh057\\OneDrive\\Documentos\\NetBeansProjects\\Cafeteria\\img\\reloj.png")); // NOI18N
         lblTime4.setText("hora");
         lblTime4.setOpaque(true);
 
@@ -185,14 +179,13 @@ public class Products extends javax.swing.JPanel {
         jButton10.setBackground(new java.awt.Color(33, 150, 243));
         jButton10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setIcon(new javax.swing.ImageIcon("C:\\Users\\dh057\\OneDrive\\Documentos\\NetBeansProjects\\Cafeteria\\img\\agregar.png")); // NOI18N
+        jButton10.setIcon(new javax.swing.ImageIcon("C:\\Users\\Personal\\Documents\\ProyectoCafeteriaNuevo\\src\\img\\agregar.png")); // NOI18N
         jButton10.setText("Nuevo Producto");
         jButton10.addActionListener(this::jButton10ActionPerformed);
 
         jButton11.setBackground(new java.awt.Color(33, 150, 243));
         jButton11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setIcon(new javax.swing.ImageIcon("C:\\Users\\dh057\\OneDrive\\Documentos\\NetBeansProjects\\Cafeteria\\img\\notas.png")); // NOI18N
         jButton11.setText("Modificar");
         jButton11.setPreferredSize(new java.awt.Dimension(100, 31));
         jButton11.addActionListener(this::jButton11ActionPerformed);
@@ -220,8 +213,8 @@ public class Products extends javax.swing.JPanel {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(24, 24, 24)
-                    .addComponent(jButton10)
-                    .addContainerGap(631, Short.MAX_VALUE)))
+                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(625, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,12 +227,12 @@ public class Products extends javax.swing.JPanel {
                     .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(163, 163, 163)
                     .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(516, Short.MAX_VALUE)))
+                    .addContainerGap(506, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -270,31 +263,16 @@ public class Products extends javax.swing.JPanel {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JLabel lblDay;
-    private javax.swing.JLabel lblDay1;
-    private javax.swing.JLabel lblDay2;
     private javax.swing.JLabel lblDay3;
     private javax.swing.JLabel lblDay4;
-    private javax.swing.JLabel lblTime;
-    private javax.swing.JLabel lblTime1;
-    private javax.swing.JLabel lblTime2;
     private javax.swing.JLabel lblTime3;
     private javax.swing.JLabel lblTime4;
     // End of variables declaration//GEN-END:variables
