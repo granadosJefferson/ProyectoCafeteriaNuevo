@@ -4,6 +4,8 @@
  */
 package Vista;
 
+import Control.ControllerClients;
+import Modelo.ClientsDAO;
 import java.awt.CardLayout;
 import java.util.Date;
 import javax.swing.Timer;
@@ -29,11 +31,21 @@ public class Principal extends javax.swing.JFrame {
         panelContenido.add(new JPanel(), "vacio");
         panelContenido.add(new orders(), "order");
         panelContenido.add(new Products(), "products");
-        panelContenido.add(new ClientsPanel(), "clients");
+        //panelContenido.add(new ClientsPanel(), "clients");
         panelContenido.add(new GestionInventario(), "inventario");
+         << << << < HEAD
         panelContenido.add(new GestionMesas(), "mesas");
         panelContenido.add(new GestionFacturacion(), "facturacion");
 //        panelContenido.add(new Reportes(), "reportes");
+         == == ==
+                = ClientsDAO clientsDao = new ClientsDAO();
+        ClientsPanel clientsPanel = new ClientsPanel();
+        GestionCliente gestioncliente = new GestionCliente();
+
+        ControllerClients controllerClients = new ControllerClients(clientsPanel, clientsDao, gestioncliente);
+
+        panelContenido.add(clientsPanel, "clients");
+         >>> >>> > 62ed25a5d246e44a52aba032b51aa8f4460de3b9
     }
 
     /**

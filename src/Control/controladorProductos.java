@@ -4,12 +4,11 @@
  */
 package Control;
 
-import Modelo.Products;
+import Modelo.Product;
 import Modelo.productosDAO;
 import Vista.GestionProductos;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,18 +21,17 @@ public class controladorProductos {
 
     public controladorProductos(GestionProductos vista) {
         this.vista = vista;
-        this.dao = new productosDAO();
+        this.dao = productosDAO.getInstancia();
 
         // Registrar eventos
         this.vista.getBtnGuardar().addActionListener(this::guardarProducto);
         this.vista.getBtnCancelar().addActionListener(e -> vista.dispose());
 
-     
     }
 
     private void guardarProducto(ActionEvent e) {
         try {
-            // 1. Validar campos obligatorios
+            // Validar campos obligatorios
             if (vista.getTxtIDProduct().getText().trim().isEmpty()
                     || vista.getTxtNombre().getText().trim().isEmpty()
                     || vista.getTxtPrecio().getText().trim().isEmpty()
@@ -46,7 +44,7 @@ public class controladorProductos {
                 return;
             }
 
-            // 2. Obtener datos de la vista
+            // Obtener datos de la vista
             String id = vista.getTxtIDProduct().getText().trim();
             String nombre = vista.getTxtNombre().getText().trim();
             String categoria = vista.getComboCategoria().getSelectedItem().toString();
@@ -54,29 +52,69 @@ public class controladorProductos {
             int cantidad = Integer.parseInt(vista.getTxtCantidad().getText().trim());
             String descripcion = vista.getTxtDescripcion().getText().trim();
 
-            // 3. Crear objeto Producto
-            Products nuevo = new Products(id, nombre, categoria, precio, cantidad, "Activo");
+            // Crear objeto Producto
+            Product nuevo = new Product(id, nombre, categoria, precio, cantidad, "Activo");
 
-            // 4. Guardar usando DAO
-            boolean guardado = dao.insertarProducto(nuevo);
+            // Verificar si el producto ya existe
+            Product existente = dao.buscarProductoPorId(id);
 
-            if (guardado) {
+            if (existente != null) {
+                // Producto existe → preguntar si desea modificar
+                int confirmacion = JOptionPane.showConfirmDialog(vista,
+                        "Ya existe un producto con ID: " + id + "\n"
+                        + "Producto actual: " + existente.getNameProduct() + "\n"
+                        + "¿Desea modificar este producto con los nuevos datos?",
+                        "Producto existente",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
 
-                JOptionPane.showMessageDialog(vista,
-                        "Producto guardado correctamente",
-                        "Éxito",
-                        JOptionPane.INFORMATION_MESSAGE);
+                if (confirmacion == JOptionPane.YES_OPTION) {
+                    // Actualizar producto
+                    boolean actualizado = dao.actualizarProducto(nuevo);
 
-                // Limpiar formulario
-                vista.limpiarFormulario();
+                    if (actualizado) {
+                        JOptionPane.showMessageDialog(vista,
+                                "Producto modificado correctamente",
+                                "Éxito",
+                                JOptionPane.INFORMATION_MESSAGE);
+
+                        vista.limpiarFormulario();
+                        vista.dispose();
+
+                        // NOTIFICAR CON SINGLETON
+                        controladorProductosPanel panelCtrl = controladorProductosPanel.getInstancia();
+                        if (panelCtrl != null) {
+                            panelCtrl.recargarTabla();
+                        }
+                    }
+                }
 
             } else {
-                JOptionPane.showMessageDialog(vista,
-                        "Ya existe un producto con ese ID",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
+                // Producto no existe → insertar nuevo
+                boolean guardado = dao.insertarProducto(nuevo);
 
+                if (guardado) {
+                    JOptionPane.showMessageDialog(vista,
+                            "Producto guardado correctamente",
+                            "Éxito",
+                            JOptionPane.INFORMATION_MESSAGE);
+
+                    vista.limpiarFormulario();
+                    vista.dispose();
+
+                    // NOTIFICAR CON SINGLETON
+                    controladorProductosPanel panelCtrl = controladorProductosPanel.getInstancia();
+                    if (panelCtrl != null) {
+                        panelCtrl.recargarTabla();
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(vista,
+                            "Error al guardar el producto",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(vista,
                     "Precio y cantidad deben ser números válidos",

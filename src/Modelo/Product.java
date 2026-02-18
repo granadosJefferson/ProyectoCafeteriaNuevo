@@ -8,7 +8,7 @@ package Modelo;
  *
  * @author dh057
  */
-public class Products {
+public class Product {
     private String idProduct;
     private String nameProduct;
     private String category;
@@ -16,7 +16,7 @@ public class Products {
     private int cant;
     private String status;
 
-    public Products(String idProduct, String nameProduct, String category, double price, int cant, String status) {
+    public Product(String idProduct, String nameProduct, String category, double price, int cant, String status) {
         this.idProduct = idProduct;
         this.nameProduct = nameProduct;
         this.category = category;

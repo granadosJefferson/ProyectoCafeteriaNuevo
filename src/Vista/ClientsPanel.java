@@ -4,6 +4,9 @@
  */
 package Vista;
 
+import javax.swing.JButton;
+import javax.swing.JTable;
+
 /**
  *
  * @author dh057
@@ -34,14 +37,14 @@ public class ClientsPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtbMostrarCliente = new javax.swing.JTable();
         jButton8 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         lblDay4 = new javax.swing.JLabel();
         lblTime4 = new javax.swing.JLabel();
-        jButton10 = new javax.swing.JButton();
+        btnNewClient = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
 
         jButton9.setBackground(new java.awt.Color(33, 150, 243));
@@ -75,7 +78,7 @@ public class ClientsPanel extends javax.swing.JPanel {
 
         jSeparator2.setForeground(new java.awt.Color(215, 227, 225));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtbMostrarCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -86,7 +89,7 @@ public class ClientsPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtbMostrarCliente);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -175,11 +178,11 @@ public class ClientsPanel extends javax.swing.JPanel {
                 .addContainerGap(56, Short.MAX_VALUE))
         );
 
-        jButton10.setBackground(new java.awt.Color(33, 150, 243));
-        jButton10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setText("Nuevo Cliente");
-        jButton10.addActionListener(this::jButton10ActionPerformed);
+        btnNewClient.setBackground(new java.awt.Color(33, 150, 243));
+        btnNewClient.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnNewClient.setForeground(new java.awt.Color(255, 255, 255));
+        btnNewClient.setText("Nuevo Cliente");
+        btnNewClient.addActionListener(this::btnNewClientActionPerformed);
 
         jButton11.setBackground(new java.awt.Color(33, 150, 243));
         jButton11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -211,7 +214,7 @@ public class ClientsPanel extends javax.swing.JPanel {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(24, 24, 24)
-                    .addComponent(jButton10)
+                    .addComponent(btnNewClient)
                     .addContainerGap(643, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -229,7 +232,7 @@ public class ClientsPanel extends javax.swing.JPanel {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(163, 163, 163)
-                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNewClient, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(506, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -246,9 +249,9 @@ public class ClientsPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void btnNewClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewClientActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_btnNewClientActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
@@ -256,7 +259,7 @@ public class ClientsPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton10;
+    private javax.swing.JButton btnNewClient;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
@@ -267,11 +270,29 @@ public class ClientsPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jtbMostrarCliente;
     private javax.swing.JLabel lblDay3;
     private javax.swing.JLabel lblDay4;
     private javax.swing.JLabel lblTime3;
     private javax.swing.JLabel lblTime4;
     // End of variables declaration//GEN-END:variables
+
+    public JButton getBtnNewClient() {
+        return btnNewClient;
+    }
+
+    public void setBtnNewClient(JButton btnNewClient) {
+        this.btnNewClient = btnNewClient;
+    }
+
+    public JTable getJtbMostrarCliente() {
+        return jtbMostrarCliente;
+    }
+
+    public void setJtbMostrarCliente(JTable jtbMostrarCliente) {
+        this.jtbMostrarCliente = jtbMostrarCliente;
+    }
+
+    
 }
