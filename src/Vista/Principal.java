@@ -31,6 +31,9 @@ public class Principal extends javax.swing.JFrame {
         panelContenido.add(new Products(), "products");
         panelContenido.add(new ClientsPanel(), "clients");
         panelContenido.add(new GestionInventario(), "inventario");
+        panelContenido.add(new GestionMesas(), "mesas");
+        panelContenido.add(new GestionFacturacion(), "facturacion");
+//        panelContenido.add(new Reportes(), "reportes");
     }
 
     /**
@@ -78,6 +81,7 @@ public class Principal extends javax.swing.JFrame {
         btnProducts.setBorderPainted(false);
         btnProducts.setContentAreaFilled(false);
         btnProducts.setDefaultCapable(false);
+        btnProducts.setFocusPainted(false);
         btnProducts.setMaximumSize(new java.awt.Dimension(78, 36));
         btnProducts.setMinimumSize(new java.awt.Dimension(78, 36));
         btnProducts.setPreferredSize(new java.awt.Dimension(70, 22));
@@ -96,6 +100,7 @@ public class Principal extends javax.swing.JFrame {
         btnClients.setBorderPainted(false);
         btnClients.setContentAreaFilled(false);
         btnClients.setDefaultCapable(false);
+        btnClients.setFocusPainted(false);
         btnClients.setMaximumSize(new java.awt.Dimension(78, 36));
         btnClients.setMinimumSize(new java.awt.Dimension(78, 36));
         btnClients.setPreferredSize(new java.awt.Dimension(78, 36));
@@ -109,6 +114,7 @@ public class Principal extends javax.swing.JFrame {
         btnInventario.setBorderPainted(false);
         btnInventario.setContentAreaFilled(false);
         btnInventario.setDefaultCapable(false);
+        btnInventario.setFocusPainted(false);
         btnInventario.setPreferredSize(new java.awt.Dimension(70, 22));
         btnInventario.addActionListener(this::btnInventarioActionPerformed);
 
@@ -119,6 +125,7 @@ public class Principal extends javax.swing.JFrame {
         btnStart.setBorder(null);
         btnStart.setContentAreaFilled(false);
         btnStart.setDefaultCapable(false);
+        btnStart.setFocusPainted(false);
         btnStart.setOpaque(true);
         btnStart.setPreferredSize(new java.awt.Dimension(70, 22));
         btnStart.addActionListener(this::btnStartActionPerformed);
@@ -131,6 +138,7 @@ public class Principal extends javax.swing.JFrame {
         btnMesas.setBorderPainted(false);
         btnMesas.setContentAreaFilled(false);
         btnMesas.setDefaultCapable(false);
+        btnMesas.setFocusPainted(false);
         btnMesas.setPreferredSize(new java.awt.Dimension(70, 22));
         btnMesas.addActionListener(this::btnMesasActionPerformed);
 
@@ -142,6 +150,7 @@ public class Principal extends javax.swing.JFrame {
         btnReportes.setBorderPainted(false);
         btnReportes.setContentAreaFilled(false);
         btnReportes.setDefaultCapable(false);
+        btnReportes.setFocusPainted(false);
         btnReportes.setPreferredSize(new java.awt.Dimension(70, 22));
         btnReportes.addActionListener(this::btnReportesActionPerformed);
 
@@ -153,6 +162,7 @@ public class Principal extends javax.swing.JFrame {
         btnPedidos.setBorderPainted(false);
         btnPedidos.setContentAreaFilled(false);
         btnPedidos.setDefaultCapable(false);
+        btnPedidos.setFocusPainted(false);
         btnPedidos.setPreferredSize(new java.awt.Dimension(70, 22));
         btnPedidos.addActionListener(this::btnPedidosActionPerformed);
 
@@ -164,6 +174,7 @@ public class Principal extends javax.swing.JFrame {
         btnFacturación.setBorderPainted(false);
         btnFacturación.setContentAreaFilled(false);
         btnFacturación.setDefaultCapable(false);
+        btnFacturación.setFocusPainted(false);
         btnFacturación.setPreferredSize(new java.awt.Dimension(70, 22));
         btnFacturación.addActionListener(this::btnFacturaciónActionPerformed);
 
@@ -394,11 +405,9 @@ public class Principal extends javax.swing.JFrame {
         btnReportes.setOpaque(false);
         btnReportes.repaint();
 
-        // Activar botón actual
         btnMesas.setOpaque(true);
         btnMesas.repaint();
 
-        // Cambiar panel (necesitas crear un panel para mesas)
         CardLayout cl = (CardLayout) panelContenido.getLayout();
         cl.show(panelContenido, "mesas");
 

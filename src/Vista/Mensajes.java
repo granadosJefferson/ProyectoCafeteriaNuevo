@@ -13,13 +13,10 @@ import javax.swing.JOptionPane;
  */
 public class Mensajes {
     
-     /**
-     * Muestra un mensaje simple (solo el texto, sin título)
-     * @param mensaje Texto a mostrar
-     */
-    public static void mostrarMensaje(JComponent parent, String mensaje) {
-        JOptionPane.showMessageDialog(parent, mensaje);
-    }
+    public void message(String msg){
+        JOptionPane.showMessageDialog(null, msg);
+    } 
+    
     
     
 }

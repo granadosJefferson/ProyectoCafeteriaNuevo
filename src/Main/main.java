@@ -5,8 +5,10 @@
 package Main;
 
 import Control.ControllerLogin;
-import Modelo.loginDao;
+import Modelo.UsersDao;
 import Vista.Login;
+import Vista.Mensajes;
+import Vista.Principal;
 import Vista.Register;
 
 /**
@@ -15,10 +17,12 @@ import Vista.Register;
  */
 public class main {
     public static void main(String[] args) {
-       loginDao usDao = new loginDao(); 
+       UsersDao usDao = new UsersDao(); 
        Register rg = new Register();
        Login lg = new Login();
-       new ControllerLogin(usDao,rg,lg);
-       rg.setVisible(true);
+       Mensajes ms = new Mensajes();
+       Principal pr = new Principal();
+       new ControllerLogin(usDao,rg,lg,ms,pr);
+       lg.setVisible(true);
     }
 }
