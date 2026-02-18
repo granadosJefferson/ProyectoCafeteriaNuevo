@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controlador;
+package Control;
 
-import Modelo.UsersDao;
+import Modelo.loginDao;
 import Vista.Register;
 import Modelo.Users;
 import Vista.Login;
@@ -14,13 +14,14 @@ import javax.swing.JOptionPane;
  *
  * @author Personal
  */
-public class ControllerUsers {
+public class ControllerLogin {
 
-    private UsersDao usDao;
+    private loginDao usDao;
     private Register visRegister;
     private Login visLog;
 
-    public ControllerUsers(UsersDao usDao, Register visRegister, Login visLog) {
+    
+    public ControllerLogin(loginDao usDao, Register visRegister, Login visLog) {
         this.usDao = usDao;
         this.visRegister = visRegister;
         this.visLog = visLog;
@@ -49,4 +50,10 @@ public class ControllerUsers {
 
     }
 
+    public void start(){
+    String ced = visLog.getTxtUser().getText();
+    
+        
+    
+    }
 }

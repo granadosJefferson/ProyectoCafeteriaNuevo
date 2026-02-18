@@ -4,7 +4,7 @@
  */
 package Control;
 
-import Modelo.Products;
+import Modelo.Product;
 import Modelo.productosDAO;
 import Vista.GestionProductos;
 import java.awt.event.ActionEvent;
@@ -53,10 +53,10 @@ public class controladorProductos {
             String descripcion = vista.getTxtDescripcion().getText().trim();
 
             // Crear objeto Producto
-            Products nuevo = new Products(id, nombre, categoria, precio, cantidad, "Activo");
+            Product nuevo = new Product(id, nombre, categoria, precio, cantidad, "Activo");
 
             // Verificar si el producto ya existe
-            Products existente = dao.buscarProductoPorId(id);
+            Product existente = dao.buscarProductoPorId(id);
 
             if (existente != null) {
                 // Producto existe → preguntar si desea modificar
