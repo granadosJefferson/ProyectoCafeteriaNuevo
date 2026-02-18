@@ -145,10 +145,12 @@ public class GestionMesas extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/CirculoVerde.png"))); // NOI18N
         jLabel3.setText("Disponible");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/CirculoRojo.png"))); // NOI18N
         jLabel4.setText("Ocupada");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/CirculoVerde.png"))); // NOI18N
