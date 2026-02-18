@@ -6,7 +6,7 @@ package Control;
 
 import Modelo.Products;
 import Modelo.productosDAO;
-import Vista.GestionProducto;
+import Vista.GestionProductos;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -16,37 +16,36 @@ import javax.swing.table.DefaultTableModel;
  * @author Jefferson granados
  */
 public class controladorProductos {
-    
-    private GestionProducto vista;
+
+    private GestionProductos vista;
     private productosDAO dao;
-    
-    public controladorProductos(GestionProducto vista) {
+
+    public controladorProductos(GestionProductos vista) {
         this.vista = vista;
         this.dao = new productosDAO();
-        
+
         // Registrar eventos
         this.vista.getBtnGuardar().addActionListener(this::guardarProducto);
         this.vista.getBtnCancelar().addActionListener(e -> vista.dispose());
-        
-        // Cargar productos existentes al abrir
-        cargarProductosEnTabla();
+
+     
     }
-    
-     private void guardarProducto(ActionEvent e) {
+
+    private void guardarProducto(ActionEvent e) {
         try {
             // 1. Validar campos obligatorios
-            if (vista.getTxtIDProduct().getText().trim().isEmpty() ||
-                vista.getTxtNombre().getText().trim().isEmpty() ||
-                vista.getTxtPrecio().getText().trim().isEmpty() ||
-                vista.getTxtCantidad().getText().trim().isEmpty()) {
-                
+            if (vista.getTxtIDProduct().getText().trim().isEmpty()
+                    || vista.getTxtNombre().getText().trim().isEmpty()
+                    || vista.getTxtPrecio().getText().trim().isEmpty()
+                    || vista.getTxtCantidad().getText().trim().isEmpty()) {
+
                 JOptionPane.showMessageDialog(vista,
                         "Complete todos los campos obligatorios",
                         "Error",
                         JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            
+
             // 2. Obtener datos de la vista
             String id = vista.getTxtIDProduct().getText().trim();
             String nombre = vista.getTxtNombre().getText().trim();
@@ -54,39 +53,30 @@ public class controladorProductos {
             double precio = Double.parseDouble(vista.getTxtPrecio().getText().trim());
             int cantidad = Integer.parseInt(vista.getTxtCantidad().getText().trim());
             String descripcion = vista.getTxtDescripcion().getText().trim();
-            
+
             // 3. Crear objeto Producto
             Products nuevo = new Products(id, nombre, categoria, precio, cantidad, "Activo");
-            
+
             // 4. Guardar usando DAO
             boolean guardado = dao.insertarProducto(nuevo);
-            
+
             if (guardado) {
-                // 5. Actualizar tabla
-                DefaultTableModel modelo = (DefaultTableModel) vista.getjTableProductos().getModel();
-                modelo.addRow(new Object[]{
-                    id,
-                    nombre,
-                    categoria,
-                    precio,
-                    cantidad,
-                    "Activo"
-                });
-                
+
                 JOptionPane.showMessageDialog(vista,
                         "Producto guardado correctamente",
                         "Éxito",
                         JOptionPane.INFORMATION_MESSAGE);
-                
+
+                // Limpiar formulario
                 vista.limpiarFormulario();
-                
+
             } else {
                 JOptionPane.showMessageDialog(vista,
                         "Ya existe un producto con ese ID",
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
             }
-            
+
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(vista,
                     "Precio y cantidad deben ser números válidos",
@@ -94,22 +84,5 @@ public class controladorProductos {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    private void cargarProductosEnTabla() {
-        DefaultTableModel modelo = (DefaultTableModel) vista.getjTableProductos().getModel();
-        modelo.setRowCount(0); // Limpiar tabla
-        
-        for (Products p : dao.obtenerTodosLosProductos()) {
-            modelo.addRow(new Object[]{
-                p.getIdProduct(),
-                p.getNameProduct(),
-                p.getCategory(),
-                p.getPrice(),
-                p.getCant(),
-                p.getStatus()
-            });
-        }
-    }
-}
-    
 
+}

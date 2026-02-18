@@ -206,62 +206,9 @@ public class GestionProductos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+   
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (txtIDProduct.getText().trim().isEmpty() || txtNombre.getText().trim().isEmpty() || txtPrecio.getText().trim().isEmpty() || txtCantidad.getText().trim().isEmpty()) {
-
-            javax.swing.JOptionPane.showMessageDialog(
-                    this,
-                    "Por favor, complete todos los campos obligatorios",
-                    "Campos vacíos",
-                    javax.swing.JOptionPane.WARNING_MESSAGE
-            );
-            return;
-        }
-
-        try {
-            // Obtener datos del formulario
-            String id = txtIDProduct.getText().trim();
-            String nombre = txtNombre.getText().trim();
-            String categoria = comboCategoria.getSelectedItem().toString();
-            double precio = Double.parseDouble(txtPrecio.getText().trim());
-            int cantidad = Integer.parseInt(txtCantidad.getText().trim());
-            String descripcion = txtDescripcion.getText().trim();
-
-            // Crear el producto (usando descripción como estado por ahora, o podrías guardarla en otro lado)
-            Modelo.Products nuevoProducto = new Modelo.Products(
-                    id, nombre, categoria, precio, cantidad, "Activo"
-            );
-
-            // Guardar usando DAO
-            Modelo.productosDAO dao = new Modelo.productosDAO();
-
-            if (dao.insertarProducto(nuevoProducto)) {
-                javax.swing.JOptionPane.showMessageDialog(
-                        this,
-                        "Producto guardado exitosamente",
-                        "Éxito",
-                        javax.swing.JOptionPane.INFORMATION_MESSAGE
-                );
-
-                limpiarFormulario();
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(
-                        this,
-                        "Ya existe un producto con ese ID",
-                        "Error",
-                        javax.swing.JOptionPane.ERROR_MESSAGE
-                );
-            }
-
-        } catch (NumberFormatException ex) {
-            javax.swing.JOptionPane.showMessageDialog(
-                    this,
-                    "Precio y cantidad deben ser números válidos",
-                    "Error de formato",
-                    javax.swing.JOptionPane.ERROR_MESSAGE
-            );
-        }
-
+      
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -360,6 +307,16 @@ public class GestionProductos extends javax.swing.JFrame {
         return txtPrecio;
     }
 
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public JButton getBtnGuardar() {
+        return btnGuardar;
+    }
+    
+    
+
     public void limpiarFormulario() {
         txtIDProduct.setText("");
         txtNombre.setText("");
@@ -391,7 +348,24 @@ public class GestionProductos extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GestionProductos().setVisible(true));
+        try {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
+            }
+        }
+    } catch (Exception ex) {
+        logger.log(java.util.logging.Level.SEVERE, null, ex);
+    }
+
+    java.awt.EventQueue.invokeLater(() -> {
+        GestionProductos vista = new GestionProductos();
+        // Crear el controlador (esto AGREGARÁ otro ActionListener al botón)
+        Control.controladorProductos controlador = new Control.controladorProductos(vista);
+        vista.setVisible(true);
+    });
+       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
