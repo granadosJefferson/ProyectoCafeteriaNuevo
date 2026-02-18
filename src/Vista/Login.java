@@ -73,18 +73,21 @@ public class Login extends javax.swing.JFrame {
         btnExit.setText("Salir");
         btnExit.setBorderPainted(false);
         btnExit.setContentAreaFilled(false);
+        btnExit.setFocusPainted(false);
 
         btnRegister.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         btnRegister.setForeground(new java.awt.Color(0, 0, 0));
         btnRegister.setText("Registrarse");
         btnRegister.setBorderPainted(false);
         btnRegister.setContentAreaFilled(false);
+        btnRegister.setFocusPainted(false);
 
         btnLogin.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(0, 0, 0));
         btnLogin.setText("Iniciar Sesion");
         btnLogin.setBorderPainted(false);
         btnLogin.setContentAreaFilled(false);
+        btnLogin.setFocusPainted(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

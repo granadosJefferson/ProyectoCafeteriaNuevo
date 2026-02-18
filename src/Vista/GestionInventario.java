@@ -153,7 +153,6 @@ public void iniciarReloj() {
         jButton11.setBackground(new java.awt.Color(33, 150, 243));
         jButton11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setIcon(new javax.swing.ImageIcon("C:\\Users\\Personal\\Documents\\ProyectoCafeteriaNuevo\\src\\img\\agregar.png")); // NOI18N
         jButton11.setText("Agregar");
         jButton11.setPreferredSize(new java.awt.Dimension(100, 31));
         jButton11.addActionListener(this::jButton11ActionPerformed);

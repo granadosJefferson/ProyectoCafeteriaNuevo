@@ -152,12 +152,14 @@ public class Register extends javax.swing.JFrame {
         btnBack.setText("Volver");
         btnBack.setBorderPainted(false);
         btnBack.setContentAreaFilled(false);
+        btnBack.setFocusPainted(false);
 
         btnRegister.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         btnRegister.setForeground(new java.awt.Color(0, 0, 0));
         btnRegister.setText("Registrarse");
         btnRegister.setBorderPainted(false);
         btnRegister.setContentAreaFilled(false);
+        btnRegister.setFocusPainted(false);
         btnRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegisterActionPerformed(evt);

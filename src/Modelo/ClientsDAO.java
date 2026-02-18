@@ -11,18 +11,29 @@ import java.util.ArrayList;
  * @author dh057
  */
 public class ClientsDAO {
-    private ArrayList<Clients> cliente = new ArrayList<>();
+
+    private ArrayList<Clients> ListCliente = new ArrayList<>();
 
     public ClientsDAO() {
     }
 
     public ArrayList<Clients> getCliente() {
-        return cliente;
+        return ListCliente;
     }
 
     public void setCliente(ArrayList<Clients> cliente) {
-        this.cliente = cliente;
+        this.ListCliente = ListCliente;
+    }
+
+    public ArrayList<Clients> getAll() {
+        return ListCliente;
     }
     
-    
+    public ArrayList<Clients> addLista(String type, int visits, String fecha, double total, String cedula, String name){
+        
+        ListCliente.add(new Clients(type,visits,fecha,total,cedula,name));
+        
+        return ListCliente;
+    }
+
 }
