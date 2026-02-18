@@ -13,11 +13,11 @@ import java.util.ArrayList;
  *
  * @author Personal
  */
-public class UsersDao {
+public class loginDao {
 
     ArrayList<Users> list;
 
-    public UsersDao() {
+    public loginDao() {
         list = new ArrayList<>();
     }
 
@@ -35,8 +35,11 @@ public class UsersDao {
         return true;
     }
    
-    public void start(){
+    public void validUser(){
     
+         
+        
     }
+    
     
 }

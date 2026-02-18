@@ -4,8 +4,8 @@
  */
 package Main;
 
-import Controlador.ControllerUsers;
-import Modelo.UsersDao;
+import Control.ControllerLogin;
+import Modelo.loginDao;
 import Vista.Login;
 import Vista.Register;
 
@@ -15,10 +15,10 @@ import Vista.Register;
  */
 public class main {
     public static void main(String[] args) {
-       UsersDao usDao = new UsersDao(); 
+       loginDao usDao = new loginDao(); 
        Register rg = new Register();
        Login lg = new Login();
-       new ControllerUsers(usDao,rg,lg);
+       new ControllerLogin(usDao,rg,lg);
        rg.setVisible(true);
     }
 }
