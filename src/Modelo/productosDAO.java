@@ -11,12 +11,22 @@ import java.util.ArrayList;
 
 public class productosDAO {
 
+    
+    private static productosDAO instancia;
     private ArrayList<Products> list;
     private static final String ARCHIVO = "products.txt";
-
-    public productosDAO() {
+    
+    
+    private productosDAO() {
         list = new ArrayList<>();
         cargarProductos(); // Cargar productos del archivo al iniciar
+    }
+    
+     public static productosDAO getInstancia() {
+        if (instancia == null) {
+            instancia = new productosDAO();
+        }
+        return instancia;
     }
 
     /**
