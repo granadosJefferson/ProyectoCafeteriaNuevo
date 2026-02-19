@@ -4,12 +4,8 @@
  */
 package Vista;
 
-import Control.ControllerClients;
-import Modelo.ClientsDAO;
-import java.awt.CardLayout;
-import java.util.Date;
-import javax.swing.Timer;
-import java.text.SimpleDateFormat;
+
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
@@ -31,22 +27,13 @@ public class Principal extends javax.swing.JFrame {
         panelContenido.add(new JPanel(), "vacio");
         panelContenido.add(new orders(), "order");
         panelContenido.add(new Products(), "products");
-        //panelContenido.add(new ClientsPanel(), "clients");
-        panelContenido.add(new GestionInventario(), "inventario");
-         << << << < HEAD
+        panelContenido.add(new ClientsPanel(), "clients");
+        panelContenido.add(new GestionInventario(), "inventario");  
         panelContenido.add(new GestionMesas(), "mesas");
         panelContenido.add(new GestionFacturacion(), "facturacion");
 //        panelContenido.add(new Reportes(), "reportes");
-         == == ==
-                = ClientsDAO clientsDao = new ClientsDAO();
-        ClientsPanel clientsPanel = new ClientsPanel();
-        GestionCliente gestioncliente = new GestionCliente();
-
-        ControllerClients controllerClients = new ControllerClients(clientsPanel, clientsDao, gestioncliente);
-
-        panelContenido.add(clientsPanel, "clients");
-         >>> >>> > 62ed25a5d246e44a52aba032b51aa8f4460de3b9
-    }
+       
+         }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -269,250 +256,75 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public JPanel getPanelContenido() {
+        return panelContenido;
+    }
+
+    public JButton getBtnClients() {
+        return btnClients;
+    }
+
+    public JButton getBtnFacturación() {
+        return btnFacturación;
+    }
+
+    public JButton getBtnInventario() {
+        return btnInventario;
+    }
+
+    public JButton getBtnMesas() {
+        return btnMesas;
+    }
+
+    public JButton getBtnPedidos() {
+        return btnPedidos;
+    }
+
+    public JButton getBtnProducts() {
+        return btnProducts;
+    }
+
+    public JButton getBtnReportes() {
+        return btnReportes;
+    }
+
+    public JButton getBtnStart() {
+        return btnStart;
+    }
+    
+
     private void btnProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductsActionPerformed
 
-        btnClients.setOpaque(false);
-        btnClients.repaint();
-
-        btnInventario.setOpaque(false);
-        btnInventario.repaint();
-
-        btnStart.setOpaque(false);
-        btnStart.repaint();
-
-        btnPedidos.setOpaque(false);
-        btnPedidos.repaint();
-
-        btnProducts.setOpaque(true);
-        btnProducts.repaint();
-
-        btnMesas.setOpaque(false);
-        btnMesas.repaint();
-
-        btnFacturación.setOpaque(false);
-        btnFacturación.repaint();
-
-        btnReportes.setOpaque(false);
-        btnReportes.repaint();
-
-        CardLayout cl = (CardLayout) panelContenido.getLayout();
-        cl.show(panelContenido, "products");
     }//GEN-LAST:event_btnProductsActionPerformed
 
     private void btnClientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientsActionPerformed
 
-        btnStart.setOpaque(false);
-        btnStart.repaint();
-
-        btnPedidos.setOpaque(false);
-        btnPedidos.repaint();
-
-        btnProducts.setOpaque(false);
-        btnProducts.repaint();
-
-        btnInventario.setOpaque(false);
-        btnInventario.repaint();
-
-        btnMesas.setOpaque(false);
-        btnMesas.repaint();
-
-        btnFacturación.setOpaque(false);
-        btnFacturación.repaint();
-
-        btnReportes.setOpaque(false);
-        btnReportes.repaint();
-
-        btnClients.setOpaque(true);
-        btnClients.repaint();
-        CardLayout cl = (CardLayout) panelContenido.getLayout();
-        cl.show(panelContenido, "clients");
     }//GEN-LAST:event_btnClientsActionPerformed
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
 
-        // Desactivar todos los botones
-        btnProducts.setOpaque(false);
-        btnProducts.repaint();
-
-        btnClients.setOpaque(false);
-        btnClients.repaint();
-
-        btnStart.setOpaque(false);
-        btnStart.repaint();
-
-        btnPedidos.setOpaque(false);
-        btnPedidos.repaint();
-
-        btnMesas.setOpaque(false);
-        btnMesas.repaint();
-
-        btnFacturación.setOpaque(false);
-        btnFacturación.repaint();
-
-        btnReportes.setOpaque(false);
-        btnReportes.repaint();
-
-        // Activar SOLO el botón de inventario
-        btnInventario.setOpaque(true);
-        btnInventario.repaint();
-
-        // Cambiar al panel de inventario (NO a mesas)
-        CardLayout cl = (CardLayout) panelContenido.getLayout();
-        cl.show(panelContenido, "inventario");
 
     }//GEN-LAST:event_btnInventarioActionPerformed
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
 
-        btnProducts.setOpaque(false);
-        btnProducts.repaint();
-
-        btnClients.setOpaque(false);
-        btnClients.repaint();
-
-        btnInventario.setOpaque(false);
-        btnInventario.repaint();
-
-        btnStart.setOpaque(true);
-        btnStart.repaint();
-
-        btnPedidos.setOpaque(false);
-        btnPedidos.repaint();
-
-        btnFacturación.setOpaque(false);
-        btnFacturación.repaint();
-
-        btnReportes.setOpaque(false);
-        btnReportes.repaint();
-
-        btnReportes.setOpaque(false);
-        btnReportes.repaint();
-
-        // Activar botón actual
-        btnMesas.setOpaque(false);
-        btnMesas.repaint();
-
-
     }//GEN-LAST:event_btnStartActionPerformed
 
     private void btnMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesasActionPerformed
-        btnProducts.setOpaque(false);
-        btnProducts.repaint();
-
-        btnClients.setOpaque(false);
-        btnClients.repaint();
-
-        btnInventario.setOpaque(false);
-        btnInventario.repaint();
-
-        btnStart.setOpaque(false);
-        btnStart.repaint();
-
-        btnPedidos.setOpaque(false);
-        btnPedidos.repaint();
-
-        btnFacturación.setOpaque(false);
-        btnFacturación.repaint();
-
-        btnReportes.setOpaque(false);
-        btnReportes.repaint();
-
-        btnMesas.setOpaque(true);
-        btnMesas.repaint();
-
-        CardLayout cl = (CardLayout) panelContenido.getLayout();
-        cl.show(panelContenido, "mesas");
+       
 
     }//GEN-LAST:event_btnMesasActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
 
-        btnProducts.setOpaque(false);
-        btnProducts.repaint();
-
-        btnClients.setOpaque(false);
-        btnClients.repaint();
-
-        btnInventario.setOpaque(false);
-        btnInventario.repaint();
-
-        btnStart.setOpaque(false);
-        btnStart.repaint();
-
-        btnPedidos.setOpaque(false);
-        btnPedidos.repaint();
-
-        btnMesas.setOpaque(false);
-        btnMesas.repaint();
-
-        btnFacturación.setOpaque(false);
-        btnFacturación.repaint();
-
-        btnReportes.setOpaque(true);
-        btnReportes.repaint();
-
-        CardLayout cl = (CardLayout) panelContenido.getLayout();
-        cl.show(panelContenido, "reportes");
-
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedidosActionPerformed
-        btnProducts.setOpaque(false);
-        btnProducts.repaint();
-
-        btnClients.setOpaque(false);
-        btnClients.repaint();
-
-        btnStart.setOpaque(false);
-        btnStart.repaint();
-
-        btnPedidos.setOpaque(true);
-        btnPedidos.repaint();
-
-        btnInventario.setOpaque(false);
-        btnInventario.repaint();
-
-        btnMesas.setOpaque(false);
-        btnMesas.repaint();
-
-        btnFacturación.setOpaque(false);
-        btnFacturación.repaint();
-
-        btnReportes.setOpaque(false);
-        btnReportes.repaint();
-
-        CardLayout cl = (CardLayout) panelContenido.getLayout();
-        cl.show(panelContenido, "order");
+        
     }//GEN-LAST:event_btnPedidosActionPerformed
 
     private void btnFacturaciónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturaciónActionPerformed
 
-        btnProducts.setOpaque(false);
-        btnProducts.repaint();
-
-        btnClients.setOpaque(false);
-        btnClients.repaint();
-
-        btnInventario.setOpaque(false);
-        btnInventario.repaint();
-
-        btnStart.setOpaque(false);
-        btnStart.repaint();
-
-        btnPedidos.setOpaque(false);
-        btnPedidos.repaint();
-
-        btnMesas.setOpaque(false);
-        btnMesas.repaint();
-
-        btnReportes.setOpaque(false);
-        btnReportes.repaint();
-
-        btnFacturación.setOpaque(true);
-        btnFacturación.repaint();
-
-        CardLayout cl = (CardLayout) panelContenido.getLayout();
-        cl.show(panelContenido, "facturacion");
 
     }//GEN-LAST:event_btnFacturaciónActionPerformed
 

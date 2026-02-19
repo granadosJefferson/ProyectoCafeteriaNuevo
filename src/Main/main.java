@@ -5,6 +5,7 @@
 package Main;
 
 import Control.ControllerLogin;
+import Control.ControllerPrincipal;
 import Modelo.UsersDao;
 import Vista.Login;
 import Vista.Mensajes;
@@ -16,13 +17,16 @@ import Vista.Register;
  * @author Personal
  */
 public class main {
+
     public static void main(String[] args) {
-       UsersDao usDao = new UsersDao(); 
-       Register rg = new Register();
-       Login lg = new Login();
-       Mensajes ms = new Mensajes();
-       Principal pr = new Principal();
-       new ControllerLogin(usDao,rg,lg,ms,pr);
-       lg.setVisible(true);
+
+        UsersDao usDao = new UsersDao();
+        Register rg = new Register();
+        Login lg = new Login();
+        Mensajes ms = new Mensajes();
+        Principal pr = new Principal();
+        ControllerPrincipal conPr = new ControllerPrincipal(pr);
+        new ControllerLogin(usDao, rg, lg, ms, pr);
+        lg.setVisible(true);
     }
 }
