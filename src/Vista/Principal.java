@@ -33,19 +33,17 @@ public class Principal extends javax.swing.JFrame {
         panelContenido.add(new Products(), "products");
         //panelContenido.add(new ClientsPanel(), "clients");
         panelContenido.add(new GestionInventario(), "inventario");
-         << << << < HEAD
         panelContenido.add(new GestionMesas(), "mesas");
         panelContenido.add(new GestionFacturacion(), "facturacion");
 //        panelContenido.add(new Reportes(), "reportes");
-         == == ==
-                = ClientsDAO clientsDao = new ClientsDAO();
+        ClientsDAO clientsDao = new ClientsDAO();
         ClientsPanel clientsPanel = new ClientsPanel();
         GestionCliente gestioncliente = new GestionCliente();
 
         ControllerClients controllerClients = new ControllerClients(clientsPanel, clientsDao, gestioncliente);
 
         panelContenido.add(clientsPanel, "clients");
-         >>> >>> > 62ed25a5d246e44a52aba032b51aa8f4460de3b9
+
     }
 
     /**
