@@ -5,6 +5,15 @@
 package Vista;
 
 
+import Control.ControllerClients;
+import Modelo.ClientsDAO;
+import Vista.ClientsPanel;
+import Vista.GestionCliente;
+import Vista.GestionFacturacion;
+import Vista.GestionInventario;
+import Vista.GestionMesas;
+import Vista.Products;
+import Vista.orders;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -27,13 +36,25 @@ public class Principal extends javax.swing.JFrame {
         panelContenido.add(new JPanel(), "vacio");
         panelContenido.add(new orders(), "order");
         panelContenido.add(new Products(), "products");
-        panelContenido.add(new ClientsPanel(), "clients");
-        panelContenido.add(new GestionInventario(), "inventario");  
+
+        //panelContenido.add(new ClientsPanel(), "clients");
+        panelContenido.add(new GestionInventario(), "inventario");
         panelContenido.add(new GestionMesas(), "mesas");
         panelContenido.add(new GestionFacturacion(), "facturacion");
 //        panelContenido.add(new Reportes(), "reportes");
+        ClientsDAO clientsDao = new ClientsDAO();
+        ClientsPanel clientsPanel = new ClientsPanel();
+        GestionCliente gestioncliente = new GestionCliente();
+
+        ControllerClients controllerClients = new ControllerClients(clientsPanel, clientsDao, gestioncliente);
+
+        panelContenido.add(clientsPanel, "clients");
+
+    }
+
+//        panelContenido.add(new Reportes(), "reportes");
        
-         }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -357,6 +378,7 @@ public class Principal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new Principal().setVisible(true));
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClients;
     private javax.swing.JButton btnFacturación;
@@ -374,3 +396,4 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel panelContenido;
     // End of variables declaration//GEN-END:variables
 }
+

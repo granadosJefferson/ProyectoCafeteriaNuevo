@@ -1,2 +1,1 @@
-998631,Cafe Expreso,lacteos,2000.0,100,Activo,TazaCafe.png
-1234567898764,nuevo,lacteos,1500.0,12,Activo,TazaCafe.png
+4343,Croasant (cangrejo),Postres,500.0,20,Activo,prod_Croissant.png
