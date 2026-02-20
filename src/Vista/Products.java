@@ -116,6 +116,7 @@ public class Products extends javax.swing.JPanel {
         lblTime3.setOpaque(true);
 
         setBackground(new java.awt.Color(215, 227, 225));
+        setFocusable(false);
         setPreferredSize(new java.awt.Dimension(1000, 700));
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
@@ -159,6 +160,7 @@ public class Products extends javax.swing.JPanel {
         btnEliminarProducto.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEliminarProducto.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminarProducto.setText("Eliminar");
+        btnEliminarProducto.setFocusPainted(false);
         btnEliminarProducto.addActionListener(this::btnEliminarProductoActionPerformed);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -193,7 +195,7 @@ public class Products extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblDay4, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(61, 61, 61)
                         .addComponent(lblTime4, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -216,12 +218,15 @@ public class Products extends javax.swing.JPanel {
         btnNuevoProducto.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnNuevoProducto.setForeground(new java.awt.Color(255, 255, 255));
         btnNuevoProducto.setText("Nuevo Producto");
+        btnNuevoProducto.setBorderPainted(false);
+        btnNuevoProducto.setFocusPainted(false);
         btnNuevoProducto.addActionListener(this::btnNuevoProductoActionPerformed);
 
         btnModificarProducto.setBackground(new java.awt.Color(33, 150, 243));
         btnModificarProducto.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnModificarProducto.setForeground(new java.awt.Color(255, 255, 255));
         btnModificarProducto.setText("Modificar");
+        btnModificarProducto.setFocusPainted(false);
         btnModificarProducto.setPreferredSize(new java.awt.Dimension(100, 31));
         btnModificarProducto.addActionListener(this::btnModificarProductoActionPerformed);
 
@@ -247,18 +252,18 @@ public class Products extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(btnNuevoProducto)
                         .addGap(344, 344, 344)
                         .addComponent(btnModificarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                         .addComponent(btnEliminarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 783, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 783, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap(191, Short.MAX_VALUE))
+                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

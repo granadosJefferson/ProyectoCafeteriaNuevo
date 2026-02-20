@@ -19,23 +19,22 @@ public class controladorProductosPanel {
 
     private final Products vista;
     private final productosDAO dao;
+    private final ControllerInventario invCtrl;
 
     private boolean cargandoTabla = false;
     private boolean cambioProgramatico = false;
 
-    public controladorProductosPanel(Products vista) {
+    public controladorProductosPanel(Products vista, ControllerInventario invCtrl) {
         this.vista = vista;
         this.dao = productosDAO.getInstancia();
+        this.invCtrl = invCtrl;
 
-    
         this.vista.getBtnNuevoProducto().addActionListener(this::nuevoProducto);
         this.vista.getBtnModificarProducto().addActionListener(this::modificarProducto);
         this.vista.getBtnEliminarProducto().addActionListener(this::eliminarProducto);
 
-      
         cargandoTabla = true;
 
-     
         DefaultTableModel modelo = new DefaultTableModel(
                 new Object[][]{},
                 new String[]{"ID", "Nombre", "Categoría", "Precio", "Cantidad", "Estado", "Imagen"}
@@ -53,12 +52,10 @@ public class controladorProductosPanel {
 
         vista.getTableProductos().setModel(modelo);
         vista.getTableProductos().setFont(new Font("Segoe UI", Font.BOLD, 14));
-        vista.getTableProductos().setRowHeight(80); 
+        vista.getTableProductos().setRowHeight(80);
 
-       
         cargarProductosEnTabla();
 
-      
         DefaultTableCellRenderer centrado = new DefaultTableCellRenderer();
         centrado.setHorizontalAlignment(SwingConstants.CENTER);
         centrado.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -81,7 +78,6 @@ public class controladorProductosPanel {
 
         cargandoTabla = false;
 
-        
         vista.getTxtProductoSeleccionado().getDocument().addDocumentListener(
                 new javax.swing.event.DocumentListener() {
             @Override
@@ -102,9 +98,7 @@ public class controladorProductosPanel {
         );
     }
 
-    // public static controladorProductosPanel getInstancia() {
-    //    return instancia;
-    //}
+   
     private void nuevoProducto(ActionEvent e) {
         GestionProductos gp = new GestionProductos();
         new controladorProductos(gp);
@@ -321,6 +315,10 @@ public class controladorProductosPanel {
         cargandoTabla = false;
 
         cargarProductosEnTabla();
+
+        if (invCtrl != null) {
+            invCtrl.recargarInventario();
+        }
 
     }
 

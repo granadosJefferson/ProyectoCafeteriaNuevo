@@ -21,7 +21,8 @@ public class orders extends javax.swing.JPanel {
         initComponents();
         iniciarReloj();
     }
-public void iniciarReloj() {
+
+    public void iniciarReloj() {
 
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy");
         SimpleDateFormat formatoHora = new SimpleDateFormat("hh:mm:ss a");
@@ -38,6 +39,7 @@ public void iniciarReloj() {
 
         tm.start();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -88,12 +90,14 @@ public void iniciarReloj() {
         jLabel8.setText("Vista general del sistema");
 
         lblTime.setBackground(new java.awt.Color(215, 227, 225));
+        lblTime.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         lblTime.setForeground(new java.awt.Color(0, 0, 0));
         lblTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTime.setText("hora");
         lblTime.setOpaque(true);
 
         lblDay.setBackground(new java.awt.Color(215, 227, 225));
+        lblDay.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         lblDay.setForeground(new java.awt.Color(0, 0, 0));
         lblDay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDay.setText("dia");
@@ -296,6 +300,7 @@ public void iniciarReloj() {
         jButton6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
         jButton6.setText("Limpiar Pedido");
+        jButton6.setFocusPainted(false);
         jButton6.setPreferredSize(new java.awt.Dimension(72, 23));
         jButton6.addActionListener(this::jButton6ActionPerformed);
 
@@ -303,6 +308,7 @@ public void iniciarReloj() {
         jButton7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setText("Realizar Pedido");
+        jButton7.setFocusPainted(false);
         jButton7.addActionListener(this::jButton7ActionPerformed);
 
         jSeparator5.setForeground(new java.awt.Color(215, 227, 225));

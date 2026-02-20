@@ -4,8 +4,8 @@
  */
 package Vista;
 
-
 import Control.ControllerClients;
+import Control.ControllerInventario;
 import Control.controladorProductosPanel;
 import Modelo.ClientsDAO;
 import Vista.ClientsPanel;
@@ -36,13 +36,16 @@ public class Principal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         panelContenido.add(new JPanel(), "vacio");
         panelContenido.add(new orders(), "order");
-      
-        Products p = new Products();
-        panelContenido.add(p, "products");
-        new controladorProductosPanel(p);
 
-        //panelContenido.add(new ClientsPanel(), "clients");
-        panelContenido.add(new GestionInventario(), "inventario");
+        Products p = new Products();
+        GestionInventario inv = new GestionInventario();
+
+        panelContenido.add(p, "products");
+        panelContenido.add(inv, "inventario");
+
+        ControllerInventario invCtrl = new ControllerInventario(inv);
+        new controladorProductosPanel(p, invCtrl);
+
         panelContenido.add(new GestionMesas(), "mesas");
         panelContenido.add(new GestionFacturacion(), "facturacion");
 //        panelContenido.add(new Reportes(), "reportes");
@@ -57,9 +60,6 @@ public class Principal extends javax.swing.JFrame {
     }
 
 //        panelContenido.add(new Reportes(), "reportes");
-       
-
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -249,13 +249,13 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btnInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnFacturación, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
 
         panelContenido.setBackground(new java.awt.Color(215, 227, 225));
@@ -316,7 +316,7 @@ public class Principal extends javax.swing.JFrame {
     public JButton getBtnStart() {
         return btnStart;
     }
-    
+
 
     private void btnProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductsActionPerformed
 
@@ -336,7 +336,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnStartActionPerformed
 
     private void btnMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesasActionPerformed
-       
+
 
     }//GEN-LAST:event_btnMesasActionPerformed
 
@@ -345,7 +345,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedidosActionPerformed
-        
+
     }//GEN-LAST:event_btnPedidosActionPerformed
 
     private void btnFacturaciónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturaciónActionPerformed
@@ -400,4 +400,3 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel panelContenido;
     // End of variables declaration//GEN-END:variables
 }
-

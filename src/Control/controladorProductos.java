@@ -25,7 +25,9 @@ public class controladorProductos {
 
     }
 
+    
     private void guardarProducto(ActionEvent e) {
+        
         try {
             // Validar campos obligatorios
             if (vista.getTxtIDProduct().getText().trim().isEmpty()
