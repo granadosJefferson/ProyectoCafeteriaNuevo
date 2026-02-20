@@ -145,7 +145,7 @@ public class productosDAO {
                     int cantidad = Integer.parseInt(partes[4].trim());
                     String estado = partes[5].trim();
 
-                    String imagen = (partes.length >= 7) ? partes[6].trim() : ""; // 👈 NUEVO
+                    String imagen = (partes.length >= 7) ? partes[6].trim() : ""; 
 
                     list.add(new Product(id, nombre, categoria, precio, cantidad, estado, imagen));
 
@@ -155,5 +155,5 @@ public class productosDAO {
             System.out.println("Error al cargar productos: " + e.getMessage());
         }
     }
-
+    
 }

@@ -1,1 +1,6 @@
-4343,Croasant (cangrejo),Postres,500.0,20,Activo,prod_Croissant.png
+123,fresa,lacteos,1200.0,0,Inactivo,prod_YogurtFresa.png
+123456787554,Batido,lacteos,1500.0,14,Activo,prod_BatidoChocolate.png
+32121,Batido,lacteos,1500.0,12,Activo,prod_BatidoChocolate.png
+4342312,nuevo,cheseecake,2000.0,4,Activo,prod_CheeseCakeLimon.png
+11,dsd,Postres,111.0,3,Activo,prod_Brownie.png
+12345,dsdsd,Café ,1111.0,0,Inactivo,prod_TazaCapuccino.png

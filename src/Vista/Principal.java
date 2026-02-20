@@ -6,6 +6,7 @@ package Vista;
 
 
 import Control.ControllerClients;
+import Control.controladorProductosPanel;
 import Modelo.ClientsDAO;
 import Vista.ClientsPanel;
 import Vista.GestionCliente;
@@ -35,7 +36,10 @@ public class Principal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         panelContenido.add(new JPanel(), "vacio");
         panelContenido.add(new orders(), "order");
-        panelContenido.add(new Products(), "products");
+      
+        Products p = new Products();
+        panelContenido.add(p, "products");
+        new controladorProductosPanel(p);
 
         //panelContenido.add(new ClientsPanel(), "clients");
         panelContenido.add(new GestionInventario(), "inventario");

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Control;
 
 import Modelo.Product;
@@ -35,7 +31,8 @@ public class controladorProductos {
             if (vista.getTxtIDProduct().getText().trim().isEmpty()
                     || vista.getTxtNombre().getText().trim().isEmpty()
                     || vista.getTxtPrecio().getText().trim().isEmpty()
-                    || vista.getTxtCantidad().getText().trim().isEmpty()) {
+                    || vista.getTxtCantidad().getText().trim().isEmpty()
+                    || vista.getTxtImagen().getText().trim().isEmpty()) {
 
                 JOptionPane.showMessageDialog(vista,
                         "Complete todos los campos obligatorios",
@@ -50,10 +47,11 @@ public class controladorProductos {
             String categoria = vista.getComboCategoria().getSelectedItem().toString();
             double precio = Double.parseDouble(vista.getTxtPrecio().getText().trim());
             int cantidad = Integer.parseInt(vista.getTxtCantidad().getText().trim());
-            String descripcion = vista.getTxtDescripcion().getText().trim();
-            String imagen = vista.getTxtImagen().getText().trim(); 
+            //String descripcion = vista.getTxtDescripcion().getText().trim();
+            String imagen = vista.getTxtImagen().getText().trim();
+            String estado = (cantidad > 0) ? "Activo" : "Inactivo";
 
-            Product nuevo = new Product(id, nombre, categoria, precio, cantidad, "Activo", imagen);
+            Product nuevo = new Product(id, nombre, categoria, precio, cantidad, estado, imagen);
             // Verificar si el producto ya existe
             Product existente = dao.buscarProductoPorId(id);
 
@@ -80,16 +78,17 @@ public class controladorProductos {
                         vista.limpiarFormulario();
                         vista.dispose();
 
-                        // NOTIFICAR CON SINGLETON
-                        controladorProductosPanel panelCtrl = controladorProductosPanel.getInstancia();
-                        if (panelCtrl != null) {
-                            panelCtrl.recargarTabla();
-                        }
+                    } else {
+
+                        JOptionPane.showMessageDialog(vista,
+                                "No se pudo modificar el producto",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
                     }
                 }
 
             } else {
-                // Producto no existe → insertar nuevo
+       
                 boolean guardado = dao.insertarProducto(nuevo);
 
                 if (guardado) {
@@ -100,12 +99,6 @@ public class controladorProductos {
 
                     vista.limpiarFormulario();
                     vista.dispose();
-
-                    // NOTIFICAR CON SINGLETON
-                    controladorProductosPanel panelCtrl = controladorProductosPanel.getInstancia();
-                    if (panelCtrl != null) {
-                        panelCtrl.recargarTabla();
-                    }
 
                 } else {
                     JOptionPane.showMessageDialog(vista,
@@ -121,6 +114,8 @@ public class controladorProductos {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
+    
+    
 }
 

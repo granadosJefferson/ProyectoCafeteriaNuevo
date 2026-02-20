@@ -1,4 +1,3 @@
-
 package Vista;
 
 import java.awt.Image;
@@ -24,60 +23,34 @@ public class Products extends javax.swing.JPanel {
      */
     public Products() {
         initComponents();
+
         
-         TableProductos.setRowHeight(80);
-
-    TableProductos.setModel(new javax.swing.table.DefaultTableModel(
-        new Object[][]{},
-        new String[]{"ID","Nombre","Categoría","Precio","Cantidad","Estado","Imagen"}
-    ) {
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            return (columnIndex == 6) ? javax.swing.Icon.class : Object.class;
-        }
-    });
-
-      cargarFilaPruebaConImagen();
+        TableProductos.setRowHeight(80);
          configurarColumnaImagen();
-
-    }
-    
-    
-   private void cargarFilaPruebaConImagen() {
-    DefaultTableModel m = (DefaultTableModel) TableProductos.getModel();
-
-    URL url = getClass().getResource("/img/TazaCafe.png");
-    System.out.println(url); // para ver si carga
-
-    ImageIcon icono = null;
-    if (url != null) {
-        Image img = new ImageIcon(url).getImage()
-                .getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-        icono = new ImageIcon(img);
+      
     }
 
-   // m.addRow(new Object[]{"P01","Café Americano","Bebidas",500,20,"Activo",icono});
-}
-   
-   private void configurarColumnaImagen() {
-    TableColumn colImg = TableProductos.getColumnModel().getColumn(6);
+    
 
-    colImg.setMinWidth(90);
-    colImg.setMaxWidth(90);
-    colImg.setPreferredWidth(90);
+    private void configurarColumnaImagen() {
+        TableColumn colImg = TableProductos.getColumnModel().getColumn(6);
 
-    colImg.setCellRenderer(new DefaultTableCellRenderer() {
-        @Override
-        public void setValue(Object value) {
-            setText("");
-            setHorizontalAlignment(JLabel.CENTER);
-            setIcon(value instanceof Icon ? (Icon) value : null);
-        }
-    });
-}
+        colImg.setMinWidth(90);
+        colImg.setMaxWidth(90);
+        colImg.setPreferredWidth(90);
 
+        colImg.setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public void setValue(Object value) {
+                setText("");
+                setHorizontalAlignment(JLabel.CENTER);
+                setIcon(value instanceof Icon ? (Icon) value : null);
+            }
+        });
+    }
 
-
+    
+    
 
     public JTable getTableProductos() {
         return TableProductos;
@@ -98,8 +71,6 @@ public class Products extends javax.swing.JPanel {
     public JTextField getTxtProductoSeleccionado() {
         return txtProductoSeleccionado;
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -150,8 +121,8 @@ public class Products extends javax.swing.JPanel {
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
         jPanel10.setPreferredSize(new java.awt.Dimension(775, 465));
 
-        txtProductoSeleccionado.setBackground(new java.awt.Color(236, 240, 241));
-        txtProductoSeleccionado.setForeground(new java.awt.Color(236, 240, 241));
+        txtProductoSeleccionado.setBackground(new java.awt.Color(255, 255, 255));
+        txtProductoSeleccionado.setForeground(new java.awt.Color(0, 0, 0));
         txtProductoSeleccionado.addActionListener(this::txtProductoSeleccionadoActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -181,7 +152,7 @@ public class Products extends javax.swing.JPanel {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnEliminarProducto.setBackground(new java.awt.Color(204, 0, 0));
@@ -222,7 +193,7 @@ public class Products extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
                         .addComponent(lblDay4, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(61, 61, 61)
                         .addComponent(lblTime4, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -265,6 +236,9 @@ public class Products extends javax.swing.JPanel {
                 "ID", "Nombre", "Categoría", "Precio", "Cantidad", "Estado", "Imagen"
             }
         ));
+        TableProductos.setMaximumSize(null);
+        TableProductos.setMinimumSize(null);
+        TableProductos.setPreferredSize(null);
         jScrollPane1.setViewportView(TableProductos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -272,34 +246,35 @@ public class Products extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 757, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
                         .addComponent(btnNuevoProducto)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(344, 344, 344)
                         .addComponent(btnModificarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62)
+                        .addGap(47, 47, 47)
                         .addComponent(btnEliminarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(40, Short.MAX_VALUE))
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 783, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 783, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(191, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(23, 23, 23)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnModificarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNuevoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNuevoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(37, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -343,22 +318,6 @@ public class Products extends javax.swing.JPanel {
     private javax.swing.JLabel lblTime4;
     private javax.swing.JTextField txtProductoSeleccionado;
     // End of variables declaration//GEN-END:variables
-
-
-    // Método main temporal para pruebas
-public static void main(String[] args) {
-    javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Productos");
-    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-    
-    Products panel = new Products();
-    frame.add(panel);
-    frame.pack();
-    frame.setLocationRelativeTo(null);
-    frame.setVisible(true);
-    
-    // Conectar el controlador
-    Control.controladorProductosPanel controlador = new Control.controladorProductosPanel(panel);
-}
 
 
 }
