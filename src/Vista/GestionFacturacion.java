@@ -422,6 +422,7 @@ public void iniciarReloj() {
         jButton8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
         jButton8.setText("Limpiar Pedido");
+        jButton8.setFocusPainted(false);
         jButton8.setPreferredSize(new java.awt.Dimension(72, 23));
         jButton8.addActionListener(this::jButton8ActionPerformed);
 

@@ -20,6 +20,47 @@ public class productosDAO {
         cargarProductos(); // Cargar productos del archivo al iniciar
     }
 
+    //Clase para cargas los productos que se encuentrar registrados en el txt
+    public List<Product> listar() {
+        List<Product> list = new ArrayList<>();
+        
+        File f = new File("products.txt"); // <- poné tu ruta real si es distinta
+        if (!f.exists()) {
+            return list;
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(f))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty()) {
+                    continue;
+                }
+
+                String[] p = line.split(",");
+                if (p.length < 7) {
+                    continue;
+                }
+
+                String id = p[0].trim();
+                String categoria = p[1].trim();
+                String nombre = p[2].trim();
+                double precio = Double.parseDouble(p[3].trim());
+                int cantidad = Integer.parseInt(p[4].trim());
+                String estado = p[5].trim();
+                String imagen = p[6].trim();
+
+                Product pr = new Product(id, nombre, categoria, precio, cantidad, estado, imagen);
+                list.add(pr);
+            }
+        } catch (Exception e) {
+            
+            System.out.println("Error leyendo productos: " + e.getMessage());
+        }
+
+        return list;
+    }
+
     public static productosDAO getInstancia() {
         if (instancia == null) {
             instancia = new productosDAO();
@@ -145,7 +186,7 @@ public class productosDAO {
                     int cantidad = Integer.parseInt(partes[4].trim());
                     String estado = partes[5].trim();
 
-                    String imagen = (partes.length >= 7) ? partes[6].trim() : ""; // 👈 NUEVO
+                    String imagen = (partes.length >= 7) ? partes[6].trim() : "";
 
                     list.add(new Product(id, nombre, categoria, precio, cantidad, estado, imagen));
 

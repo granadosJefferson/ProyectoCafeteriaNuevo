@@ -25,8 +25,10 @@ public class main {
         Login lg = new Login();
         Mensajes ms = new Mensajes();
         Principal pr = new Principal();
-        ControllerPrincipal conPr = new ControllerPrincipal(pr);
-        new ControllerLogin(usDao, rg, lg, ms, pr);
+        
+       new Control.ControllerPrincipal(pr);
+       new ControllerLogin(usDao, rg, lg, ms, pr);
+
         lg.setVisible(true);
     }
 }

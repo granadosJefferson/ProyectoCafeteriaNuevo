@@ -89,12 +89,14 @@ public class GestionCliente extends javax.swing.JFrame {
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Cancelar");
+        btnCancelar.setFocusPainted(false);
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         btnGuardar.setBackground(new java.awt.Color(33, 150, 243));
         btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardar.setText("Guardar");
+        btnGuardar.setFocusPainted(false);
         btnGuardar.setPreferredSize(new java.awt.Dimension(100, 31));
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 

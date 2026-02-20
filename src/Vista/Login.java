@@ -58,6 +58,7 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Usuario");
 
+        txtPassword.setToolTipText("*");
         txtPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPasswordActionPerformed(evt);
@@ -68,25 +69,25 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Contraseña");
 
+        btnExit.setBackground(new java.awt.Color(239, 68, 68));
         btnExit.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        btnExit.setForeground(new java.awt.Color(0, 0, 0));
+        btnExit.setForeground(new java.awt.Color(255, 255, 255));
         btnExit.setText("Salir");
         btnExit.setBorderPainted(false);
-        btnExit.setContentAreaFilled(false);
         btnExit.setFocusPainted(false);
 
+        btnRegister.setBackground(new java.awt.Color(153, 153, 153));
         btnRegister.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        btnRegister.setForeground(new java.awt.Color(0, 0, 0));
+        btnRegister.setForeground(new java.awt.Color(255, 255, 255));
         btnRegister.setText("Registrarse");
         btnRegister.setBorderPainted(false);
-        btnRegister.setContentAreaFilled(false);
         btnRegister.setFocusPainted(false);
 
+        btnLogin.setBackground(new java.awt.Color(33, 150, 243));
         btnLogin.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        btnLogin.setForeground(new java.awt.Color(0, 0, 0));
+        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("Iniciar Sesion");
         btnLogin.setBorderPainted(false);
-        btnLogin.setContentAreaFilled(false);
         btnLogin.setFocusPainted(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -115,9 +116,10 @@ public class Login extends javax.swing.JFrame {
                                         .addComponent(jLabel2))))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                                    .addComponent(btnExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(27, 27, 27))))))
                 .addContainerGap(159, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
