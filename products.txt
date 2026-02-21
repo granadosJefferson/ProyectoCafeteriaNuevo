@@ -10,3 +10,5 @@ dv,cc,lacteos,12.0,12,Activo,prod_CheeseCakeFresa.png
 1666,a,lacteos,4.0,6,Activo,prod_BatidoChocolate.png
 1466,a,lacteos,4.0,6,Activo,prod_BatidoChocolate.png
 ad,fe,Postres,100.0,11,Activo,prod_Brownie.png
+98889,dona,Postres,900.0,15,Activo,prod_DonaCaramelo.png
+001,Cafe,Cafe,800.0,40,Activo,prod_TazaCafeExpresso.png

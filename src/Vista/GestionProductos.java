@@ -18,11 +18,9 @@ import javax.swing.JTextField;
  * @author dh057
  */
 public class GestionProductos extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GestionProductos.class.getName());
-    // Variable auxiliar para la lista de imágenes
-    private javax.swing.JList<javax.swing.ImageIcon> listaImagenes;
 
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GestionProductos.class.getName());
+    
     /**
      * Creates new form GestionProducto
      */
@@ -30,21 +28,23 @@ public class GestionProductos extends javax.swing.JFrame {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        //tamaño fijo para el panel, que no sea editable y aparezca centrado
+        setSize(789, 580);
+      
+
+        
         //Hacer que el txtImagen no sea editable a mano, solo al tocar las imageness
         txtImagen.setEditable(false);
         txtImagen.setVisible(false);
         lblImgPro.setVisible(false);
-        
-      
-        jScrollPane1.setVisible(false);
+
+        //Siempre visible la lista de imagenes 
+        jScrollPane1.setVisible(true);
+
         configurarListaImagenes();
-        
-        btnExaminarImagen.addActionListener(e -> {
-            jScrollPane1.setVisible(!jScrollPane1.isVisible());
-            revalidate();
-            repaint();
-        });
-        
+
+    
+
     }
 
     /**
@@ -63,7 +63,6 @@ public class GestionProductos extends javax.swing.JFrame {
         txtImagen = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListImagenes = new javax.swing.JList<>();
-        btnExaminarImagen = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -84,10 +83,11 @@ public class GestionProductos extends javax.swing.JFrame {
         lblPreviewImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(null);
         setPreferredSize(new java.awt.Dimension(1000, 700));
 
         jPanel2.setBackground(new java.awt.Color(215, 227, 225));
-        jPanel2.setPreferredSize(new java.awt.Dimension(1000, 700));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         btnCancelar.setBackground(new java.awt.Color(239, 68, 68));
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -109,12 +109,6 @@ public class GestionProductos extends javax.swing.JFrame {
         jListImagenes.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(jListImagenes);
 
-        btnExaminarImagen.setBackground(new java.awt.Color(29, 78, 216));
-        btnExaminarImagen.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnExaminarImagen.setForeground(new java.awt.Color(255, 255, 255));
-        btnExaminarImagen.setText("ELEGIR IMAGEN DEL PRODUCTO");
-        btnExaminarImagen.addActionListener(this::btnExaminarImagenActionPerformed);
-
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
@@ -128,7 +122,7 @@ public class GestionProductos extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(530, Short.MAX_VALUE))
+                .addContainerGap(465, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,8 +243,8 @@ public class GestionProductos extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblPreviewImg, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblImgPro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblImgPro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPreviewImg, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -270,96 +264,75 @@ public class GestionProductos extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(55, 55, 55)
-                                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(39, 39, 39)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addGap(171, 171, 171)
-                                                .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
-                                                .addGap(98, 98, 98))
-                                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                    .addComponent(btnExaminarImagen, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
-                                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                                                .addGap(0, 0, Short.MAX_VALUE))))))))
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(74, 74, 74)
+                                .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(182, 182, 182)
+                        .addGap(168, 168, 168)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 15, Short.MAX_VALUE))
+                        .addGap(35, 35, 35)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(0, 32, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btnExaminarImagen)
-                                    .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(27, 27, 27)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                        .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 826, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 25, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantidadActionPerformed
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        limpiarFormulario();
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    private void txtDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDescripcionActionPerformed
 
     private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPrecioActionPerformed
-
-    private void txtCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCantidadActionPerformed
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
@@ -369,126 +342,127 @@ public class GestionProductos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIDProductActionPerformed
 
-    private void txtDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDescripcionActionPerformed
-
     private void txtImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImagenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtImagenActionPerformed
 
-    private void btnExaminarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExaminarImagenActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnExaminarImagenActionPerformed
-    
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpiarFormulario();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+
     public javax.swing.JTextField getTxtImagen() {
         return txtImagen;
     }
-    
+
     public static Logger getLogger() {
         return logger;
     }
-    
+
     public JComboBox<String> getComboCategoria() {
         return comboCategoria;
     }
-    
+
     public JButton getjButton11() {
         return btnGuardar;
     }
-    
+
     public JButton getjButton8() {
         return btnCancelar;
     }
-    
+
     public JLabel getjLabel1() {
         return jLabel1;
     }
-    
+
     public JLabel getjLabel2() {
         return jLabel2;
     }
-    
+
     public JLabel getjLabel3() {
         return jLabel3;
     }
-    
+
     public JLabel getjLabel5() {
         return jLabel5;
     }
-    
+
     public JLabel getjLabel6() {
         return lblImgPro;
     }
-    
+
     public javax.swing.JLabel getLblPreviewImg() {
         return lblPreviewImg;
     }
-    
+
     public JLabel getjLabel7() {
         return jLabel7;
     }
-    
+
     public JPanel getjPanel2() {
         return jPanel2;
     }
-    
+
     public JSeparator getjSeparator2() {
         return jSeparator2;
     }
-    
+
     public JLabel getLabelNombre() {
         return labelNombre;
     }
-    
+
     public JTextField getTxtCantidad() {
         return txtCantidad;
     }
-    
+
     public JTextField getTxtDescripcion() {
         return txtDescripcion;
     }
-    
+
     public JTextField getTxtIDProduct() {
         return txtIDProduct;
     }
-    
+
     public JTextField getTxtNombre() {
         return txtNombre;
     }
-    
+
     public JTextField getTxtPrecio() {
         return txtPrecio;
     }
-    
+
     public JButton getBtnCancelar() {
         return btnCancelar;
     }
-    
+
     public JButton getBtnGuardar() {
         return btnGuardar;
     }
-    
+
     public javax.swing.JList<String> getJListImagenes() {
         return jListImagenes;
     }
-    
+
     private ImageIcon escalarProporcional(ImageIcon icono, int maxW, int maxH) {
         int w = icono.getIconWidth();
         int h = icono.getIconHeight();
-        
+
         if (w <= 0 || h <= 0) {
             return icono;
         }
-        
+
         double scale = Math.min((double) maxW / w, (double) maxH / h);
         int newW = (int) Math.round(w * scale);
         int newH = (int) Math.round(h * scale);
-        
+
         Image img = icono.getImage().getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
         return new ImageIcon(img);
     }
-    
+
     public void limpiarFormulario() {
         txtIDProduct.setText("");
         txtNombre.setText("");
@@ -498,57 +472,57 @@ public class GestionProductos extends javax.swing.JFrame {
         txtImagen.setText("");
         comboCategoria.setSelectedIndex(0);
     }
-    
+
     private static class ItemImagen {
-        
+
         private String nombre;
         private ImageIcon icono;
-        
+
         public ItemImagen(String nombre, ImageIcon icono) {
             this.nombre = nombre;
             this.icono = icono;
         }
-        
+
         public String getNombre() {
             return nombre;
         }
-        
+
         public ImageIcon getIcono() {
             return icono;
         }
-        
+
         @Override
         public String toString() {
             return nombre;
         }
-        
+
     }
-    
+
     private void configurarListaImagenes() {
-        
+
         DefaultListModel<ItemImagen> modelo = new DefaultListModel<>();
         jListImagenes.setModel((javax.swing.ListModel) modelo);
-        
+
         jListImagenes.setCellRenderer(new javax.swing.DefaultListCellRenderer() {
             @Override
             public java.awt.Component getListCellRendererComponent(
                     javax.swing.JList<?> list, Object value, int index,
                     boolean isSelected, boolean cellHasFocus) {
-                
+
                 JLabel label = (JLabel) super.getListCellRendererComponent(
                         list, "", index, isSelected, cellHasFocus);
-                
+
                 label.setHorizontalAlignment(JLabel.CENTER);
                 label.setVerticalAlignment(JLabel.CENTER);
-                
+
                 if (value instanceof ItemImagen item) {
                     label.setIcon(escalarProporcional(item.getIcono(), 90, 90));
-                    
+
                     label.setText(""); // solo imagen
                 } else {
                     label.setIcon(null);
                 }
-                
+
                 return label;
             }
         });
@@ -565,7 +539,7 @@ public class GestionProductos extends javax.swing.JFrame {
                     Image img = item.getIcono().getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
                     getLblPreviewImg().setIcon(new ImageIcon(img));
                     lblImgPro.setVisible(true);
-                   
+
                     revalidate();
                     repaint();
                 }
@@ -582,26 +556,26 @@ public class GestionProductos extends javax.swing.JFrame {
      */
     private void cargarImagenesPNGEnModelo(DefaultListModel<ItemImagen> modelo) {
         modelo.clear();
-        
+
         try {
             URL url = getClass().getResource("/img");
             if (url == null) {
                 JOptionPane.showMessageDialog(this, "No existe la carpeta /img en resources");
                 return;
             }
-            
+
             java.io.File carpeta = new java.io.File(url.toURI());
             java.io.File[] archivos = carpeta.listFiles();
-            
+
             if (archivos == null) {
                 return;
             }
-            
+
             for (java.io.File archivo : archivos) {
                 String nombre = archivo.getName().toLowerCase();
-                
+
                 if (nombre.endsWith(".png") && nombre.startsWith("prod_")) {
-                    
+
                     URL imgUrl = getClass().getResource("/img/" + archivo.getName());
                     if (imgUrl != null) {
                         ImageIcon icono = new ImageIcon(imgUrl);
@@ -614,27 +588,11 @@ public class GestionProductos extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * Muestra una vista previa de la imagen seleccionada
-     */
-    private void mostrarVistaPrevia(String rutaImagen) {
-        try {
-            java.net.URL imgURL = getClass().getResource(rutaImagen);
-            if (imgURL != null) {
-                javax.swing.ImageIcon icono = new javax.swing.ImageIcon(imgURL);
-                java.awt.Image img = icono.getImage().getScaledInstance(135, 135, java.awt.Image.SCALE_SMOOTH);
-            }
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Error al cargar vista previa: " + e.getMessage());
-        }
-        
-    }
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnExaminarImagen;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> comboCategoria;
     private javax.swing.JLabel jLabel1;
