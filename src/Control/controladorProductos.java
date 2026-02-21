@@ -25,10 +25,12 @@ public class controladorProductos {
 
     }
 
-    
     private void guardarProducto(ActionEvent e) {
-        
+
         try {
+
+            dao.recargarDesdeArchivo();
+
             // Validar campos obligatorios
             if (vista.getTxtIDProduct().getText().trim().isEmpty()
                     || vista.getTxtNombre().getText().trim().isEmpty()
@@ -90,7 +92,7 @@ public class controladorProductos {
                 }
 
             } else {
-       
+
                 boolean guardado = dao.insertarProducto(nuevo);
 
                 if (guardado) {
@@ -116,8 +118,5 @@ public class controladorProductos {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    
-    
-}
 
+}

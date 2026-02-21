@@ -34,7 +34,8 @@ public class ControllerPrincipal {
         desactive(vista.getBtnMesas());
         desactive(vista.getBtnFacturación());
         desactive(vista.getBtnStart());
-
+        desactive(vista.getBtnReportes());
+        
         active.setOpaque(true);
         active.repaint();
 

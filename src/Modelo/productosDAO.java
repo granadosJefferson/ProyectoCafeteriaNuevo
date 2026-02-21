@@ -17,16 +17,23 @@ public class productosDAO {
 
     private productosDAO() {
         list = new ArrayList<>();
-        cargarProductos(); // Cargar productos del archivo al iniciar
+        cargarProductos();
+    }
+
+    public static productosDAO getInstancia() {
+        if (instancia == null) {
+            instancia = new productosDAO();
+        }
+        return instancia;
     }
 
     //Clase para cargas los productos que se encuentrar registrados en el txt
     public List<Product> listar() {
-        List<Product> list = new ArrayList<>();
-        
-        File f = new File("products.txt"); // <- poné tu ruta real si es distinta
+        List<Product> lista = new ArrayList<>();
+
+        File f = new File(ARCHIVO);
         if (!f.exists()) {
-            return list;
+            return lista;
         }
 
         try (BufferedReader br = new BufferedReader(new FileReader(f))) {
@@ -38,34 +45,24 @@ public class productosDAO {
                 }
 
                 String[] p = line.split(",");
-                if (p.length < 7) {
+                if (p.length < 6) {
                     continue;
                 }
-
                 String id = p[0].trim();
-                String categoria = p[1].trim();
-                String nombre = p[2].trim();
+                String nombre = p[1].trim();
+                String categoria = p[2].trim();
                 double precio = Double.parseDouble(p[3].trim());
                 int cantidad = Integer.parseInt(p[4].trim());
                 String estado = p[5].trim();
-                String imagen = p[6].trim();
+                String imagen = (p.length >= 7) ? p[6].trim() : "";
 
-                Product pr = new Product(id, nombre, categoria, precio, cantidad, estado, imagen);
-                list.add(pr);
+                lista.add(new Product(id, nombre, categoria, precio, cantidad, estado, imagen));
             }
         } catch (Exception e) {
-            
             System.out.println("Error leyendo productos: " + e.getMessage());
         }
 
-        return list;
-    }
-
-    public static productosDAO getInstancia() {
-        if (instancia == null) {
-            instancia = new productosDAO();
-        }
-        return instancia;
+        return lista;
     }
 
     /**
@@ -76,7 +73,7 @@ public class productosDAO {
     public boolean insertarProducto(Product producto) {
         // Verificar si ya existe un producto con el mismo ID
         for (Product p : list) {
-            if (p.getIdProduct().equals(producto.getIdProduct())) {
+            if (p.getIdProduct().trim().equals(producto.getIdProduct())) {
                 System.out.println("Producto con ID " + producto.getIdProduct() + " ya existe.");
                 return false;
             }
@@ -91,9 +88,9 @@ public class productosDAO {
     /**
      * Retorna una copia de la lista de productos
      */
-    public ArrayList<Product> obtenerTodosLosProductos() {
-        return list;
-    }
+   public ArrayList<Product> obtenerTodosLosProductos() {
+    return new ArrayList<>(list);
+}
 
     /**
      * Busca un producto por su ID
@@ -102,8 +99,9 @@ public class productosDAO {
      * @return El producto si existe, null si no
      */
     public Product buscarProductoPorId(String id) {
+        String buscar = id.trim();
         for (Product p : list) {
-            if (p.getIdProduct().equals(id)) {
+            if (p.getIdProduct().trim().equalsIgnoreCase(buscar)) {
                 return p;
             }
         }
@@ -118,7 +116,7 @@ public class productosDAO {
      */
     public boolean actualizarProducto(Product producto) {
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getIdProduct().equals(producto.getIdProduct())) {
+            if (list.get(i).getIdProduct().trim().equals(producto.getIdProduct())) {
                 list.set(i, producto);
                 guardarProductos();
                 System.out.println("Producto actualizado: " + producto.getNameProduct());
@@ -137,7 +135,7 @@ public class productosDAO {
      */
     public boolean eliminarProducto(String id) {
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getIdProduct().equals(id)) {
+            if (list.get(i).getIdProduct().trim().equals(id)) {
                 Product eliminado = list.remove(i);
                 guardarProductos();
                 System.out.println("Producto eliminado: " + eliminado.getNameProduct());
@@ -195,6 +193,11 @@ public class productosDAO {
         } catch (IOException | NumberFormatException e) {
             System.out.println("Error al cargar productos: " + e.getMessage());
         }
+    }
+
+    public void recargarDesdeArchivo() {
+        list.clear();
+        cargarProductos();
     }
 
 }

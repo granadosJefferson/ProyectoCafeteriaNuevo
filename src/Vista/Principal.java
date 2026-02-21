@@ -48,7 +48,10 @@ public class Principal extends javax.swing.JFrame {
 
         panelContenido.add(new GestionMesas(), "mesas");
         panelContenido.add(new GestionFacturacion(), "facturacion");
-//        panelContenido.add(new Reportes(), "reportes");
+        
+        Reports reports = new Reports();
+        panelContenido.add(reports, "reportes");
+        
         ClientsDAO clientsDao = new ClientsDAO();
         ClientsPanel clientsPanel = new ClientsPanel();
         GestionCliente gestioncliente = new GestionCliente();
