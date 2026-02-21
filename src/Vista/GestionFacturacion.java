@@ -1,13 +1,10 @@
 package Vista;
 
-import java.awt.Image;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 /**
@@ -22,9 +19,6 @@ public class GestionFacturacion extends javax.swing.JPanel {
     public GestionFacturacion() {
         initComponents();
         
-        System.out.println(getClass().getResource("/img/efectivo.png"));
-System.out.println(getClass().getResource("/img/tarjeta.png"));
-System.out.println(getClass().getResource("/img/sinpe.png"));
         iniciarReloj();
 
         
@@ -457,12 +451,13 @@ System.out.println(getClass().getResource("/img/sinpe.png"));
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Total:");
 
-        btnTarjeta.setBackground(new java.awt.Color(255, 255, 255));
+        btnTarjeta.setBackground(new java.awt.Color(84, 110, 122));
         btnTarjeta.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnTarjeta.setForeground(new java.awt.Color(0, 0, 0));
-        btnTarjeta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tarjeta.png"))); // NOI18N
         btnTarjeta.setText("Tarjeta");
+        btnTarjeta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnTarjeta.setPreferredSize(new java.awt.Dimension(72, 23));
+        btnTarjeta.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnTarjeta.addActionListener(this::btnTarjetaActionPerformed);
 
         btnRealizarPedido.setBackground(new java.awt.Color(36, 162, 89));
@@ -483,20 +478,22 @@ System.out.println(getClass().getResource("/img/sinpe.png"));
         btnLimpiarPedido.setPreferredSize(new java.awt.Dimension(72, 23));
         btnLimpiarPedido.addActionListener(this::btnLimpiarPedidoActionPerformed);
 
-        btnSinpeMovil.setBackground(new java.awt.Color(255, 255, 255));
+        btnSinpeMovil.setBackground(new java.awt.Color(33, 150, 243));
         btnSinpeMovil.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSinpeMovil.setForeground(new java.awt.Color(0, 0, 0));
-        btnSinpeMovil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sinpe.png"))); // NOI18N
         btnSinpeMovil.setText("SINPE Móvil");
+        btnSinpeMovil.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSinpeMovil.setPreferredSize(new java.awt.Dimension(72, 23));
+        btnSinpeMovil.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnSinpeMovil.addActionListener(this::btnSinpeMovilActionPerformed);
 
-        btnEfectivo.setBackground(new java.awt.Color(255, 255, 255));
+        btnEfectivo.setBackground(new java.awt.Color(76, 175, 80));
         btnEfectivo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEfectivo.setForeground(new java.awt.Color(0, 0, 0));
-        btnEfectivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Efectivo.png"))); // NOI18N
         btnEfectivo.setText("Efectivo");
+        btnEfectivo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnEfectivo.setPreferredSize(new java.awt.Dimension(72, 23));
+        btnEfectivo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnEfectivo.addActionListener(this::btnEfectivoActionPerformed);
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
