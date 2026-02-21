@@ -21,17 +21,18 @@ public class GestionFacturacion extends javax.swing.JPanel {
      */
     public GestionFacturacion() {
         initComponents();
+        
+        System.out.println(getClass().getResource("/img/efectivo.png"));
+System.out.println(getClass().getResource("/img/tarjeta.png"));
+System.out.println(getClass().getResource("/img/sinpe.png"));
         iniciarReloj();
 
-        setIconEscalado(btnEfectivo, "/img/Efectivo.png", 24, 24);
-        setIconEscalado(btnTarjeta, "/img/tarjeta.png", 24, 24);
-        setIconEscalado(btnSinpeMovil, "/img/Simpemovil.png", 24, 24);
-
-        configurarBotonIconoTexto(btnEfectivo);
-        configurarBotonIconoTexto(btnTarjeta);
-        configurarBotonIconoTexto(btnSinpeMovil);
-
+        
+       
     }
+    
+    
+  
 
     public void iniciarReloj() {
 
@@ -485,7 +486,7 @@ public class GestionFacturacion extends javax.swing.JPanel {
         btnSinpeMovil.setBackground(new java.awt.Color(255, 255, 255));
         btnSinpeMovil.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSinpeMovil.setForeground(new java.awt.Color(0, 0, 0));
-        btnSinpeMovil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Simpemovil.png"))); // NOI18N
+        btnSinpeMovil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sinpe.png"))); // NOI18N
         btnSinpeMovil.setText("SINPE Móvil");
         btnSinpeMovil.setPreferredSize(new java.awt.Dimension(72, 23));
         btnSinpeMovil.addActionListener(this::btnSinpeMovilActionPerformed);
@@ -532,11 +533,11 @@ public class GestionFacturacion extends javax.swing.JPanel {
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEfectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSinpeMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
@@ -626,17 +627,7 @@ public class GestionFacturacion extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEfectivoActionPerformed
 
-    private void setIconEscalado(javax.swing.JButton btn, String path, int w, int h) {
-        ImageIcon icon = new ImageIcon(getClass().getResource(path));
-        Image img = icon.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
-        btn.setIcon(new ImageIcon(img));
-    }
 
-    private void configurarBotonIconoTexto(javax.swing.JButton btn) {
-        btn.setHorizontalTextPosition(SwingConstants.CENTER);
-        btn.setVerticalTextPosition(SwingConstants.BOTTOM);
-        btn.setIconTextGap(6);
-    }
 
     public static void main(String[] args) {
 
