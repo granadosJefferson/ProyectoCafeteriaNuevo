@@ -1,15 +1,12 @@
 package Vista;
 
-import java.awt.Image;
-import java.net.URL;
+
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 /**
@@ -23,11 +20,19 @@ public class Products extends javax.swing.JPanel {
      */
     public Products() {
         initComponents();
-
+new Control.reloj().iniciar(getLblDay(), getLblTime());
         
         TableProductos.setRowHeight(80);
          configurarColumnaImagen();
       
+    }
+
+    public JLabel getLblDay() {
+        return lblDay;
+    }
+
+    public JLabel getLblTime() {
+        return lblTime;
     }
 
     
@@ -92,8 +97,8 @@ public class Products extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        lblDay4 = new javax.swing.JLabel();
-        lblTime4 = new javax.swing.JLabel();
+        lblDay = new javax.swing.JLabel();
+        lblTime = new javax.swing.JLabel();
         btnNuevoProducto = new javax.swing.JButton();
         btnModificarProducto = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -173,15 +178,17 @@ public class Products extends javax.swing.JPanel {
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Gestión de productos de la cafetería");
 
-        lblDay4.setBackground(new java.awt.Color(215, 227, 225));
-        lblDay4.setForeground(new java.awt.Color(0, 0, 0));
-        lblDay4.setText("dia");
-        lblDay4.setOpaque(true);
+        lblDay.setBackground(new java.awt.Color(215, 227, 225));
+        lblDay.setForeground(new java.awt.Color(0, 0, 0));
+        lblDay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDay.setText("dia");
+        lblDay.setOpaque(true);
 
-        lblTime4.setBackground(new java.awt.Color(215, 227, 225));
-        lblTime4.setForeground(new java.awt.Color(0, 0, 0));
-        lblTime4.setText("hora");
-        lblTime4.setOpaque(true);
+        lblTime.setBackground(new java.awt.Color(215, 227, 225));
+        lblTime.setForeground(new java.awt.Color(0, 0, 0));
+        lblTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTime.setText("hora");
+        lblTime.setOpaque(true);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -196,9 +203,9 @@ public class Products extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblDay4, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblDay, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(61, 61, 61)
-                        .addComponent(lblTime4, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -209,8 +216,8 @@ public class Products extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(lblDay4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTime4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDay, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
@@ -317,10 +324,10 @@ public class Products extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lblDay;
     private javax.swing.JLabel lblDay3;
-    private javax.swing.JLabel lblDay4;
+    private javax.swing.JLabel lblTime;
     private javax.swing.JLabel lblTime3;
-    private javax.swing.JLabel lblTime4;
     private javax.swing.JTextField txtProductoSeleccionado;
     // End of variables declaration//GEN-END:variables
 

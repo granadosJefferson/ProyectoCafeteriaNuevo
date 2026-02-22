@@ -6,6 +6,7 @@ package Vista;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JLabel;
 import javax.swing.Timer;
 
 /**
@@ -19,27 +20,18 @@ public class GestionMesas extends javax.swing.JPanel {
      */
     public GestionMesas() {
         initComponents();
-        iniciarReloj();
+        new Control.reloj().iniciar(getLblDay(), getLblTime());
     }
 
-    public void iniciarReloj() {
-
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy");
-        SimpleDateFormat formatoHora = new SimpleDateFormat("hh:mm:ss a");
-
-        Timer tm = new Timer(1000, e -> {
-            Date ahora = new Date();
-
-            String fecha = formatoFecha.format(ahora);
-            String hora = formatoHora.format(ahora).toLowerCase();
-
-            lblDay.setText(fecha);
-            lblTime.setText(hora);
-        });
-
-        tm.start();
+    public JLabel getLblDay() {
+        return lblDay;
     }
 
+    public JLabel getLblTime() {
+        return lblTime;
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

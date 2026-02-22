@@ -53,6 +53,39 @@ public class ClientsDAO {
         return ListCliente;
     }
 
+    public Clients buscarPorCedula(String cedulaBuscada) {
+  
+         try (BufferedReader br = new BufferedReader(new FileReader("Clients.txt"))) {
+            String linea;
+
+            while ((linea = br.readLine()) != null) {
+
+                if (linea.trim().isEmpty()) continue;
+
+                String[] p = linea.split(",");
+
+                if (p.length < 6) continue;
+
+                String cedula = p[0].trim();
+                if (!cedula.equals(cedulaBuscada)) continue;
+
+                String name   = p[1].trim();
+                String type   = p[2].trim();
+                int visits    = Integer.parseInt(p[3].trim());
+                String fecha  = p[4].trim();
+                double total  = Double.parseDouble(p[5].trim());
+
+              
+                return new Clients(type, visits, fecha, total, cedula, name);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error leyendo Clients.txt: " + e.getMessage());
+        }
+
+        return null;
+    }
+    
     public boolean cedulaExist(String cedula) {
         try {
             for (Clients c : ListCliente) {

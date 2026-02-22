@@ -1,13 +1,13 @@
-123,chesseCake,cheseecake,2300.0,5,Activo,prod_CheeseCakeFresa.png
-123456787554,Batido,lacteos,1500.0,14,Activo,prod_BatidoChocolate.png
-4342312,nuevo,cheseecake,2000.0,4,Activo,prod_CheeseCakeLimon.png
-11,a,Postres,1000.0,5,Activo,prod_DonaCaramelo.png
+123,fresa,Lacteos,1200.0,0,Inactivo,prod_YogurtFresa.png
+123456787554,Batido,Lacteos,1500.0,0,Activo,prod_BatidoChocolate.png
+11,dsd,Postres,111.0,0,Activo,prod_Brownie.png
 12345,dsdsd,Cafe,1111.0,0,Inactivo,prod_TazaCapuccino.png
-453,Capuccino,Cafe,1200.0,12,Activo,prod_TazaCapuccino.png
-dv,cc,lacteos,12.0,12,Activo,prod_TazaCafeFrio.png
-13,a,lacteos,4.0,6,Activo,prod_BatidoChocolate.png
-14,a,lacteos,4.0,6,Activo,prod_BatidoChocolate.png
-1666,a,lacteos,4.0,6,Activo,prod_BatidoChocolate.png
+453,Capuccino,Cafe,1200.0,5,Activo,prod_TazaCapuccino.png
+dv,cc,Lacteos,12.0,9,Activo,prod_CheeseCakeFresa.png
+13,a,Lacteos,4.0,6,Activo,prod_BatidoChocolate.png
+14,a,Lacteos,4.0,6,Activo,prod_BatidoChocolate.png
+1666,a,Lacteos,4.0,6,Activo,prod_BatidoChocolate.png
+1466,a,Lacteos,4.0,6,Activo,prod_BatidoChocolate.png
 ad,fe,Postres,100.0,11,Activo,prod_Brownie.png
-98889,dona,Postres,900.0,15,Activo,prod_DonaCaramelo.png
-001,Cafe Pelao,Cafe,800.0,20,Activo,prod_TazaCafeExpresso.png
+13444,Batido,Lacteos,1500.0,16,Activo,prod_BatidoChocolate.png
+1553,Batido,Lacteos,1500.0,14,Activo,prod_BatidoChocolate.png

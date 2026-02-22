@@ -79,6 +79,7 @@ public class ControllerLogin {
         if (exist) {
             visMsg.message(msg);
             visPrin.setVisible(true);
+            visLog.setVisible(false);
         } else {
             msg = "El usuario o la contraseña es incorrecta";
             visMsg.message(msg);

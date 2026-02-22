@@ -5,6 +5,7 @@
 package Vista;
 
 import Modelo.Product;
+import Modelo.Product;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -33,15 +34,15 @@ public class panelProduct extends javax.swing.JPanel {
     }
 
     public panelProduct(Product p) {
-        setPreferredSize(new Dimension(165, 165));
+        setPreferredSize(new Dimension(160, 150));
         setBackground(Color.WHITE);
         setBorder(javax.swing.BorderFactory.createLineBorder(new Color(210, 210, 210)));
         setLayout(new BorderLayout());
 
         // ===== TOP (imagen) =====
         JPanel top = new JPanel(new BorderLayout());
-        top.setBackground(new Color(215, 227, 225));
-        top.setPreferredSize(new Dimension(170, 80));
+        top.setBackground(new Color(210, 210, 210));
+        top.setPreferredSize(new Dimension(75, 75));
 
         JLabel lblImg = new JLabel("", JLabel.CENTER);
         lblImg.setIcon(cargarIcono("/img/" + p.getImage(), 70, 70));
@@ -51,7 +52,7 @@ public class panelProduct extends javax.swing.JPanel {
         JPanel bottom = new JPanel();
         bottom.setBackground(Color.WHITE);
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
-        bottom.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 10, 8, 10));
+        bottom.setBorder(javax.swing.BorderFactory.createEmptyBorder(6, 8, 6, 8));
         bottom.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
 
         JLabel lblName = new JLabel(p.getNameProduct());
@@ -90,11 +91,11 @@ public class panelProduct extends javax.swing.JPanel {
         fila.add(lblStock, BorderLayout.EAST);
 
         bottom.add(lblName);
-        bottom.add(Box.createVerticalStrut(2));
+        bottom.add(Box.createVerticalStrut(1));
         bottom.add(lblCat);
-        bottom.add(Box.createVerticalStrut(6));
+        bottom.add(Box.createVerticalStrut(5));
         bottom.add(sep);
-        bottom.add(Box.createVerticalStrut(6));
+        bottom.add(Box.createVerticalStrut(5));
         bottom.add(fila);
 
         add(top, BorderLayout.NORTH);

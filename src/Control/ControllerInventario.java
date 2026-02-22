@@ -7,9 +7,7 @@ package Control;
 import Modelo.Product;
 import Modelo.productosDAO;
 import Vista.GestionInventario;
-import Vista.GestionProductos;
 import Vista.panelProduct;
-import java.util.List;
 
 /**
  *
@@ -21,12 +19,13 @@ public class ControllerInventario {
     private productosDAO dao;
 
     public ControllerInventario(GestionInventario vista) {
+        
         this.vista = vista;
         this.dao = productosDAO.getInstancia();
         this.vista.getBtnAdd().addActionListener(e -> agregarProducto());
         this.vista.getCmbCategory().addActionListener(e -> filtrarPorCategoria());
-
-        recargarInventario();
+recargarInventario();
+        
     }
 private void agregarProducto() {
     Vista.GestionProductos gp = new Vista.GestionProductos();

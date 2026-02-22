@@ -6,8 +6,10 @@ package Vista;
 
 import Control.ControllerClients;
 import Control.ControllerInventario;
+import Control.ControllerOrder;
 import Control.controladorProductosPanel;
 import Modelo.ClientsDAO;
+import Modelo.productosDAO;
 import Vista.ClientsPanel;
 import Vista.GestionCliente;
 import Vista.GestionFacturacion;
@@ -34,31 +36,42 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
 
         this.setLocationRelativeTo(null);
-        panelContenido.add(new JPanel(), "vacio");
-        panelContenido.add(new orders(), "order");
 
-        Products p = new Products();
-        GestionInventario inv = new GestionInventario();
+    // ====== VISTAS (instancias) ======
+    JPanel vacio = new JPanel();
 
-        panelContenido.add(p, "products");
-        panelContenido.add(inv, "inventario");
+    orders ord = new orders();                 // <-- guardo instancia para controller
+    Products p = new Products();
+    GestionInventario inv = new GestionInventario();
 
-        ControllerInventario invCtrl = new ControllerInventario(inv);
-        new controladorProductosPanel(p, invCtrl);
+    GestionMesas mesas = new GestionMesas();
+    GestionFacturacion fact = new GestionFacturacion();
 
-        panelContenido.add(new GestionMesas(), "mesas");
-        panelContenido.add(new GestionFacturacion(), "facturacion");
-        
-        Reports reports = new Reports();
-        panelContenido.add(reports, "reportes");
-        
-        ClientsDAO clientsDao = new ClientsDAO();
-        ClientsPanel clientsPanel = new ClientsPanel();
-        GestionCliente gestioncliente = new GestionCliente();
+    ClientsPanel clientsPanel = new ClientsPanel();
+    GestionCliente gestionCliente = new GestionCliente();
 
-        ControllerClients controllerClients = new ControllerClients(clientsPanel, clientsDao, gestioncliente);
+    panelContenido.add(vacio, "vacio");
+    panelContenido.add(ord, "order");
+    panelContenido.add(p, "products");
+    panelContenido.add(inv, "inventario");
+    panelContenido.add(mesas, "mesas");
+    panelContenido.add(fact, "facturacion");
+    panelContenido.add(clientsPanel, "clients");
 
-        panelContenido.add(clientsPanel, "clients");
+
+    productosDAO prodDao = productosDAO.getInstancia();
+    ClientsDAO clientsDao = new ClientsDAO();
+
+    
+    ControllerInventario invCtrl = new ControllerInventario(inv);
+
+    new controladorProductosPanel(p, invCtrl);
+
+    // orders (buscar cliente, etc.)
+    new ControllerOrder(ord);
+
+    // clients
+    new ControllerClients(clientsPanel, clientsDao, gestionCliente);
 
     }
 

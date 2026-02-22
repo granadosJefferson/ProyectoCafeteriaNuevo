@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -23,7 +24,7 @@ public class GestionInventario extends javax.swing.JPanel {
      */
     public GestionInventario() {
         initComponents();
-        iniciarReloj();
+       new Control.reloj().iniciar(getLblDay(), getLblTime());
         jpanelProducts.setLayout(new java.awt.GridLayout(0, 4, 18, 18));
         JPanel wrapper = new JPanel(new BorderLayout());
         wrapper.setBackground(jpanelProducts.getBackground());
@@ -51,23 +52,14 @@ public class GestionInventario extends javax.swing.JPanel {
         return jpanelProducts;
     }
 
-    public void iniciarReloj() {
-
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy");
-        SimpleDateFormat formatoHora = new SimpleDateFormat("hh:mm:ss a");
-
-        Timer tm = new Timer(1000, e -> {
-            Date ahora = new Date();
-
-            String fecha = formatoFecha.format(ahora);
-            String hora = formatoHora.format(ahora).toLowerCase();
-
-            lblDay.setText(fecha);
-            lblTime.setText(hora);
-        });
-
-        tm.start();
+    public JLabel getLblDay() {
+        return lblDay;
     }
+
+    public JLabel getLblTime() {
+        return lblTime;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -147,7 +139,7 @@ public class GestionInventario extends javax.swing.JPanel {
                 .addContainerGap(56, Short.MAX_VALUE))
         );
 
-        cmbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos los productos", "lacteos", "Postres", "Cafe", "cheseecake" }));
+        cmbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos los productos", "Lacteos", "Postres", "Cafe", "Cheesecake" }));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
