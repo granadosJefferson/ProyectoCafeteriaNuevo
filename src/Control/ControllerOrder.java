@@ -9,31 +9,30 @@ import Modelo.productosDAO;
 import Vista.OrderItemCard;
 import Vista.ProductCard;
 import Vista.orders;
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
 public class ControllerOrder {
 
-    private final orders vista;
+    private orders vista;
 
-    
-    private final java.util.List<String>[] cedulasPorMesa = new java.util.ArrayList[5];
+    private java.util.List<String>[] cedulasPorMesa = new java.util.ArrayList[5];
 
-    private final ClientsDAO clientsDAO;
-    private final productosDAO dao;
-    private final List<ItemPedido> carrito = new ArrayList<>();
+    private ClientsDAO clientsDAO;
+    private productosDAO dao;
+    private List<ItemPedido> carrito = new ArrayList<>();
     private String categoriaActual = "Todos";
     private Clients clienteActual = null;
-    private final pedidosDAO pedidosDAO = new pedidosDAO();
+    private pedidosDAO pedidosDAO = new pedidosDAO();
     private String mesaActual = null;
+    private boolean bloqueoMesas = false;
+    private String mesaPermitida = null;
+    private java.awt.Color COLOR_MESA_NORMAL = new java.awt.Color(153, 153, 153); // gris
+    private java.awt.Color COLOR_MESA_SEL = new java.awt.Color(0, 140, 255);     // azul
+    private java.awt.Color COLOR_MESA_LLENA = new java.awt.Color(220, 60, 60);   // rojo
 
-    private final java.awt.Color COLOR_MESA_NORMAL = new java.awt.Color(153, 153, 153); // gris
-    private final java.awt.Color COLOR_MESA_SEL = new java.awt.Color(0, 140, 255);     // azul
-    private final java.awt.Color COLOR_MESA_LLENA = new java.awt.Color(220, 60, 60);   // rojo
-
-    private final java.util.List<JButton> botonesMesa = new java.util.ArrayList<>();
+    private java.util.List<JButton> botonesMesa = new java.util.ArrayList<>();
 
     public ControllerOrder(orders vista) {
         for (int i = 0; i < cedulasPorMesa.length; i++) {
@@ -58,33 +57,133 @@ public class ControllerOrder {
         vista.getBtnClean().addActionListener(e -> limpiarPedidoUI());
 
         vista.getTxtBuscarProducto().getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
-            public void insertUpdate(javax.swing.event.DocumentEvent e) { cargarProductos(); }
-            public void removeUpdate(javax.swing.event.DocumentEvent e) { cargarProductos(); }
-            public void changedUpdate(javax.swing.event.DocumentEvent e) { cargarProductos(); }
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                cargarProductos();
+            }
+
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                cargarProductos();
+            }
+
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                cargarProductos();
+            }
         });
 
         configurarMesas();
         configurarProductos();
         configurarPedidos();
 
-        vista.getBtnAll().addActionListener(e -> { categoriaActual = "Todos"; cargarProductos(); });
-        vista.getBtnCafe().addActionListener(e -> { categoriaActual = "Cafe"; cargarProductos(); });
-        vista.getBtnDrinks().addActionListener(e -> { categoriaActual = "Lacteos"; cargarProductos(); });
-        vista.getBtnPostres().addActionListener(e -> { categoriaActual = "Postres"; cargarProductos(); });
-        vista.getBtnCheeseCake().addActionListener(e -> { categoriaActual = "CheeseCake"; cargarProductos(); });
-
+        vista.getBtnAll().addActionListener(e -> {
+            categoriaActual = "Todos";
+            cargarProductos();
+        });
+        vista.getBtnCafe().addActionListener(e -> {
+            categoriaActual = "Cafe";
+            cargarProductos();
+        });
+        vista.getBtnDrinks().addActionListener(e -> {
+            categoriaActual = "Lacteos";
+            cargarProductos();
+        });
+        vista.getBtnPostres().addActionListener(e -> {
+            categoriaActual = "Postres";
+            cargarProductos();
+        });
+        vista.getBtnCheeseCake().addActionListener(e -> {
+            categoriaActual = "Comidas";
+            cargarProductos();
+        });
+        cargarCedulasDesdePedidosTxt();
+        refrescarColoresMesas();
         cargarProductos();
         recargarResumen();
-        ocultarCliente(); 
+        ocultarCliente();
     }
 
+    private void cargarCedulasDesdePedidosTxt() {
+        java.io.File f = new java.io.File("pedidos.txt");
+        if (!f.exists()) {
+            return;
+        }
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(f))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty()) {
+                    continue;
+                }
+
+                // Formato: ID,FECHA,HORA,MESA,CEDULA,ITEMS,SUBTOTAL,IVA,TOTAL
+                String[] p = line.split(",", 9);
+                if (p.length < 5) {
+                    continue;
+                }
+
+                String mesa = p[3].trim();
+                String ced = p[4].trim();
+
+                if (ced.isEmpty()) {
+                    continue;
+                }
+                if (esLlevar(mesa)) {
+                    continue;
+                }
+
+                int idx = idMesa(mesa);
+                if (idx < 0) {
+                    continue;
+                }
+
+                if (!cedulasPorMesa[idx].contains(ced)) {
+                    cedulasPorMesa[idx].add(ced);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error leyendo pedidos.txt: " + e.getMessage());
+        }
+    }
+
+    private String mesaDeCedula(String cedula) {
+        if (cedula == null) {
+            return null;
+        }
+        String c = cedula.trim();
+        if (c.isEmpty()) {
+            return null;
+        }
+
+        for (int i = 0; i < cedulasPorMesa.length; i++) {
+            if (cedulasPorMesa[i].contains(c)) {
+                return String.valueOf(i + 1);
+            }
+        }
+        return null;
+    }
+
+    private void desactivarBloqueoYVolverAGris() {
+        bloqueoMesas = false;
+        mesaPermitida = null;
+        mesaActual = null;
+
+        // todo gris (como pediste)
+        vista.getBtnTable1().setBackground(COLOR_MESA_NORMAL);
+        vista.getBtnTable2().setBackground(COLOR_MESA_NORMAL);
+        vista.getBtnTable3().setBackground(COLOR_MESA_NORMAL);
+        vista.getBtnTable4().setBackground(COLOR_MESA_NORMAL);
+        vista.getBtnTable5().setBackground(COLOR_MESA_NORMAL);
+        vista.getBtnLlevar().setBackground(COLOR_MESA_NORMAL);
+    }
 
     private boolean esLlevar(String mesa) {
         return mesa != null && mesa.trim().equalsIgnoreCase("LLEVAR");
     }
 
-    private int idxMesa(String mesa) {
-        if (mesa == null) return -1;
+    private int idMesa(String mesa) {
+        if (mesa == null) {
+            return -1;
+        }
         mesa = mesa.trim();
         try {
             int n = Integer.parseInt(mesa);
@@ -106,22 +205,34 @@ public class ControllerOrder {
     }
 
     private boolean mesaLlena(String mesa) {
-        if (esLlevar(mesa)) return false;
-        int idx = idxMesa(mesa);
-        if (idx < 0) return false;
+        if (esLlevar(mesa)) {
+            return false;
+        }
+        int idx = idMesa(mesa);
+        if (idx < 0) {
+            return false;
+        }
         return cedulasPorMesa[idx].size() >= 4;
     }
 
     private void marcarMesaLlena(String mesa) {
         JButton b = switch (mesa) {
-            case "1" -> vista.getBtnTable1();
-            case "2" -> vista.getBtnTable2();
-            case "3" -> vista.getBtnTable3();
-            case "4" -> vista.getBtnTable4();
-            case "5" -> vista.getBtnTable5();
-            default -> null;
+            case "1" ->
+                vista.getBtnTable1();
+            case "2" ->
+                vista.getBtnTable2();
+            case "3" ->
+                vista.getBtnTable3();
+            case "4" ->
+                vista.getBtnTable4();
+            case "5" ->
+                vista.getBtnTable5();
+            default ->
+                null;
         };
-        if (b != null) b.setBackground(COLOR_MESA_LLENA);
+        if (b != null) {
+            b.setBackground(COLOR_MESA_LLENA);
+        }
     }
 
     private void refrescarColoresMesas() {
@@ -138,11 +249,16 @@ public class ControllerOrder {
                 vista.getBtnLlevar().setBackground(COLOR_MESA_SEL);
             } else if (!mesaLlena(mesaActual)) {
                 switch (mesaActual.trim()) {
-                    case "1" -> vista.getBtnTable1().setBackground(COLOR_MESA_SEL);
-                    case "2" -> vista.getBtnTable2().setBackground(COLOR_MESA_SEL);
-                    case "3" -> vista.getBtnTable3().setBackground(COLOR_MESA_SEL);
-                    case "4" -> vista.getBtnTable4().setBackground(COLOR_MESA_SEL);
-                    case "5" -> vista.getBtnTable5().setBackground(COLOR_MESA_SEL);
+                    case "1" ->
+                        vista.getBtnTable1().setBackground(COLOR_MESA_SEL);
+                    case "2" ->
+                        vista.getBtnTable2().setBackground(COLOR_MESA_SEL);
+                    case "3" ->
+                        vista.getBtnTable3().setBackground(COLOR_MESA_SEL);
+                    case "4" ->
+                        vista.getBtnTable4().setBackground(COLOR_MESA_SEL);
+                    case "5" ->
+                        vista.getBtnTable5().setBackground(COLOR_MESA_SEL);
                 }
             }
         }
@@ -150,20 +266,33 @@ public class ControllerOrder {
 
     private void seleccionarMesa(JButton btn, String mesa) {
         mesa = (mesa == null) ? null : mesa.trim();
+        if (mesa == null) {
+            return;
+        }
 
-        if (mesa == null) return;
+        // ✅ bloqueo primero (antes de tocar mesaActual)
+        if (bloqueoMesas && mesaPermitida != null) {
+            // LLEVAR siempre permitido
+            if (!esLlevar(mesa) && !mesa.equals(mesaPermitida)) {
+                JOptionPane.showMessageDialog(vista,
+                        "No puede elegir esa mesa. El cliente se encuentra en la mesa " + mesaPermitida + ".");
+                return;
+            }
+        }
 
+        // mesa llena (no aplica para llevar)
         if (mesaLlena(mesa)) {
             marcarMesaLlena(mesa);
             JOptionPane.showMessageDialog(vista, "Mesa " + mesa + " está llena (máx 4 personas).");
             return;
         }
 
-        // ✅ Normalizamos llevar
         mesaActual = esLlevar(mesa) ? "LLEVAR" : mesa;
-
-        refrescarColoresMesas();
-        btn.setBackground(COLOR_MESA_SEL);
+        aplicarBloqueoColores();
+        // marcar la que se eligió (si fue llevar)
+        if (esLlevar(mesaActual)) {
+            vista.getBtnLlevar().setBackground(COLOR_MESA_SEL);
+        }
     }
 
     private void configurarMesas() {
@@ -175,7 +304,9 @@ public class ControllerOrder {
         botonesMesa.add(vista.getBtnTable5());
         botonesMesa.add(vista.getBtnLlevar());
 
-        for (JButton b : botonesMesa) estiloMesaNormal(b);
+        for (JButton b : botonesMesa) {
+            estiloMesaNormal(b);
+        }
 
         vista.getBtnTable1().addActionListener(e -> seleccionarMesa(vista.getBtnTable1(), "1"));
         vista.getBtnTable2().addActionListener(e -> seleccionarMesa(vista.getBtnTable2(), "2"));
@@ -183,13 +314,11 @@ public class ControllerOrder {
         vista.getBtnTable4().addActionListener(e -> seleccionarMesa(vista.getBtnTable4(), "4"));
         vista.getBtnTable5().addActionListener(e -> seleccionarMesa(vista.getBtnTable5(), "5"));
 
-        // ✅ aunque en diseño el texto sea "6", acá lo tratamos como LLEVAR
+        // aunque en diseño el texto sea "6", acá lo tratamos como LLEVAR
         vista.getBtnLlevar().addActionListener(e -> seleccionarMesa(vista.getBtnLlevar(), "LLEVAR"));
 
         refrescarColoresMesas();
     }
-
-    /* ---------------------- UI config ---------------------- */
 
     private void configurarProductos() {
         JPanel cont = vista.getPanelProductos();
@@ -203,7 +332,7 @@ public class ControllerOrder {
         sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         sp.getVerticalScrollBar().setUnitIncrement(16);
 
-        // ✅ con GridLayout solo una vez
+        // con GridLayout solo una vez
         cont.setLayout(new java.awt.GridLayout(0, 3, 14, 14));
     }
 
@@ -224,12 +353,11 @@ public class ControllerOrder {
         recargarResumen();
         mesaActual = null;
 
-        // ✅ no borramos el rojo de mesas llenas
+        // no borramos el rojo de mesas llenas
         refrescarColoresMesas();
     }
 
     /* ---------------------- productos ---------------------- */
-
     private void cargarProductos() {
         String txt = vista.getTxtBuscarProducto().getText().trim().toLowerCase();
 
@@ -313,8 +441,11 @@ public class ControllerOrder {
             ItemPedido it = carrito.get(i);
             if (it.getPro().getIdProduct().equals(id)) {
                 int n = it.getCant() - 1;
-                if (n <= 0) carrito.remove(i);
-                else it.setCant(n);
+                if (n <= 0) {
+                    carrito.remove(i);
+                } else {
+                    it.setCant(n);
+                }
 
                 recargarResumen();
                 return;
@@ -368,29 +499,120 @@ public class ControllerOrder {
     }
 
     /* ---------------------- cliente ---------------------- */
-
     private void buscarCliente() {
-        String cedula = vista.getTxtCed().getText().trim();
+        // reset por búsqueda
+        bloqueoMesas = false;
+        mesaPermitida = null;
 
-        if (cedula.isEmpty()) {
-            JOptionPane.showMessageDialog(vista, "Ingrese la cédula del cliente");
+        String ced = vista.getTxtCed().getText().trim();
+        if (ced.isEmpty()) {
+            JOptionPane.showMessageDialog(vista, "Ingrese la cédula.");
+            return;
+        }
+
+        clienteActual = clientsDAO.buscarPorCedula(ced);
+
+        if (clienteActual == null) {
+            JOptionPane.showMessageDialog(vista, "Cliente no encontrado.");
             ocultarCliente();
             return;
         }
 
-        Clients c = clientsDAO.buscarPorCedula(cedula);
-
-        if (c == null) {
-            JOptionPane.showMessageDialog(vista, "Cliente no encontrado");
-            ocultarCliente();
-            return;
-        }
-
-        clienteActual = c;
-        vista.getLblName().setText(c.getName());
-        vista.getLblType().setText(c.getType());
-        vista.getLblVisits().setText(String.valueOf(c.getVisits()));
         mostrarCliente();
+
+        String mesaAsignada = mesaDeCedula(clienteActual.getCedula());
+        if (mesaAsignada != null) {
+            bloqueoMesas = true;
+            mesaPermitida = mesaAsignada;
+            mesaActual = mesaAsignada;  // para que se pinte azul su mesa al buscar
+        } else {
+            // si el cliente no está sentado, no arrastres mesa anterior
+            mesaActual = null;
+        }
+
+        aplicarBloqueoColores();
+    }
+
+    private String getValorCliente(Clients c, String... posiblesMetodos) {
+        if (c == null) {
+            return "";
+        }
+        for (String m : posiblesMetodos) {
+            try {
+                java.lang.reflect.Method method = c.getClass().getMethod(m);
+                Object val = method.invoke(c);
+                if (val != null) {
+                    return String.valueOf(val);
+                }
+            } catch (Exception ignored) {
+            }
+        }
+        return "";
+    }
+
+    private void actualizarDatosClienteUI() {
+        if (clienteActual == null) {
+            return;
+        }
+
+        // Intenta diferentes nombres de métodos (por si tu modelo usa otro)
+        String nombre = getValorCliente(clienteActual, "getNombre", "getName", "getNameClient", "getNombreCliente");
+        String tipo = getValorCliente(clienteActual, "getTipo", "getType", "getTipoCliente", "getTypeClient");
+        String visitas = getValorCliente(clienteActual, "getVisitas", "getVisits", "getCantVisitas", "getCantidadVisitas");
+
+        vista.getLblName().setText(nombre.isEmpty() ? "-" : nombre);
+        vista.getLblType().setText(tipo.isEmpty() ? "-" : tipo);
+        vista.getLblVisits().setText(visitas.isEmpty() ? "-" : visitas);
+    }
+
+    private void aplicarBloqueoColores() {
+
+        // Sin bloqueo: colores normales (gris y rojas solo si están llenas)
+        if (!bloqueoMesas || mesaPermitida == null) {
+            refrescarColoresMesas();
+            return;
+        }
+
+        boolean llevarSeleccionado = (mesaActual != null && esLlevar(mesaActual));
+
+        // Caso 1: Cliente bloqueado pero seleccionó LLEVAR
+        if (llevarSeleccionado) {
+
+            // Todas rojas por defecto
+            vista.getBtnTable1().setBackground(COLOR_MESA_LLENA);
+            vista.getBtnTable2().setBackground(COLOR_MESA_LLENA);
+            vista.getBtnTable3().setBackground(COLOR_MESA_LLENA);
+            vista.getBtnTable4().setBackground(COLOR_MESA_LLENA);
+            vista.getBtnTable5().setBackground(COLOR_MESA_LLENA);
+
+            // Mesa donde está el cliente: gris
+            switch (mesaPermitida) {
+                case "1" ->
+                    vista.getBtnTable1().setBackground(COLOR_MESA_NORMAL);
+                case "2" ->
+                    vista.getBtnTable2().setBackground(COLOR_MESA_NORMAL);
+                case "3" ->
+                    vista.getBtnTable3().setBackground(COLOR_MESA_NORMAL);
+                case "4" ->
+                    vista.getBtnTable4().setBackground(COLOR_MESA_NORMAL);
+                case "5" ->
+                    vista.getBtnTable5().setBackground(COLOR_MESA_NORMAL);
+            }
+
+            // LLEVAR azul
+            vista.getBtnLlevar().setBackground(COLOR_MESA_SEL);
+            return;
+        }
+
+        // Caso 2: Cliente bloqueado (normal): su mesa azul, las demás rojas
+        vista.getBtnTable1().setBackground("1".equals(mesaPermitida) ? COLOR_MESA_SEL : COLOR_MESA_LLENA);
+        vista.getBtnTable2().setBackground("2".equals(mesaPermitida) ? COLOR_MESA_SEL : COLOR_MESA_LLENA);
+        vista.getBtnTable3().setBackground("3".equals(mesaPermitida) ? COLOR_MESA_SEL : COLOR_MESA_LLENA);
+        vista.getBtnTable4().setBackground("4".equals(mesaPermitida) ? COLOR_MESA_SEL : COLOR_MESA_LLENA);
+        vista.getBtnTable5().setBackground("5".equals(mesaPermitida) ? COLOR_MESA_SEL : COLOR_MESA_LLENA);
+
+        // LLEVAR gris cuando no está seleccionado
+        vista.getBtnLlevar().setBackground(COLOR_MESA_NORMAL);
     }
 
     private void mostrarCliente() {
@@ -401,28 +623,32 @@ public class ControllerOrder {
         vista.getLblNameTitle().setVisible(true);
         vista.getLblTypeTitle().setVisible(true);
         vista.getLblVisTitle().setVisible(true);
+
+        //ahora sí carga los datos
+        actualizarDatosClienteUI();
+
+        vista.revalidate();
+        vista.repaint();
     }
 
     private void ocultarCliente() {
-        vista.getLblNameTitle().setVisible(false);
-        vista.getLblTypeTitle().setVisible(false);
-        vista.getLblVisTitle().setVisible(false);
-
-        // ✅ faltaba ocultar y limpiar valores
-        vista.getLblName().setVisible(false);
-        vista.getLblType().setVisible(false);
-        vista.getLblVisits().setVisible(false);
 
         vista.getLblName().setText("");
         vista.getLblType().setText("");
         vista.getLblVisits().setText("");
 
         clienteActual = null;
+
+        //FORZAR RECÁLCULO DEL LAYOUT
+        vista.revalidate();
+        vista.repaint();
+
+        clienteActual = null;
     }
 
     /* ---------------------- pedido ---------------------- */
-
     private void realizarPedido() {
+
         if (clienteActual == null) {
             JOptionPane.showMessageDialog(vista, "Debe buscar un cliente primero");
             return;
@@ -452,7 +678,7 @@ public class ControllerOrder {
 
         // Validación de capacidad mesa
         if (!esLlevar(mesaActual)) {
-            int idx = idxMesa(mesaActual);
+            int idx = idMesa(mesaActual);
             if (idx < 0) {
                 JOptionPane.showMessageDialog(vista, "Mesa inválida.");
                 return;
@@ -470,8 +696,12 @@ public class ControllerOrder {
 
             if (!yaEsta) {
                 lista.add(ced);
-                if (lista.size() >= 4) marcarMesaLlena(mesaActual);
+                if (lista.size() >= 4) {
+                    marcarMesaLlena(mesaActual);
+                }
             }
+            bloqueoMesas = false;
+            mesaPermitida = null;
         }
 
         // Construir ITEMS para el txt: id|cant|precio|total ; ...
@@ -495,7 +725,9 @@ public class ControllerOrder {
                     .append(precioUnit).append("|")
                     .append(totalProd);
 
-            if (i < carrito.size() - 1) items.append(";");
+            if (i < carrito.size() - 1) {
+                items.append(";");
+            }
         }
 
         int iva = (int) Math.round(subtotal * 0.13);
@@ -516,9 +748,11 @@ public class ControllerOrder {
 
         carrito.clear();
         recargarResumen();
+        desactivarBloqueoYVolverAGris();
+        vista.getTxtCed().setText("");
+        ocultarCliente();
         mesaActual = null;
         refrescarColoresMesas();
-
         JOptionPane.showMessageDialog(vista, "Pedido realizado con éxito\nID Pedido: " + idPedido);
 
         int respuesta = JOptionPane.showConfirmDialog(vista,
@@ -532,16 +766,17 @@ public class ControllerOrder {
     }
 
     /* ---------------------- facturación ---------------------- */
-
     private void abrirFacturacion(int idPedido, Clients cliente, String mesa,
-                                 List<ItemPedido> items, int subtotal, int iva, int total) {
+            List<ItemPedido> items, int subtotal, int iva, int total) {
 
         java.awt.Container parent = vista.getParent();
         while (parent != null && !(parent instanceof Vista.Principal)) {
             parent = parent.getParent();
         }
 
-        if (!(parent instanceof Vista.Principal)) return;
+        if (!(parent instanceof Vista.Principal)) {
+            return;
+        }
 
         Vista.Principal principal = (Vista.Principal) parent;
 
@@ -559,16 +794,16 @@ public class ControllerOrder {
             }
         }
 
-        if (panelFact == null) return;
+        if (panelFact == null) {
+            return;
+        }
 
-       
         ControllerFacturacion controllerFact = ControllerFacturacion.getFor(panelFact);
         if (controllerFact == null) {
             // si por alguna razón la vista no lo creó, lo creamos acá
             controllerFact = new ControllerFacturacion(panelFact);
         }
 
-        
         controllerFact.cargarPedidoPorId(idPedido);
     }
 }

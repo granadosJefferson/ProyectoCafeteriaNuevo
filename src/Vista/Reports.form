@@ -119,9 +119,9 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel9" min="-2" pref="124" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="lblDay1" min="-2" pref="158" max="-2" attributes="0"/>
+                              <Component id="lblDay" min="-2" pref="158" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
-                              <Component id="lblTime1" min="-2" pref="109" max="-2" attributes="0"/>
+                              <Component id="lblTime" min="-2" pref="109" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -136,8 +136,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblDay1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="lblTime1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="lblDay" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="lblTime" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="32" max="32767" attributes="0"/>
                   </Group>
@@ -166,7 +166,7 @@
                 <Property name="text" type="java.lang.String" value="Estad&#xed;sticas y An&#xe1;lisis"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblTime1">
+            <Component class="javax.swing.JLabel" name="lblTime">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e1" green="e3" red="d7" type="rgb"/>
@@ -179,7 +179,7 @@
                 <Property name="opaque" type="boolean" value="true"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblDay1">
+            <Component class="javax.swing.JLabel" name="lblDay">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e1" green="e3" red="d7" type="rgb"/>
@@ -219,10 +219,29 @@
                               <Component id="jScrollPane2" min="-2" pref="792" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+<<<<<<< HEAD
                       <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
                       <Component id="jPanel9" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jSeparator1" max="32767" attributes="0"/>
+=======
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jScrollPane1" min="-2" pref="790" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane2" min="-2" pref="792" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="359" max="-2" attributes="0"/>
+                              <Component id="btnVerReportes" min="-2" pref="159" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+>>>>>>> 4706965 (Cambios)
                   </Group>
               </Group>
             </DimensionLayout>

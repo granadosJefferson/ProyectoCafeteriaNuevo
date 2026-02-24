@@ -60,7 +60,7 @@ public class orders extends javax.swing.JPanel {
     }
 
     public JButton getBtnCheeseCake() {
-        return jButton5;
+        return btnComidas;
     }
 
     public JButton getBtnAll() {
@@ -176,7 +176,7 @@ public class orders extends javax.swing.JPanel {
         jSeparator3 = new javax.swing.JSeparator();
         scrollProductos = new javax.swing.JScrollPane();
         panelProductos = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
+        btnComidas = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JLabel();
@@ -214,7 +214,7 @@ public class orders extends javax.swing.JPanel {
 
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Vista general del sistema");
+        jLabel8.setText("Vista general de pedido");
 
         lblTime.setBackground(new java.awt.Color(215, 227, 225));
         lblTime.setForeground(new java.awt.Color(0, 0, 0));
@@ -237,7 +237,7 @@ public class orders extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 293, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
                 .addComponent(lblDay, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(54, 54, 54)
                 .addComponent(lblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -442,21 +442,19 @@ public class orders extends javax.swing.JPanel {
 
         panelProductos.setBackground(new java.awt.Color(215, 227, 225));
         panelProductos.setMaximumSize(null);
-        panelProductos.setMinimumSize(null);
-        panelProductos.setPreferredSize(null);
-        panelProductos.setLayout(new java.awt.GridLayout());
+        panelProductos.setLayout(new java.awt.GridLayout(1, 0));
         scrollProductos.setViewportView(panelProductos);
 
-        jButton5.setBackground(new java.awt.Color(230, 204, 178));
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(0, 0, 0));
-        jButton5.setText("CheeseCake");
-        jButton5.setBorder(null);
-        jButton5.setBorderPainted(false);
-        jButton5.setContentAreaFilled(false);
-        jButton5.setFocusPainted(false);
-        jButton5.setPreferredSize(new java.awt.Dimension(70, 22));
-        jButton5.addActionListener(this::jButton5ActionPerformed);
+        btnComidas.setBackground(new java.awt.Color(230, 204, 178));
+        btnComidas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnComidas.setForeground(new java.awt.Color(0, 0, 0));
+        btnComidas.setText("Comidas");
+        btnComidas.setBorder(null);
+        btnComidas.setBorderPainted(false);
+        btnComidas.setContentAreaFilled(false);
+        btnComidas.setFocusPainted(false);
+        btnComidas.setPreferredSize(new java.awt.Dimension(70, 22));
+        btnComidas.addActionListener(this::btnComidasActionPerformed);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -480,7 +478,7 @@ public class orders extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnPostres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnComidas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
@@ -501,7 +499,7 @@ public class orders extends javax.swing.JPanel {
                     .addComponent(btnCafe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDrinks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPostres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnComidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(4, 4, 4)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -542,8 +540,6 @@ public class orders extends javax.swing.JPanel {
 
         panelPedidos.setBackground(new java.awt.Color(215, 227, 225));
         panelPedidos.setMaximumSize(null);
-        panelPedidos.setMinimumSize(null);
-        panelPedidos.setPreferredSize(null);
 
         javax.swing.GroupLayout panelPedidosLayout = new javax.swing.GroupLayout(panelPedidos);
         panelPedidos.setLayout(panelPedidosLayout);
@@ -688,10 +684,6 @@ public class orders extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -715,7 +707,11 @@ public class orders extends javax.swing.JPanel {
                         .addComponent(btnLlevar, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -770,9 +766,9 @@ public class orders extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCedActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnComidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComidasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnComidasActionPerformed
 
     public JLabel getLblNameTitle() {
         return lblNameTitle;
@@ -806,11 +802,14 @@ public class orders extends javax.swing.JPanel {
         return txtCed;
     }
 
+    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAll;
     private javax.swing.JButton btnCafe;
     private javax.swing.JButton btnClean;
+    private javax.swing.JButton btnComidas;
     private javax.swing.JButton btnDrinks;
     private javax.swing.JButton btnLlevar;
     private javax.swing.JButton btnPedir;
@@ -821,7 +820,6 @@ public class orders extends javax.swing.JPanel {
     private javax.swing.JButton btnTable3;
     private javax.swing.JButton btnTable4;
     private javax.swing.JButton btnTable5;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
