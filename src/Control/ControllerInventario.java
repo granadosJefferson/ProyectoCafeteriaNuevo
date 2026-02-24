@@ -8,6 +8,7 @@ import Modelo.Product;
 import Modelo.productosDAO;
 import Vista.GestionInventario;
 import Vista.panelProduct;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -19,34 +20,47 @@ public class ControllerInventario {
     private productosDAO dao;
 
     public ControllerInventario(GestionInventario vista) {
-        
+
         this.vista = vista;
         this.dao = productosDAO.getInstancia();
-        this.vista.getBtnAdd().addActionListener(e -> agregarProducto());
-        this.vista.getCmbCategory().addActionListener(e -> filtrarPorCategoria());
-recargarInventario();
         
-    }
-private void agregarProducto() {
-    Vista.GestionProductos gp = new Vista.GestionProductos();
-
-      new Control.controladorProductos(gp);
-
-    gp.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-     gp.addWindowListener(new java.awt.event.WindowAdapter() {
-        @Override
-        public void windowClosed(java.awt.event.WindowEvent e) {
+         this.dao.addStockChangeCallback(() -> {
+        SwingUtilities.invokeLater(() -> {
+            System.out.println("Stock actualizado - Recargando inventario");
             filtrarPorCategoria();
-        }
-        @Override
-        public void windowClosing(java.awt.event.WindowEvent e) {
-            filtrarPorCategoria();
-        }
+        });
     });
 
-    gp.setVisible(true);
-}
+        this.vista.getBtnAdd().addActionListener(e -> agregarProducto());
+        this.vista.getCmbCategory().addActionListener(e -> filtrarPorCategoria());
+
+       
+
+        recargarInventario();
+
+    }
+
+    private void agregarProducto() {
+        Vista.GestionProductos gp = new Vista.GestionProductos();
+
+        new Control.controladorProductos(gp);
+
+        gp.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        gp.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                filtrarPorCategoria();
+            }
+
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                filtrarPorCategoria();
+            }
+        });
+
+        gp.setVisible(true);
+    }
 
     private void filtrarPorCategoria() {
         String cat = vista.getCmbCategory().getSelectedItem().toString();

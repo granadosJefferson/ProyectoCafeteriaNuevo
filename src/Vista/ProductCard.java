@@ -3,12 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package Vista;
+
 import Modelo.Product;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import javax.swing.*;
+
 /**
  *
  * @author Personal
@@ -18,9 +20,13 @@ public class ProductCard extends javax.swing.JPanel {
     /**
      * Creates new form ProductCard
      */
+    private JPanel top;
+    private JLabel lblPrecio;
+
     public ProductCard() {
         initComponents();
     }
+
     public ProductCard(Product p, Runnable onClick) {
         setPreferredSize(new Dimension(120, 150));
         setBackground(Color.WHITE);
@@ -28,16 +34,15 @@ public class ProductCard extends javax.swing.JPanel {
         setLayout(new BorderLayout());
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        // TOP: imagen
-        JPanel top = new JPanel(new BorderLayout());
-        top.setBackground(new Color(210,210,210));
+        top = new JPanel(new BorderLayout());
+        top.setBackground(new Color(210, 210, 210));
         top.setPreferredSize(new Dimension(170, 90));
+        top.setOpaque(true);
 
         JLabel lblImg = new JLabel("", JLabel.CENTER);
         lblImg.setIcon(cargarIcono("/img/" + p.getImage(), 70, 70));
         top.add(lblImg, BorderLayout.CENTER);
 
-        // BOTTOM: nombre + precio
         JPanel bottom = new JPanel();
         bottom.setBackground(Color.WHITE);
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
@@ -47,9 +52,8 @@ public class ProductCard extends javax.swing.JPanel {
         lblNombre.setFont(new Font("Segoe UI", Font.BOLD, 12));
         lblNombre.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel lblPrecio = new JLabel("₡" + (int)p.getPrice());
+        lblPrecio = new JLabel("₡" + (int) p.getPrice());
         lblPrecio.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        lblPrecio.setForeground(new Color(0, 140, 0));
         lblPrecio.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         bottom.add(lblNombre);
@@ -59,9 +63,15 @@ public class ProductCard extends javax.swing.JPanel {
         add(top, BorderLayout.NORTH);
         add(bottom, BorderLayout.CENTER);
 
-        // click (se lo ponemos a todo)
+        // pintar según stock
+        setStockDisponible(p.getCant() > 0);
+
+        // click
         MouseAdapter click = new MouseAdapter() {
-            @Override public void mouseClicked(MouseEvent e) { onClick.run(); }
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                onClick.run();
+            }
         };
         addMouseListener(click);
         top.addMouseListener(click);
@@ -73,9 +83,21 @@ public class ProductCard extends javax.swing.JPanel {
 
     private ImageIcon cargarIcono(String path, int w, int h) {
         URL url = getClass().getResource(path);
-        if (url == null) return null;
+        if (url == null) {
+            return null;
+        }
         Image img = new ImageIcon(url).getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
         return new ImageIcon(img);
+    }
+
+    public void setStockDisponible(boolean disponible) {
+        if (disponible) {
+            top.setBackground(new Color(80, 200, 120));
+            lblPrecio.setForeground(new Color(0, 140, 0));
+        } else {
+            top.setBackground(new Color(220, 60, 60));
+            lblPrecio.setForeground(new Color(220, 60, 60));
+        }
     }
 
     /**

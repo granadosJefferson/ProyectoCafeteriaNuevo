@@ -28,6 +28,13 @@ public class controladorProductosPanel {
         this.vista = vista;
         this.dao = productosDAO.getInstancia();
         this.invCtrl = invCtrl;
+        
+          this.dao.addStockChangeCallback(() -> {
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                System.out.println("Stock actualizado - Recargando tabla de productos");
+                recargarSinFiltro();
+            });
+        });
 
         this.vista.getBtnNuevoProducto().addActionListener(this::nuevoProducto);
         this.vista.getBtnModificarProducto().addActionListener(this::modificarProducto);

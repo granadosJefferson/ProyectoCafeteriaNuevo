@@ -71,7 +71,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="btnFacturación" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnFacturacion" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnMesas" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnPedidos" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnInventario" alignment="0" max="32767" attributes="0"/>
@@ -123,7 +123,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnMesas" min="-2" pref="43" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnFacturación" min="-2" pref="43" max="-2" attributes="0"/>
+                      <Component id="btnFacturacion" min="-2" pref="43" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnReportes" min="-2" pref="43" max="-2" attributes="0"/>
                       <EmptySpace pref="174" max="32767" attributes="0"/>
@@ -362,7 +362,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPedidosActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnFacturaci&#xf3;n">
+            <Component class="javax.swing.JButton" name="btnFacturacion">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="f3" green="96" red="21" type="rgb"/>
@@ -388,7 +388,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFacturaci&#xf3;nActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFacturacionActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel7">

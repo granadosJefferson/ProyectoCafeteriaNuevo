@@ -389,12 +389,17 @@
             <Component class="javax.swing.JComboBox" name="comboCategoria">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="5">
+                  <StringArray count="10">
                     <StringItem index="0" value="Lacteos"/>
                     <StringItem index="1" value="Postres"/>
                     <StringItem index="2" value="Cafe"/>
-                    <StringItem index="3" value="Cheseecake"/>
-                    <StringItem index="4" value=" "/>
+                    <StringItem index="3" value="Bebidas"/>
+                    <StringItem index="4" value="Bebidas_Naturales"/>
+                    <StringItem index="5" value="PlatoFuerte"/>
+                    <StringItem index="6" value="Desayunos"/>
+                    <StringItem index="7" value="Comida_Rapida"/>
+                    <StringItem index="8" value="Reposteria"/>
+                    <StringItem index="9" value="Sopas"/>
                   </StringArray>
                 </Property>
               </Properties>

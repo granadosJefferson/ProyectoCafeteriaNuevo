@@ -76,14 +76,14 @@
                       <Component id="btnNuevoProducto" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="344" max="-2" attributes="0"/>
                       <Component id="btnModificarProducto" min="-2" pref="127" max="-2" attributes="0"/>
-                      <EmptySpace pref="34" max="32767" attributes="0"/>
+                      <EmptySpace pref="38" max="32767" attributes="0"/>
                       <Component id="btnEliminarProducto" min="-2" pref="128" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jPanel10" alignment="0" pref="766" max="32767" attributes="0"/>
                   <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                   <Component id="jPanel1" pref="766" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="17" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

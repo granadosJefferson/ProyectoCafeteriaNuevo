@@ -1,19 +1,16 @@
 package Modelo;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class productosDAO {
 
     private static productosDAO instancia;
-    private ArrayList<Product> list;
+    private final ArrayList<Product> list;
     private static final String ARCHIVO = "products.txt";
+
+    private final List<Runnable> stockChangeCallbacks = new ArrayList<>();
 
     private productosDAO() {
         list = new ArrayList<>();
@@ -21,33 +18,41 @@ public class productosDAO {
     }
 
     public static productosDAO getInstancia() {
-        if (instancia == null) {
-            instancia = new productosDAO();
-        }
+        if (instancia == null) instancia = new productosDAO();
         return instancia;
     }
 
-    //Clase para cargas los productos que se encuentrar registrados en el txt
+    public void addStockChangeCallback(Runnable callback) {
+        if (callback != null && !stockChangeCallbacks.contains(callback)) {
+            stockChangeCallbacks.add(callback);
+        }
+    }
+
+    public void removeStockChangeCallback(Runnable callback) {
+        stockChangeCallbacks.remove(callback);
+    }
+
+    private void notificarStockCambiado() {
+        for (Runnable callback : stockChangeCallbacks) {
+            if (callback != null) callback.run();
+        }
+    }
+
+    // Lee productos desde archivo (lista nueva)
     public List<Product> listar() {
         List<Product> lista = new ArrayList<>();
-
         File f = new File(ARCHIVO);
-        if (!f.exists()) {
-            return lista;
-        }
+        if (!f.exists()) return lista;
 
         try (BufferedReader br = new BufferedReader(new FileReader(f))) {
             String line;
             while ((line = br.readLine()) != null) {
                 line = line.trim();
-                if (line.isEmpty()) {
-                    continue;
-                }
+                if (line.isEmpty()) continue;
 
                 String[] p = line.split(",");
-                if (p.length < 6) {
-                    continue;
-                }
+                if (p.length < 6) continue;
+
                 String id = p[0].trim();
                 String nombre = p[1].trim();
                 String categoria = p[2].trim();
@@ -65,113 +70,101 @@ public class productosDAO {
         return lista;
     }
 
-    /**
-     * Metodo para agregar un producto al arrayList y al txt, se hace una
-     * verificacion para que no se repitan los ID, si el producto está duplicado
-     * se retorna un false de lo contrario, se agrega un producto al arrayList
-     */
     public boolean insertarProducto(Product producto) {
-        // Verificar si ya existe un producto con el mismo ID
+        if (producto == null || producto.getIdProduct() == null) return false;
+
+        String nuevoId = producto.getIdProduct().trim();
+
         for (Product p : list) {
-            if (p.getIdProduct().trim().equals(producto.getIdProduct())) {
-                System.out.println("Producto con ID " + producto.getIdProduct() + " ya existe.");
+            if (p.getIdProduct() != null && p.getIdProduct().trim().equalsIgnoreCase(nuevoId)) {
                 return false;
             }
         }
 
         list.add(producto);
         guardarProductos();
-        System.out.println("Producto agregado: " + producto.getNameProduct());
+        notificarStockCambiado();
         return true;
     }
 
-    /**
-     * Retorna una copia de la lista de productos
-     */
-   public ArrayList<Product> obtenerTodosLosProductos() {
-    return new ArrayList<>(list);
-}
+    public ArrayList<Product> obtenerTodosLosProductos() {
+        return new ArrayList<>(list);
+    }
 
-    /**
-     * Busca un producto por su ID
-     *
-     * @param id ID del producto a buscar
-     * @return El producto si existe, null si no
-     */
     public Product buscarProductoPorId(String id) {
+        if (id == null) return null;
         String buscar = id.trim();
+
         for (Product p : list) {
-            if (p.getIdProduct().trim().equalsIgnoreCase(buscar)) {
+            if (p.getIdProduct() != null && p.getIdProduct().trim().equalsIgnoreCase(buscar)) {
                 return p;
             }
         }
         return null;
     }
 
-    /**
-     * Actualiza un producto existente
-     *
-     * @param producto Producto con los nuevos datos
-     * @return true si se actualizó, false si no existía
-     */
     public boolean actualizarProducto(Product producto) {
+        if (producto == null || producto.getIdProduct() == null) return false;
+
+        String id = producto.getIdProduct().trim();
+
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getIdProduct().trim().equals(producto.getIdProduct())) {
+            Product actual = list.get(i);
+            if (actual.getIdProduct() != null && actual.getIdProduct().trim().equalsIgnoreCase(id)) {
                 list.set(i, producto);
                 guardarProductos();
                 System.out.println("Producto actualizado: " + producto.getNameProduct());
+                notificarStockCambiado();
                 return true;
             }
         }
-        System.out.println("Producto con ID " + producto.getIdProduct() + " no encontrado.");
+
+        System.out.println("Producto con ID " + id + " no encontrado.");
         return false;
     }
 
-    /**
-     * Elimina un producto por su ID
-     *
-     * @param id ID del producto a eliminar
-     * @return true si se eliminó, false si no existía
-     */
     public boolean eliminarProducto(String id) {
+        if (id == null) return false;
+        String target = id.trim();
+
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getIdProduct().trim().equals(id)) {
+            Product p = list.get(i);
+            if (p.getIdProduct() != null && p.getIdProduct().trim().equalsIgnoreCase(target)) {
                 Product eliminado = list.remove(i);
                 guardarProductos();
                 System.out.println("Producto eliminado: " + eliminado.getNameProduct());
+                notificarStockCambiado();
                 return true;
             }
         }
 
         return false;
-
     }
 
     private void guardarProductos() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO))) {
             for (Product p : list) {
-                // Formato: id,nombre,categoria,precio,cantidad,estado, imagen
-                String linea = p.getIdProduct() + ","
-                        + p.getNameProduct() + ","
-                        + p.getCategory() + ","
+                String linea = (p.getIdProduct() == null ? "" : p.getIdProduct()) + ","
+                        + (p.getNameProduct() == null ? "" : p.getNameProduct()) + ","
+                        + (p.getCategory() == null ? "" : p.getCategory()) + ","
                         + p.getPrice() + ","
                         + p.getCant() + ","
-                        + p.getStatus() + ","
+                        + (p.getStatus() == null ? "" : p.getStatus()) + ","
                         + (p.getImage() == null ? "" : p.getImage());
+
                 bw.write(linea);
                 bw.newLine();
             }
             System.out.println("Archivo guardado correctamente.");
         } catch (IOException e) {
-            System.out.println("Error al guardar el archivo.");
+            System.out.println("Error al guardar el archivo: " + e.getMessage());
         }
     }
 
     private void cargarProductos() {
         File archivo = new File(ARCHIVO);
-        if (!archivo.exists()) {
-            return;
-        }
+        if (!archivo.exists()) return;
+
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
             while ((linea = br.readLine()) != null) {
@@ -183,11 +176,9 @@ public class productosDAO {
                     double precio = Double.parseDouble(partes[3].trim());
                     int cantidad = Integer.parseInt(partes[4].trim());
                     String estado = partes[5].trim();
-
                     String imagen = (partes.length >= 7) ? partes[6].trim() : "";
 
                     list.add(new Product(id, nombre, categoria, precio, cantidad, estado, imagen));
-
                 }
             }
         } catch (IOException | NumberFormatException e) {
@@ -198,6 +189,6 @@ public class productosDAO {
     public void recargarDesdeArchivo() {
         list.clear();
         cargarProductos();
+        notificarStockCambiado();
     }
-
 }

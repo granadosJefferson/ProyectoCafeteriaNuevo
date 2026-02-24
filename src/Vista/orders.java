@@ -441,20 +441,10 @@ public class orders extends javax.swing.JPanel {
         jSeparator3.setForeground(new java.awt.Color(215, 227, 225));
 
         panelProductos.setBackground(new java.awt.Color(215, 227, 225));
-        panelProductos.setMaximumSize(new java.awt.Dimension(460, 278));
-        panelProductos.setMinimumSize(new java.awt.Dimension(460, 278));
-
-        javax.swing.GroupLayout panelProductosLayout = new javax.swing.GroupLayout(panelProductos);
-        panelProductos.setLayout(panelProductosLayout);
-        panelProductosLayout.setHorizontalGroup(
-            panelProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 460, Short.MAX_VALUE)
-        );
-        panelProductosLayout.setVerticalGroup(
-            panelProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 278, Short.MAX_VALUE)
-        );
-
+        panelProductos.setMaximumSize(null);
+        panelProductos.setMinimumSize(null);
+        panelProductos.setPreferredSize(null);
+        panelProductos.setLayout(new java.awt.GridLayout());
         scrollProductos.setViewportView(panelProductos);
 
         jButton5.setBackground(new java.awt.Color(230, 204, 178));
@@ -495,7 +485,7 @@ public class orders extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollProductos)
+                .addComponent(scrollProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -551,8 +541,9 @@ public class orders extends javax.swing.JPanel {
         scrollPedidos.setBackground(new java.awt.Color(215, 227, 225));
 
         panelPedidos.setBackground(new java.awt.Color(215, 227, 225));
-        panelPedidos.setMaximumSize(new java.awt.Dimension(231, 362));
-        panelPedidos.setMinimumSize(new java.awt.Dimension(231, 362));
+        panelPedidos.setMaximumSize(null);
+        panelPedidos.setMinimumSize(null);
+        panelPedidos.setPreferredSize(null);
 
         javax.swing.GroupLayout panelPedidosLayout = new javax.swing.GroupLayout(panelPedidos);
         panelPedidos.setLayout(panelPedidosLayout);

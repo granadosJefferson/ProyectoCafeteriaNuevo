@@ -28,50 +28,40 @@ public class Principal extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Principal.class.getName());
 
-    /**
-     * Creates new form Principal
-     */
     public Principal() {
-
         initComponents();
-
         this.setLocationRelativeTo(null);
 
-    // ====== VISTAS (instancias) ======
-    JPanel vacio = new JPanel();
+        JPanel vacio = new JPanel();
 
-    orders ord = new orders();                 // <-- guardo instancia para controller
-    Products p = new Products();
-    GestionInventario inv = new GestionInventario();
+        orders ord = new orders();
+        Products p = new Products();
+        GestionInventario inv = new GestionInventario();
+        GestionMesas mesas = new GestionMesas();
+        GestionFacturacion fact = new GestionFacturacion();
+        ClientsPanel clientsPanel = new ClientsPanel();
+        GestionCliente gestionCliente = new GestionCliente();
 
-    GestionMesas mesas = new GestionMesas();
-    GestionFacturacion fact = new GestionFacturacion();
+        panelContenido.add(vacio, "vacio");
+        panelContenido.add(ord, "order");
+        panelContenido.add(p, "products");
+        panelContenido.add(inv, "inventario");
+        panelContenido.add(mesas, "mesas");
+        panelContenido.add(fact, "facturacion");
+        panelContenido.add(clientsPanel, "clients");
 
-    ClientsPanel clientsPanel = new ClientsPanel();
-    GestionCliente gestionCliente = new GestionCliente();
+        productosDAO prodDao = productosDAO.getInstancia();
+        ClientsDAO clientsDao = new ClientsDAO();
 
-    panelContenido.add(vacio, "vacio");
-    panelContenido.add(ord, "order");
-    panelContenido.add(p, "products");
-    panelContenido.add(inv, "inventario");
-    panelContenido.add(mesas, "mesas");
-    panelContenido.add(fact, "facturacion");
-    panelContenido.add(clientsPanel, "clients");
+        ControllerInventario invCtrl = new ControllerInventario(inv);
 
+        new controladorProductosPanel(p, invCtrl);
 
-    productosDAO prodDao = productosDAO.getInstancia();
-    ClientsDAO clientsDao = new ClientsDAO();
+        // orders (buscar cliente, etc.)
+        new ControllerOrder(ord);
 
-    
-    ControllerInventario invCtrl = new ControllerInventario(inv);
-
-    new controladorProductosPanel(p, invCtrl);
-
-    // orders (buscar cliente, etc.)
-    new ControllerOrder(ord);
-
-    // clients
-    new ControllerClients(clientsPanel, clientsDao, gestionCliente);
+        // clients
+        new ControllerClients(clientsPanel, clientsDao, gestionCliente);
 
     }
 
@@ -96,7 +86,7 @@ public class Principal extends javax.swing.JFrame {
         btnMesas = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
         btnPedidos = new javax.swing.JButton();
-        btnFacturación = new javax.swing.JButton();
+        btnFacturacion = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         panelContenido = new javax.swing.JPanel();
 
@@ -206,17 +196,17 @@ public class Principal extends javax.swing.JFrame {
         btnPedidos.setPreferredSize(new java.awt.Dimension(70, 22));
         btnPedidos.addActionListener(this::btnPedidosActionPerformed);
 
-        btnFacturación.setBackground(new java.awt.Color(33, 150, 243));
-        btnFacturación.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        btnFacturación.setForeground(new java.awt.Color(255, 255, 255));
-        btnFacturación.setText("Facturación");
-        btnFacturación.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnFacturación.setBorderPainted(false);
-        btnFacturación.setContentAreaFilled(false);
-        btnFacturación.setDefaultCapable(false);
-        btnFacturación.setFocusPainted(false);
-        btnFacturación.setPreferredSize(new java.awt.Dimension(70, 22));
-        btnFacturación.addActionListener(this::btnFacturaciónActionPerformed);
+        btnFacturacion.setBackground(new java.awt.Color(33, 150, 243));
+        btnFacturacion.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        btnFacturacion.setForeground(new java.awt.Color(255, 255, 255));
+        btnFacturacion.setText("Facturación");
+        btnFacturacion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnFacturacion.setBorderPainted(false);
+        btnFacturacion.setContentAreaFilled(false);
+        btnFacturacion.setDefaultCapable(false);
+        btnFacturacion.setFocusPainted(false);
+        btnFacturacion.setPreferredSize(new java.awt.Dimension(70, 22));
+        btnFacturacion.addActionListener(this::btnFacturacionActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -224,7 +214,7 @@ public class Principal extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnFacturación, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnFacturacion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnMesas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnPedidos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnInventario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -268,7 +258,7 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnFacturación, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(174, Short.MAX_VALUE))
@@ -305,8 +295,8 @@ public class Principal extends javax.swing.JFrame {
         return btnClients;
     }
 
-    public JButton getBtnFacturación() {
-        return btnFacturación;
+    public JButton getBtnFacturacion() {
+        return btnFacturacion;
     }
 
     public JButton getBtnInventario() {
@@ -364,44 +354,19 @@ public class Principal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnPedidosActionPerformed
 
-    private void btnFacturaciónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturaciónActionPerformed
+    private void btnFacturacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturacionActionPerformed
 
 
-    }//GEN-LAST:event_btnFacturaciónActionPerformed
+    }//GEN-LAST:event_btnFacturacionActionPerformed
 
     private void btnProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductsMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnProductsMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Principal().setVisible(true));
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClients;
-    private javax.swing.JButton btnFacturación;
+    private javax.swing.JButton btnFacturacion;
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnMesas;
     private javax.swing.JButton btnPedidos;

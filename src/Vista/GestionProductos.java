@@ -168,7 +168,7 @@ public class GestionProductos extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(17, 24, 39));
         jLabel3.setText("Categoría");
 
-        comboCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lacteos", "Postres", "Cafe", "Cheseecake", " " }));
+        comboCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lacteos", "Postres", "Cafe", "Bebidas", "Bebidas_Naturales", "PlatoFuerte", "Desayunos", "Comida_Rapida", "Reposteria", "Sopas" }));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
