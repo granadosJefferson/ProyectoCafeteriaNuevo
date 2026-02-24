@@ -36,6 +36,7 @@ public class ControllerObjetoMesa {
     }
 
     public void cargar() {
+        cargarPanelMesa();
         cargarTablaInformacionMesa();
     }
 
@@ -91,6 +92,116 @@ public class ControllerObjetoMesa {
         vista.getTableInformacionMesa().setModel(modelo);
     }
 
+    //
+    private void cargarPanelMesa() {
+
+        // ⚠️ Asegúrate que ObjetoMesa tenga este getter:
+        // public JPanel getjPanelCargarMesa()
+        javax.swing.JPanel contenedor = vista.getjPanelCargarMesa();
+        contenedor.removeAll();
+        contenedor.setLayout(new java.awt.BorderLayout());
+
+        String filtroMesa = obtenerFiltroMesa();
+        int personas = contarCedulasUnicasPorMesa(filtroMesa);
+
+        int capacidad = 4;
+        Tables mesaObj = tablesDAO.buscarPorTableId(tableId);
+        if (mesaObj != null) {
+            capacidad = mesaObj.getCapacity();
+        }
+
+        Tables.EstadoMesa estado;
+        if (personas == 0) {
+            estado = Tables.EstadoMesa.LIBRE;
+        } else if (personas >= capacidad) {
+            estado = Tables.EstadoMesa.LLENA;
+        } else {
+            estado = Tables.EstadoMesa.OCUPADA;
+        }
+
+        java.awt.Color colorSuave;
+        switch (estado) {
+            case LIBRE:
+                colorSuave = new java.awt.Color(170, 214, 190); // verde suave
+                break;
+            case OCUPADA:
+                colorSuave = new java.awt.Color(255, 210, 160); // naranja suave
+                break;
+            case LLENA:
+                colorSuave = new java.awt.Color(245, 170, 170); // rojo suave
+                break;
+            default:
+                colorSuave = new java.awt.Color(170, 214, 190);
+        }
+
+        // Tarjeta "copia"
+        javax.swing.JPanel tarjeta = new javax.swing.JPanel();
+        tarjeta.setBackground(colorSuave);
+        tarjeta.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        tarjeta.setLayout(new javax.swing.BoxLayout(tarjeta, javax.swing.BoxLayout.Y_AXIS));
+
+        String titulo = filtroMesa.equalsIgnoreCase("LLEVAR") ? "PARA LLEVAR" : "MESA " + filtroMesa;
+
+        javax.swing.JLabel lblTitulo = new javax.swing.JLabel(titulo);
+        lblTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18));
+        lblTitulo.setForeground(java.awt.Color.BLACK);
+
+        javax.swing.JLabel lblEstado = new javax.swing.JLabel("Estado: " + estado);
+        lblEstado.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 14));
+        lblEstado.setForeground(java.awt.Color.DARK_GRAY);
+
+        javax.swing.JLabel lblPersonas = new javax.swing.JLabel("Personas: " + personas + " / " + capacidad);
+        lblPersonas.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 14));
+        lblPersonas.setForeground(java.awt.Color.DARK_GRAY);
+
+        tarjeta.add(lblTitulo);
+        tarjeta.add(javax.swing.Box.createVerticalStrut(6));
+        tarjeta.add(lblEstado);
+        tarjeta.add(javax.swing.Box.createVerticalStrut(4));
+        tarjeta.add(lblPersonas);
+
+        contenedor.add(tarjeta, java.awt.BorderLayout.CENTER);
+
+        contenedor.revalidate();
+        contenedor.repaint();
+    }
+
+    private int contarCedulasUnicasPorMesa(String numeroMesa) {
+
+        java.util.ArrayList<String> cedulasUnicas = new java.util.ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(ARCHIVO_PEDIDOS))) {
+
+            String linea;
+
+            while ((linea = br.readLine()) != null) {
+
+                if (linea.trim().isEmpty()) {
+                    continue;
+                }
+
+                String[] partes = linea.split(",", -1);
+                if (partes.length < 9) {
+                    continue;
+                }
+
+                String mesaTxt = partes[3].trim();
+                String cedula = partes[4].trim();
+
+                if (mesaTxt.equalsIgnoreCase(numeroMesa)) {
+                    if (!cedula.isEmpty() && !cedulasUnicas.contains(cedula)) {
+                        cedulasUnicas.add(cedula);
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error contando cédulas únicas: " + e.getMessage());
+        }
+
+        return cedulasUnicas.size();
+    }
+
     /**
      * jBtnCerrarMesa: Borra del TXT TODOS los registros (líneas) de esa mesa.
      * Luego recarga la tabla (quedará vacía por lógica).
@@ -115,6 +226,7 @@ public class ControllerObjetoMesa {
 
         // recargar tabla (vacía si borró)
         cargarTablaInformacionMesa();
+        cargarPanelMesa();
 
         // opcional: actualizar colores/estados en vista de mesas (si lo manejas por pedidos)
         if (controllerMesas != null) {
@@ -163,6 +275,7 @@ public class ControllerObjetoMesa {
         boolean seBorro = reescribirPedidosExcluyendoMesaYCedula(filtroMesa, cedula);
 
         cargarTablaInformacionMesa();
+        cargarPanelMesa();
 
         if (controllerMesas != null) {
             controllerMesas.actualizarMesas();
