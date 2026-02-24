@@ -16,7 +16,6 @@ public class ControllerGestionMesas {
     public ControllerGestionMesas(GestionMesas vista) {
         this.vista = vista;
         this.tablesDAO = TablesDAO.getInstancia();
-        
 
         actualizarMesas();
         configurarClicks();
@@ -24,20 +23,105 @@ public class ControllerGestionMesas {
 
     public void actualizarMesas() {
 
-        for (Tables mesa : tablesDAO.listar()) {
+    for (Modelo.Tables mesa : tablesDAO.listar()) {
 
-            Color color = mesa.getEstado() == Tables.EstadoMesa.LIBRE
-                    ? new Color(38, 169, 93)
-                    : new Color(230, 126, 34);
+        int num = mesa.getTableNumber();
+        String numeroMesa = String.valueOf(num);
 
-            int num = mesa.getTableNumber();
+        int personas = contarPersonasEnMesa(numeroMesa);
+        int capacidad = mesa.getCapacity();
 
-            if (num == 1) vista.getjPanelMesa1().setBackground(color);
-            if (num == 2) vista.getjPanelMesa2().setBackground(color);
-            if (num == 3) vista.getjPanelMesa3().setBackground(color);
-            if (num == 4) vista.getjPanelMesa4().setBackground(color);
-            if (num == 5) vista.getjPanelMesa5().setBackground(color);
+        // Estado dinámico
+        Modelo.Tables.EstadoMesa estado;
+        if (personas == 0) {
+            estado = Modelo.Tables.EstadoMesa.LIBRE;
+        } else if (personas >= capacidad) {
+            estado = Modelo.Tables.EstadoMesa.LLENA;
+        } else {
+            estado = Modelo.Tables.EstadoMesa.OCUPADA;
         }
+
+        mesa.setEstado(estado);
+        tablesDAO.actualizarMesa(mesa);
+
+        // Colores menos saturados
+        java.awt.Color color;
+        switch (estado) {
+            case LIBRE:
+                color = new java.awt.Color(170, 214, 190); // verde suave
+                break;
+            case OCUPADA:
+                color = new java.awt.Color(255, 210, 160); // naranja suave
+                break;
+            case LLENA:
+                color = new java.awt.Color(245, 170, 170); // rojo suave
+                break;
+            default:
+                color = new java.awt.Color(170, 214, 190);
+        }
+
+        if (num == 1) {
+            vista.getjPanelMesa1().setBackground(color);
+            // si agregas label de personas en mesa 1 aquí lo setéas
+        }
+
+        if (num == 2) {
+            vista.getjPanelMesa2().setBackground(color);
+            vista.getjLabelNumPersonas1().setText(String.valueOf(personas));
+        }
+
+        if (num == 3) {
+            vista.getjPanelMesa3().setBackground(color);
+            vista.getjLabelNumPersonas3().setText(String.valueOf(personas));
+        }
+
+        if (num == 4) {
+            vista.getjPanelMesa4().setBackground(color);
+            vista.getjLabelNumPersonas5().setText(String.valueOf(personas));
+        }
+
+        if (num == 5) {
+            vista.getjPanelMesa5().setBackground(color);
+            vista.getjLabelNumPersonas7().setText(String.valueOf(personas));
+        }
+    }
+}
+
+    private int contarPersonasEnMesa(String numeroMesa) {
+
+        java.util.ArrayList<String> cedulasUnicas = new java.util.ArrayList<>();
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("pedidos.txt"))) {
+
+            String linea;
+
+            while ((linea = br.readLine()) != null) {
+
+                if (linea.trim().isEmpty()) {
+                    continue;
+                }
+
+                String[] partes = linea.split(",", -1);
+                if (partes.length < 9) {
+                    continue;
+                }
+
+                String mesaTxt = partes[3].trim();
+                String cedula = partes[4].trim();
+
+                if (mesaTxt.equalsIgnoreCase(numeroMesa)) {
+
+                    if (!cedula.isEmpty() && !cedulasUnicas.contains(cedula)) {
+                        cedulasUnicas.add(cedula);
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error contando personas: " + e.getMessage());
+        }
+
+        return cedulasUnicas.size();
     }
 
     private void configurarClicks() {
@@ -77,8 +161,8 @@ public class ControllerGestionMesas {
         ventana.add(panelDetalle);
         ventana.setVisible(true);
 
-        ControllerObjetoMesa ctrl =
-                new ControllerObjetoMesa(panelDetalle, tableId, ventana, this);
+        ControllerObjetoMesa ctrl
+                = new ControllerObjetoMesa(panelDetalle, tableId, ventana, this);
 
         ctrl.cargar();
     }

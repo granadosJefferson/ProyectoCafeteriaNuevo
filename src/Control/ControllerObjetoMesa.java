@@ -40,8 +40,8 @@ public class ControllerObjetoMesa {
     }
 
     /**
-     * Carga SOLO lo importante en la tabla TableInformacionMesa:
-     * ID Pedido, Fecha, Cliente (cédula), TotalConIva
+     * Carga SOLO lo importante en la tabla TableInformacionMesa: ID Pedido,
+     * Fecha, Cliente (cédula), TotalConIva
      */
     private void cargarTablaInformacionMesa() {
 
@@ -62,13 +62,19 @@ public class ControllerObjetoMesa {
 
             while ((linea = br.readLine()) != null) {
 
-                if (linea.trim().isEmpty()) continue;
+                if (linea.trim().isEmpty()) {
+                    continue;
+                }
 
                 String[] partes = linea.split(",", -1);
-                if (partes.length < 9) continue;
+                if (partes.length < 9) {
+                    continue;
+                }
 
                 String numeroMesaTxt = partes[3].trim();
-                if (!numeroMesaTxt.equalsIgnoreCase(filtroMesa)) continue;
+                if (!numeroMesaTxt.equalsIgnoreCase(filtroMesa)) {
+                    continue;
+                }
 
                 String idPedido = partes[0].trim();
                 String fecha = (partes[1].trim() + " " + partes[2].trim()).trim();
@@ -86,8 +92,7 @@ public class ControllerObjetoMesa {
     }
 
     /**
-     * jBtnCerrarMesa:
-     * Borra del TXT TODOS los registros (líneas) de esa mesa.
+     * jBtnCerrarMesa: Borra del TXT TODOS los registros (líneas) de esa mesa.
      * Luego recarga la tabla (quedará vacía por lógica).
      */
     private void cerrarMesa() {
@@ -100,7 +105,9 @@ public class ControllerObjetoMesa {
                 "Cerrar mesa",
                 JOptionPane.YES_NO_OPTION
         );
-        if (op != JOptionPane.YES_OPTION) return;
+        if (op != JOptionPane.YES_OPTION) {
+            return;
+        }
 
         asegurarArchivoPedidos();
 
@@ -114,17 +121,14 @@ public class ControllerObjetoMesa {
             controllerMesas.actualizarMesas();
         }
 
-        JOptionPane.showMessageDialog(
-                vista,
-                seBorroAlgo ? "Mesa cerrada. Pedidos eliminados." : "No había pedidos para esa mesa."
+        JOptionPane.showMessageDialog(vista, seBorroAlgo ? "Mesa cerrada. Pedidos eliminados." : "No había pedidos para esa mesa."
         );
     }
 
     /**
-     * jBtnSacarMesa:
-     * El usuario selecciona una fila (persona/cliente) en la tabla.
-     * Se elimina del TXT la línea que coincida con esa mesa y esa cédula.
-     * Luego se recarga la tabla.
+     * jBtnSacarMesa: El usuario selecciona una fila (persona/cliente) en la
+     * tabla. Se elimina del TXT la línea que coincida con esa mesa y esa
+     * cédula. Luego se recarga la tabla.
      */
     private void sacarPersona() {
 
@@ -150,7 +154,9 @@ public class ControllerObjetoMesa {
                 "Sacar persona",
                 JOptionPane.YES_NO_OPTION
         );
-        if (op != JOptionPane.YES_OPTION) return;
+        if (op != JOptionPane.YES_OPTION) {
+            return;
+        }
 
         asegurarArchivoPedidos();
 
@@ -171,7 +177,6 @@ public class ControllerObjetoMesa {
     // ==========================
     // Helpers de persistencia
     // ==========================
-
     private boolean reescribirPedidosExcluyendoMesa(String filtroMesa) {
 
         File original = new File(ARCHIVO_PEDIDOS);
@@ -179,16 +184,19 @@ public class ControllerObjetoMesa {
 
         boolean borro = false;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(original));
-             BufferedWriter bw = new BufferedWriter(new FileWriter(temp))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(original)); BufferedWriter bw = new BufferedWriter(new FileWriter(temp))) {
 
             String linea;
             while ((linea = br.readLine()) != null) {
 
-                if (linea.trim().isEmpty()) continue;
+                if (linea.trim().isEmpty()) {
+                    continue;
+                }
 
                 String[] partes = linea.split(",", -1);
-                if (partes.length < 9) continue;
+                if (partes.length < 9) {
+                    continue;
+                }
 
                 String mesa = partes[3].trim();
                 if (mesa.equalsIgnoreCase(filtroMesa)) {
@@ -215,16 +223,19 @@ public class ControllerObjetoMesa {
 
         boolean borro = false;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(original));
-             BufferedWriter bw = new BufferedWriter(new FileWriter(temp))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(original)); BufferedWriter bw = new BufferedWriter(new FileWriter(temp))) {
 
             String linea;
             while ((linea = br.readLine()) != null) {
 
-                if (linea.trim().isEmpty()) continue;
+                if (linea.trim().isEmpty()) {
+                    continue;
+                }
 
                 String[] partes = linea.split(",", -1);
-                if (partes.length < 9) continue;
+                if (partes.length < 9) {
+                    continue;
+                }
 
                 String mesa = partes[3].trim();
                 String cliente = partes[4].trim();
@@ -249,7 +260,9 @@ public class ControllerObjetoMesa {
 
     private void reemplazarArchivo(File original, File temp) {
         // Windows a veces falla si intentas overwrite directo: borramos y renombramos
-        if (original.exists()) original.delete();
+        if (original.exists()) {
+            original.delete();
+        }
         temp.renameTo(original);
     }
 
@@ -265,9 +278,8 @@ public class ControllerObjetoMesa {
     }
 
     /**
-     * Devuelve lo que viene en el campo "numeroMesa" del TXT:
-     * - Si es llevar: "LLEVAR"
-     * - Si es mesa: "1".."5"
+     * Devuelve lo que viene en el campo "numeroMesa" del TXT: - Si es llevar:
+     * "LLEVAR" - Si es mesa: "1".."5"
      */
     private String obtenerFiltroMesa() {
 
@@ -278,7 +290,9 @@ public class ControllerObjetoMesa {
         Tables mesa = tablesDAO.buscarPorTableId(tableId);
 
         // fallback si por alguna razón no está en DAO
-        if (mesa == null) return tableId;
+        if (mesa == null) {
+            return tableId;
+        }
 
         return String.valueOf(mesa.getTableNumber());
     }

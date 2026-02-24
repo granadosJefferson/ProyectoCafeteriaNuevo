@@ -6,7 +6,11 @@ package Vista;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.Timer;
 
 /**
@@ -41,6 +45,16 @@ public class GestionMesas extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabelNumMesa2 = new javax.swing.JLabel();
+        jLabelMesa2 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabelNumPersonas2 = new javax.swing.JLabel();
+        jLabelNumMesa4 = new javax.swing.JLabel();
+        jLabelMesa4 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabelNumPersonas4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jEditorPane1 = new javax.swing.JEditorPane();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -48,16 +62,62 @@ public class GestionMesas extends javax.swing.JPanel {
         lblDay = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
+        jPanelMesa1 = new javax.swing.JPanel();
+        jLabelNumeroMesa1 = new javax.swing.JLabel();
+        jLabelMesaIcon = new javax.swing.JLabel();
+        jLabelNumPersonas1 = new javax.swing.JLabel();
+        jLabelPersonasMesa1 = new javax.swing.JLabel();
+        jPanelMesa2 = new javax.swing.JPanel();
+        jLabelPersonasMesa2 = new javax.swing.JLabel();
+        jLabelNumPersonas000 = new javax.swing.JLabel();
+        jLabelNumeroMesa00 = new javax.swing.JLabel();
+        jLabelMesa2Icon = new javax.swing.JLabel();
+        jPanelMesa3 = new javax.swing.JPanel();
+        jLabelNumPersonas3 = new javax.swing.JLabel();
+        jLabelMesa3Icon = new javax.swing.JLabel();
+        jLabelPersonasMesa3 = new javax.swing.JLabel();
+        jLabelNumeroMesa3 = new javax.swing.JLabel();
+        jPanelMesa5 = new javax.swing.JPanel();
+        jLabelNumeroMesa7 = new javax.swing.JLabel();
+        jLabelNumPersonas7 = new javax.swing.JLabel();
+        jLabelPersonasMesa5 = new javax.swing.JLabel();
+        jLabelMesa5Icon = new javax.swing.JLabel();
+        jPanelMesa4 = new javax.swing.JPanel();
+        jLabelNumeroMesa5 = new javax.swing.JLabel();
+        jLabelPersonasMesa4 = new javax.swing.JLabel();
+        jLabelMesa4Icon = new javax.swing.JLabel();
+        jLabelNumPersonas5 = new javax.swing.JLabel();
+        jPanelLLevar = new javax.swing.JPanel();
+        jLabelMesaLlevarIcon = new javax.swing.JLabel();
+        jLabelNumMesaLLevar = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+
+        jLabelNumMesa2.setText("jLabel6");
+
+        jLabelMesa2.setText("jLabel9");
+
+        jLabel13.setText("Personas:");
+
+        jLabelNumPersonas2.setText("jLabel10");
+
+        jLabelNumMesa4.setText("jLabel6");
+
+        jLabelMesa4.setText("jLabel9");
+
+        jLabel15.setText("Personas:");
+
+        jLabelNumPersonas4.setText("jLabel10");
+
+        jScrollPane1.setViewportView(jEditorPane1);
 
         setBackground(new java.awt.Color(215, 227, 225));
-        setPreferredSize(new java.awt.Dimension(804, 700));
+        setMaximumSize(new java.awt.Dimension(0, 0));
+        setPreferredSize(new java.awt.Dimension(900, 700));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -110,7 +170,7 @@ public class GestionMesas extends javax.swing.JPanel {
                     .addComponent(jLabel8)
                     .addComponent(lblDay, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
@@ -118,15 +178,307 @@ public class GestionMesas extends javax.swing.JPanel {
         jPanel9.setBackground(new java.awt.Color(236, 240, 241));
         jPanel9.setForeground(new java.awt.Color(236, 240, 241));
 
+        jPanelMesa1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabelNumeroMesa1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelNumeroMesa1.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabelNumeroMesa1.setForeground(new java.awt.Color(38, 169, 93));
+        jLabelNumeroMesa1.setText("1");
+
+        jLabelMesaIcon.setText("jLabel9");
+
+        jLabelNumPersonas1.setText("jLabel10");
+
+        jLabelPersonasMesa1.setText("Personas:");
+
+        javax.swing.GroupLayout jPanelMesa1Layout = new javax.swing.GroupLayout(jPanelMesa1);
+        jPanelMesa1.setLayout(jPanelMesa1Layout);
+        jPanelMesa1Layout.setHorizontalGroup(
+            jPanelMesa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMesa1Layout.createSequentialGroup()
+                .addGroup(jPanelMesa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelMesa1Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabelPersonasMesa1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelNumPersonas1))
+                    .addGroup(jPanelMesa1Layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addGroup(jPanelMesa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelMesaIcon)
+                            .addGroup(jPanelMesa1Layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jLabelNumeroMesa1)))))
+                .addContainerGap(72, Short.MAX_VALUE))
+        );
+        jPanelMesa1Layout.setVerticalGroup(
+            jPanelMesa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMesa1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelNumeroMesa1)
+                .addGap(35, 35, 35)
+                .addComponent(jLabelMesaIcon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGroup(jPanelMesa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelNumPersonas1)
+                    .addComponent(jLabelPersonasMesa1))
+                .addGap(19, 19, 19))
+        );
+
+        jPanelMesa2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabelPersonasMesa2.setText("Personas:");
+
+        jLabelNumPersonas000.setText("jLabel10");
+
+        jLabelNumeroMesa00.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelNumeroMesa00.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabelNumeroMesa00.setForeground(new java.awt.Color(38, 169, 93));
+        jLabelNumeroMesa00.setText("2");
+
+        jLabelMesa2Icon.setText("jLabel9");
+
+        javax.swing.GroupLayout jPanelMesa2Layout = new javax.swing.GroupLayout(jPanelMesa2);
+        jPanelMesa2.setLayout(jPanelMesa2Layout);
+        jPanelMesa2Layout.setHorizontalGroup(
+            jPanelMesa2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMesa2Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanelMesa2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelMesa2Layout.createSequentialGroup()
+                        .addComponent(jLabelPersonasMesa2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelNumPersonas000))
+                    .addGroup(jPanelMesa2Layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addGroup(jPanelMesa2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelMesa2Icon)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMesa2Layout.createSequentialGroup()
+                                .addComponent(jLabelNumeroMesa00)
+                                .addGap(14, 14, 14)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelMesa2Layout.setVerticalGroup(
+            jPanelMesa2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMesa2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelNumeroMesa00)
+                .addGap(35, 35, 35)
+                .addComponent(jLabelMesa2Icon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGroup(jPanelMesa2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelNumPersonas000)
+                    .addComponent(jLabelPersonasMesa2))
+                .addGap(19, 19, 19))
+        );
+
+        jPanelMesa3.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabelNumPersonas3.setText("jLabel10");
+
+        jLabelMesa3Icon.setText("jLabel9");
+
+        jLabelPersonasMesa3.setText("Personas:");
+
+        jLabelNumeroMesa3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelNumeroMesa3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabelNumeroMesa3.setForeground(new java.awt.Color(38, 169, 93));
+        jLabelNumeroMesa3.setText("3");
+
+        javax.swing.GroupLayout jPanelMesa3Layout = new javax.swing.GroupLayout(jPanelMesa3);
+        jPanelMesa3.setLayout(jPanelMesa3Layout);
+        jPanelMesa3Layout.setHorizontalGroup(
+            jPanelMesa3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMesa3Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanelMesa3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelMesa3Layout.createSequentialGroup()
+                        .addComponent(jLabelPersonasMesa3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelNumPersonas3))
+                    .addGroup(jPanelMesa3Layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addGroup(jPanelMesa3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelMesa3Icon)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMesa3Layout.createSequentialGroup()
+                                .addComponent(jLabelNumeroMesa3)
+                                .addGap(12, 12, 12)))))
+                .addContainerGap(67, Short.MAX_VALUE))
+        );
+        jPanelMesa3Layout.setVerticalGroup(
+            jPanelMesa3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMesa3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelNumeroMesa3)
+                .addGap(35, 35, 35)
+                .addComponent(jLabelMesa3Icon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelMesa3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelNumPersonas3)
+                    .addComponent(jLabelPersonasMesa3))
+                .addGap(19, 19, 19))
+        );
+
+        jPanelMesa5.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabelNumeroMesa7.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelNumeroMesa7.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabelNumeroMesa7.setForeground(new java.awt.Color(38, 169, 93));
+        jLabelNumeroMesa7.setText("5");
+
+        jLabelNumPersonas7.setText("jLabel10");
+
+        jLabelPersonasMesa5.setText("Personas:");
+
+        jLabelMesa5Icon.setText("jLabel9");
+
+        javax.swing.GroupLayout jPanelMesa5Layout = new javax.swing.GroupLayout(jPanelMesa5);
+        jPanelMesa5.setLayout(jPanelMesa5Layout);
+        jPanelMesa5Layout.setHorizontalGroup(
+            jPanelMesa5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMesa5Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanelMesa5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelMesa5Layout.createSequentialGroup()
+                        .addComponent(jLabelPersonasMesa5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelNumPersonas7))
+                    .addGroup(jPanelMesa5Layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addGroup(jPanelMesa5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelMesa5Icon)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMesa5Layout.createSequentialGroup()
+                                .addComponent(jLabelNumeroMesa7)
+                                .addGap(12, 12, 12)))))
+                .addContainerGap(65, Short.MAX_VALUE))
+        );
+        jPanelMesa5Layout.setVerticalGroup(
+            jPanelMesa5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMesa5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelNumeroMesa7)
+                .addGap(35, 35, 35)
+                .addComponent(jLabelMesa5Icon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGroup(jPanelMesa5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelNumPersonas7)
+                    .addComponent(jLabelPersonasMesa5))
+                .addGap(19, 19, 19))
+        );
+
+        jPanelMesa4.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabelNumeroMesa5.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelNumeroMesa5.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabelNumeroMesa5.setForeground(new java.awt.Color(38, 169, 93));
+        jLabelNumeroMesa5.setText("4");
+
+        jLabelPersonasMesa4.setText("Personas:");
+
+        jLabelMesa4Icon.setText("jLabel9");
+
+        jLabelNumPersonas5.setText("jLabel10");
+
+        javax.swing.GroupLayout jPanelMesa4Layout = new javax.swing.GroupLayout(jPanelMesa4);
+        jPanelMesa4.setLayout(jPanelMesa4Layout);
+        jPanelMesa4Layout.setHorizontalGroup(
+            jPanelMesa4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMesa4Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanelMesa4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelMesa4Layout.createSequentialGroup()
+                        .addComponent(jLabelPersonasMesa4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelNumPersonas5))
+                    .addGroup(jPanelMesa4Layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addGroup(jPanelMesa4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelMesa4Icon)
+                            .addGroup(jPanelMesa4Layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(jLabelNumeroMesa5)))))
+                .addContainerGap(74, Short.MAX_VALUE))
+        );
+        jPanelMesa4Layout.setVerticalGroup(
+            jPanelMesa4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMesa4Layout.createSequentialGroup()
+                .addComponent(jLabelNumeroMesa5)
+                .addGap(41, 41, 41)
+                .addComponent(jLabelMesa4Icon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGroup(jPanelMesa4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelNumPersonas5)
+                    .addComponent(jLabelPersonasMesa4))
+                .addGap(19, 19, 19))
+        );
+
+        jPanelLLevar.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabelMesaLlevarIcon.setText("jLabel9");
+
+        jLabelNumMesaLLevar.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelNumMesaLLevar.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabelNumMesaLLevar.setForeground(new java.awt.Color(38, 169, 93));
+        jLabelNumMesaLLevar.setText("Llevar");
+
+        javax.swing.GroupLayout jPanelLLevarLayout = new javax.swing.GroupLayout(jPanelLLevar);
+        jPanelLLevar.setLayout(jPanelLLevarLayout);
+        jPanelLLevarLayout.setHorizontalGroup(
+            jPanelLLevarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLLevarLayout.createSequentialGroup()
+                .addGap(76, 76, 76)
+                .addGroup(jPanelLLevarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelNumMesaLLevar)
+                    .addComponent(jLabelMesaLlevarIcon))
+                .addContainerGap(79, Short.MAX_VALUE))
+        );
+        jPanelLLevarLayout.setVerticalGroup(
+            jPanelLLevarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLLevarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelNumMesaLLevar)
+                .addGap(31, 31, 31)
+                .addComponent(jLabelMesaLlevarIcon)
+                .addContainerGap(77, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanelMesa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelMesa4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanelMesa2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelLLevar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(52, 52, 52)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanelMesa3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelMesa5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 426, Short.MAX_VALUE)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel9Layout.createSequentialGroup()
+                        .addComponent(jPanelMesa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(jPanelMesa4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanelMesa3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanelMesa2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanelLLevar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanelMesa5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -143,31 +495,27 @@ public class GestionMesas extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Ocupada");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Personal\\Documents\\ProyectoCafeteriaNuevo\\src\\img\\CirculoVerde.png")); // NOI18N
-
-        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\Personal\\Documents\\ProyectoCafeteriaNuevo\\src\\img\\CirculoRojo.png")); // NOI18N
-
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
-            .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addGap(84, 84, 84)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(108, 108, 108)
                 .addComponent(jLabel4)
-                .addGap(29, 29, 29))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(168, 168, 168)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(99, 99, 99))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,60 +530,465 @@ public class GestionMesas extends javax.swing.JPanel {
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        jButton1.setBackground(new java.awt.Color(38, 169, 93));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Ver Reportes");
-        jButton1.setFocusPainted(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabelMesa2;
+    private javax.swing.JLabel jLabelMesa2Icon;
+    private javax.swing.JLabel jLabelMesa3Icon;
+    private javax.swing.JLabel jLabelMesa4;
+    private javax.swing.JLabel jLabelMesa4Icon;
+    private javax.swing.JLabel jLabelMesa5Icon;
+    private javax.swing.JLabel jLabelMesaIcon;
+    private javax.swing.JLabel jLabelMesaLlevarIcon;
+    private javax.swing.JLabel jLabelNumMesa2;
+    private javax.swing.JLabel jLabelNumMesa4;
+    private javax.swing.JLabel jLabelNumMesaLLevar;
+    private javax.swing.JLabel jLabelNumPersonas000;
+    private javax.swing.JLabel jLabelNumPersonas1;
+    private javax.swing.JLabel jLabelNumPersonas2;
+    private javax.swing.JLabel jLabelNumPersonas3;
+    private javax.swing.JLabel jLabelNumPersonas4;
+    private javax.swing.JLabel jLabelNumPersonas5;
+    private javax.swing.JLabel jLabelNumPersonas7;
+    private javax.swing.JLabel jLabelNumeroMesa00;
+    private javax.swing.JLabel jLabelNumeroMesa1;
+    private javax.swing.JLabel jLabelNumeroMesa3;
+    private javax.swing.JLabel jLabelNumeroMesa5;
+    private javax.swing.JLabel jLabelNumeroMesa7;
+    private javax.swing.JLabel jLabelPersonasMesa1;
+    private javax.swing.JLabel jLabelPersonasMesa2;
+    private javax.swing.JLabel jLabelPersonasMesa3;
+    private javax.swing.JLabel jLabelPersonasMesa4;
+    private javax.swing.JLabel jLabelPersonasMesa5;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelLLevar;
+    private javax.swing.JPanel jPanelMesa1;
+    private javax.swing.JPanel jPanelMesa2;
+    private javax.swing.JPanel jPanelMesa3;
+    private javax.swing.JPanel jPanelMesa4;
+    private javax.swing.JPanel jPanelMesa5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblDay;
     private javax.swing.JLabel lblTime;
     // End of variables declaration//GEN-END:variables
+
+    
+
+    public void setjPanelLLevar(JPanel jPanelLLevar) {
+        this.jPanelLLevar = jPanelLLevar;
+    }
+    
+    public JPanel getjPanelLLevar() {
+        return jPanelLLevar;
+    }
+
+    public JPanel getjPanelMesa1() {
+        return jPanelMesa1;
+    }
+
+    public void setjPanelMesa1(JPanel jPanelMesa1) {
+        this.jPanelMesa1 = jPanelMesa1;
+    }
+
+    public JPanel getjPanelMesa2() {
+        return jPanelMesa2;
+    }
+
+    public void setjPanelMesa2(JPanel jPanelMesa2) {
+        this.jPanelMesa2 = jPanelMesa2;
+    }
+
+    public JPanel getjPanelMesa3() {
+        return jPanelMesa3;
+    }
+
+    public void setjPanelMesa3(JPanel jPanelMesa3) {
+        this.jPanelMesa3 = jPanelMesa3;
+    }
+
+    public JPanel getjPanelMesa4() {
+        return jPanelMesa4;
+    }
+
+    public void setjPanelMesa4(JPanel jPanelMesa4) {
+        this.jPanelMesa4 = jPanelMesa4;
+    }
+
+    public JPanel getjPanelMesa5() {
+        return jPanelMesa5;
+    }
+
+    public void setjPanelMesa5(JPanel jPanelMesa5) {
+        this.jPanelMesa5 = jPanelMesa5;
+    }
+
+    public JEditorPane getjEditorPane1() {
+        return jEditorPane1;
+    }
+
+    public void setjEditorPane1(JEditorPane jEditorPane1) {
+        this.jEditorPane1 = jEditorPane1;
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
+    public JLabel getjLabel13() {
+        return jLabel13;
+    }
+
+    public void setjLabel13(JLabel jLabel13) {
+        this.jLabel13 = jLabel13;
+    }
+
+    public JLabel getjLabel15() {
+        return jLabel15;
+    }
+
+    public void setjLabel15(JLabel jLabel15) {
+        this.jLabel15 = jLabel15;
+    }
+
+    public JLabel getjLabel2() {
+        return jLabel2;
+    }
+
+    public void setjLabel2(JLabel jLabel2) {
+        this.jLabel2 = jLabel2;
+    }
+
+    public JLabel getjLabel3() {
+        return jLabel3;
+    }
+
+    public void setjLabel3(JLabel jLabel3) {
+        this.jLabel3 = jLabel3;
+    }
+
+    public JLabel getjLabel4() {
+        return jLabel4;
+    }
+
+    public void setjLabel4(JLabel jLabel4) {
+        this.jLabel4 = jLabel4;
+    }
+
+    public JLabel getjLabel5() {
+        return jLabel5;
+    }
+
+    public void setjLabel5(JLabel jLabel5) {
+        this.jLabel5 = jLabel5;
+    }
+
+    public JLabel getjLabel7() {
+        return jLabel7;
+    }
+
+    public void setjLabel7(JLabel jLabel7) {
+        this.jLabel7 = jLabel7;
+    }
+
+    public JLabel getjLabel8() {
+        return jLabel8;
+    }
+
+    public void setjLabel8(JLabel jLabel8) {
+        this.jLabel8 = jLabel8;
+    }
+
+    public JLabel getjLabelMesa2() {
+        return jLabelMesa2;
+    }
+
+    public void setjLabelMesa2(JLabel jLabelMesa2) {
+        this.jLabelMesa2 = jLabelMesa2;
+    }
+
+    public JLabel getjLabelMesa2Icon() {
+        return jLabelMesa2Icon;
+    }
+
+    public void setjLabelMesa2Icon(JLabel jLabelMesa2Icon) {
+        this.jLabelMesa2Icon = jLabelMesa2Icon;
+    }
+
+    public JLabel getjLabelMesa3Icon() {
+        return jLabelMesa3Icon;
+    }
+
+    public void setjLabelMesa3Icon(JLabel jLabelMesa3Icon) {
+        this.jLabelMesa3Icon = jLabelMesa3Icon;
+    }
+
+    public JLabel getjLabelMesa4() {
+        return jLabelMesa4;
+    }
+
+    public void setjLabelMesa4(JLabel jLabelMesa4) {
+        this.jLabelMesa4 = jLabelMesa4;
+    }
+
+    public JLabel getjLabelMesa4Icon() {
+        return jLabelMesa4Icon;
+    }
+
+    public void setjLabelMesa4Icon(JLabel jLabelMesa4Icon) {
+        this.jLabelMesa4Icon = jLabelMesa4Icon;
+    }
+
+    public JLabel getjLabelMesa5Icon() {
+        return jLabelMesa5Icon;
+    }
+
+    public void setjLabelMesa5Icon(JLabel jLabelMesa5Icon) {
+        this.jLabelMesa5Icon = jLabelMesa5Icon;
+    }
+
+    public JLabel getjLabelMesaIcon() {
+        return jLabelMesaIcon;
+    }
+
+    public void setjLabelMesaIcon(JLabel jLabelMesaIcon) {
+        this.jLabelMesaIcon = jLabelMesaIcon;
+    }
+
+    public JLabel getjLabelMesaLlevarIcon() {
+        return jLabelMesaLlevarIcon;
+    }
+
+    public void setjLabelMesaLlevarIcon(JLabel jLabelMesaLlevarIcon) {
+        this.jLabelMesaLlevarIcon = jLabelMesaLlevarIcon;
+    }
+
+    public JLabel getjLabelNumMesa2() {
+        return jLabelNumMesa2;
+    }
+
+    public void setjLabelNumMesa2(JLabel jLabelNumMesa2) {
+        this.jLabelNumMesa2 = jLabelNumMesa2;
+    }
+
+    public JLabel getjLabelNumMesa4() {
+        return jLabelNumMesa4;
+    }
+
+    public void setjLabelNumMesa4(JLabel jLabelNumMesa4) {
+        this.jLabelNumMesa4 = jLabelNumMesa4;
+    }
+
+    public JLabel getjLabelNumMesaLLevar() {
+        return jLabelNumMesaLLevar;
+    }
+
+    public void setjLabelNumMesaLLevar(JLabel jLabelNumMesaLLevar) {
+        this.jLabelNumMesaLLevar = jLabelNumMesaLLevar;
+    }
+
+    public JLabel getjLabelNumPersonas000() {
+        return jLabelNumPersonas000;
+    }
+
+    public void setjLabelNumPersonas000(JLabel jLabelNumPersonas000) {
+        this.jLabelNumPersonas000 = jLabelNumPersonas000;
+    }
+
+    public JLabel getjLabelNumPersonas1() {
+        return jLabelNumPersonas1;
+    }
+
+    public void setjLabelNumPersonas1(JLabel jLabelNumPersonas1) {
+        this.jLabelNumPersonas1 = jLabelNumPersonas1;
+    }
+
+    public JLabel getjLabelNumPersonas2() {
+        return jLabelNumPersonas2;
+    }
+
+    public void setjLabelNumPersonas2(JLabel jLabelNumPersonas2) {
+        this.jLabelNumPersonas2 = jLabelNumPersonas2;
+    }
+
+    public JLabel getjLabelNumPersonas3() {
+        return jLabelNumPersonas3;
+    }
+
+    public void setjLabelNumPersonas3(JLabel jLabelNumPersonas3) {
+        this.jLabelNumPersonas3 = jLabelNumPersonas3;
+    }
+
+    public JLabel getjLabelNumPersonas4() {
+        return jLabelNumPersonas4;
+    }
+
+    public void setjLabelNumPersonas4(JLabel jLabelNumPersonas4) {
+        this.jLabelNumPersonas4 = jLabelNumPersonas4;
+    }
+
+    public JLabel getjLabelNumPersonas5() {
+        return jLabelNumPersonas5;
+    }
+
+    public void setjLabelNumPersonas5(JLabel jLabelNumPersonas5) {
+        this.jLabelNumPersonas5 = jLabelNumPersonas5;
+    }
+
+    public JLabel getjLabelNumPersonas7() {
+        return jLabelNumPersonas7;
+    }
+
+    public void setjLabelNumPersonas7(JLabel jLabelNumPersonas7) {
+        this.jLabelNumPersonas7 = jLabelNumPersonas7;
+    }
+
+    public JLabel getjLabelNumeroMesa00() {
+        return jLabelNumeroMesa00;
+    }
+
+    public void setjLabelNumeroMesa00(JLabel jLabelNumeroMesa00) {
+        this.jLabelNumeroMesa00 = jLabelNumeroMesa00;
+    }
+
+    public JLabel getjLabelNumeroMesa1() {
+        return jLabelNumeroMesa1;
+    }
+
+    public void setjLabelNumeroMesa1(JLabel jLabelNumeroMesa1) {
+        this.jLabelNumeroMesa1 = jLabelNumeroMesa1;
+    }
+
+    public JLabel getjLabelNumeroMesa3() {
+        return jLabelNumeroMesa3;
+    }
+
+    public void setjLabelNumeroMesa3(JLabel jLabelNumeroMesa3) {
+        this.jLabelNumeroMesa3 = jLabelNumeroMesa3;
+    }
+
+    public JLabel getjLabelNumeroMesa5() {
+        return jLabelNumeroMesa5;
+    }
+
+    public void setjLabelNumeroMesa5(JLabel jLabelNumeroMesa5) {
+        this.jLabelNumeroMesa5 = jLabelNumeroMesa5;
+    }
+
+    public JLabel getjLabelNumeroMesa7() {
+        return jLabelNumeroMesa7;
+    }
+
+    public void setjLabelNumeroMesa7(JLabel jLabelNumeroMesa7) {
+        this.jLabelNumeroMesa7 = jLabelNumeroMesa7;
+    }
+
+    public JLabel getjLabelPersonasMesa1() {
+        return jLabelPersonasMesa1;
+    }
+
+    public void setjLabelPersonasMesa1(JLabel jLabelPersonasMesa1) {
+        this.jLabelPersonasMesa1 = jLabelPersonasMesa1;
+    }
+
+    public JLabel getjLabelPersonasMesa2() {
+        return jLabelPersonasMesa2;
+    }
+
+    public void setjLabelPersonasMesa2(JLabel jLabelPersonasMesa2) {
+        this.jLabelPersonasMesa2 = jLabelPersonasMesa2;
+    }
+
+    public JLabel getjLabelPersonasMesa3() {
+        return jLabelPersonasMesa3;
+    }
+
+    public void setjLabelPersonasMesa3(JLabel jLabelPersonasMesa3) {
+        this.jLabelPersonasMesa3 = jLabelPersonasMesa3;
+    }
+
+    public JLabel getjLabelPersonasMesa4() {
+        return jLabelPersonasMesa4;
+    }
+
+    public void setjLabelPersonasMesa4(JLabel jLabelPersonasMesa4) {
+        this.jLabelPersonasMesa4 = jLabelPersonasMesa4;
+    }
+
+    public JLabel getjLabelPersonasMesa5() {
+        return jLabelPersonasMesa5;
+    }
+
+    public void setjLabelPersonasMesa5(JLabel jLabelPersonasMesa5) {
+        this.jLabelPersonasMesa5 = jLabelPersonasMesa5;
+    }
+
+    public JPanel getjPanel3() {
+        return jPanel3;
+    }
+
+    public void setjPanel3(JPanel jPanel3) {
+        this.jPanel3 = jPanel3;
+    }
+
+    public JPanel getjPanel8() {
+        return jPanel8;
+    }
+
+    public void setjPanel8(JPanel jPanel8) {
+        this.jPanel8 = jPanel8;
+    }
+
+    public JPanel getjPanel9() {
+        return jPanel9;
+    }
+
+    public void setjPanel9(JPanel jPanel9) {
+        this.jPanel9 = jPanel9;
+    }
+
+    
 }
