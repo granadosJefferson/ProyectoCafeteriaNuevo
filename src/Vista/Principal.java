@@ -4,8 +4,7 @@
  */
 package Vista;
 
-import Control.ControllerReports;
-import Vista.Reports;
+
 import Control.ControllerGestionMesas;
 import Control.ControllerClients;
 import Control.ControllerInventario;
@@ -44,7 +43,7 @@ public class Principal extends javax.swing.JFrame {
         GestionFacturacion fact = new GestionFacturacion();
         ClientsPanel clientsPanel = new ClientsPanel();
         GestionCliente gestionCliente = new GestionCliente();
-        Reports reportes = new Reports();
+    
 
         panelContenido.add(vacio, "vacio");
         panelContenido.add(ord, "order");
@@ -53,7 +52,7 @@ public class Principal extends javax.swing.JFrame {
         panelContenido.add(mesas, "mesas");
         panelContenido.add(fact, "facturacion");
         panelContenido.add(clientsPanel, "clients");
-        panelContenido.add(reportes, "reportes");
+     
 
         productosDAO prodDao = productosDAO.getInstancia();
         ClientsDAO clientsDao = new ClientsDAO();
@@ -70,8 +69,7 @@ public class Principal extends javax.swing.JFrame {
         // clients
         new ControllerClients(clientsPanel, clientsDao, gestionCliente);
         
-        new ControllerReports(reportes);
-
+     
     }
 
 //        panelContenido.add(new Reportes(), "reportes");
