@@ -3,6 +3,7 @@ package Vista;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
@@ -17,10 +18,18 @@ public class Reports extends javax.swing.JPanel {
      */
     public Reports() {
         initComponents();
-        iniciarReloj();
+     new Control.reloj().iniciar(getLblDay(), getLblTime());
 
         setBackground(new java.awt.Color(215, 227, 225));
         setPreferredSize(new java.awt.Dimension(820, 700));
+    }
+
+    public JLabel getLblDay() {
+        return lblDay;
+    }
+
+    public JLabel getLblTime() {
+        return lblTime;
     }
 
     public void iniciarReloj() {
@@ -34,8 +43,8 @@ public class Reports extends javax.swing.JPanel {
             String fecha = formatoFecha.format(ahora);
             String hora = formatoHora.format(ahora).toLowerCase();
 
-            lblDay1.setText(fecha);
-            lblTime1.setText(hora);
+            lblDay.setText(fecha);
+            lblTime.setText(hora);
         });
 
         tm.start();
@@ -71,8 +80,8 @@ public class Reports extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        lblTime1 = new javax.swing.JLabel();
-        lblDay1 = new javax.swing.JLabel();
+        lblTime = new javax.swing.JLabel();
+        lblDay = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -93,8 +102,6 @@ public class Reports extends javax.swing.JPanel {
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Ver Reportes");
 
-        setPreferredSize(null);
-
         jPanel1.setPreferredSize(new java.awt.Dimension(850, 700));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -108,17 +115,17 @@ public class Reports extends javax.swing.JPanel {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Estadísticas y Análisis");
 
-        lblTime1.setBackground(new java.awt.Color(215, 227, 225));
-        lblTime1.setForeground(new java.awt.Color(0, 0, 0));
-        lblTime1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTime1.setText("hora");
-        lblTime1.setOpaque(true);
+        lblTime.setBackground(new java.awt.Color(215, 227, 225));
+        lblTime.setForeground(new java.awt.Color(0, 0, 0));
+        lblTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTime.setText("hora");
+        lblTime.setOpaque(true);
 
-        lblDay1.setBackground(new java.awt.Color(215, 227, 225));
-        lblDay1.setForeground(new java.awt.Color(0, 0, 0));
-        lblDay1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDay1.setText("dia");
-        lblDay1.setOpaque(true);
+        lblDay.setBackground(new java.awt.Color(215, 227, 225));
+        lblDay.setForeground(new java.awt.Color(0, 0, 0));
+        lblDay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDay.setText("dia");
+        lblDay.setOpaque(true);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -133,9 +140,9 @@ public class Reports extends javax.swing.JPanel {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblDay1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblDay, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(100, 100, 100)
-                        .addComponent(lblTime1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(89, 89, 89))))
         );
         jPanel4Layout.setVerticalGroup(
@@ -146,8 +153,8 @@ public class Reports extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(lblDay1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTime1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDay, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
@@ -228,10 +235,10 @@ public class Reports extends javax.swing.JPanel {
                         .addComponent(jSeparator1))))
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 790, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel8Layout.createSequentialGroup()
-                            .addGap(38, 38, 38)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 790, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 792, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(359, 359, 359)
@@ -350,8 +357,8 @@ public class Reports extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JLabel lblDay1;
-    private javax.swing.JLabel lblTime1;
+    private javax.swing.JLabel lblDay;
+    private javax.swing.JLabel lblTime;
     private javax.swing.JLabel lblTime2;
     private javax.swing.JTextField txtDesde;
     private javax.swing.JTextField txtHasta;

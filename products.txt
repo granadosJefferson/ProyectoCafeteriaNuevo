@@ -1,34 +1,34 @@
-101,Arroz con Camarones,PlatoFuerte,4500.0,6,Activo,prod_ArrozCamarones.png
-58,Arroz con Atun,PlatoFuerte,3800.0,6,Activo,prod_ArrozConAtun.png
-7,Batido de Chocolate,Lacteos,1500.0,9,Activo,prod_BatidoChocolate.png
+101,Arroz con Camarones,Comidas,4500.0,3,Activo,prod_ArrozCamarones.png
+58,Arroz con Atun,Comidas,3800.0,5,Activo,prod_ArrozConAtun.png
+7,Batido de Chocolate,Lacteos,1500.0,8,Activo,prod_BatidoChocolate.png
 203,Brownie,Postres,1200.0,13,Activo,prod_Brownie.png
-89,Casado,PlatoFuerte,4000.0,9,Activo,prod_Casado.png
+89,Casado,Comidas,4000.0,9,Activo,prod_Casado.png
 14,Cheesecake de Fresa,Postres,2300.0,6,Activo,prod_CheeseCakeFresa.png
 66,Cheesecake de Limon,Postres,2200.0,3,Activo,prod_CheeseCakeLimon.png
 5,Coca Cola,Bebidas,1200.0,14,Activo,prod_CocaColaGod.png
 77,Coca Cola Zero,Bebidas,1200.0,14,Activo,prod_CocaColaNoGod.png
-120,Desayuno Americano,Desayunos,3500.0,6,Activo,prod_DesayunoAmericano.png
+120,Desayuno Americano,Comidas,3500.0,6,Activo,prod_DesayunoAmericano.png
 33,Dona de Caramelo,Postres,900.0,16,Activo,prod_DonaCaramelo.png
-9,Empanada de Carne,Reposteria,1000.0,12,Activo,prod_EmpanadaCarne.png
+9,Empanada de Carne,Comidas,1000.0,12,Activo,prod_EmpanadaCarne.png
 41,Fanta,Bebidas,1200.0,14,Activo,prod_Fanta.png
 98,Gaseosa Dr Pepper,Bebidas,1200.0,8,Activo,prod_GaseosaDrpepper.png
-62,Naranjada,Bebidas_Naturales,1400.0,11,Activo,prod_Naranjada.png
-150,Bebida Natural de Fresa,Bebidas_Naturales,1500.0,9,Activo,prod_NaturalFresa.png
-21,Horchata,Bebidas_Naturales,1300.0,8,Activo,prod_NaturalOrchata.png
-87,Pescado Frito,PlatoFuerte,4800.0,3,Activo,prod_PescadoFrito.png
+62,Naranjada,Bebidas,1400.0,11,Activo,prod_Naranjada.png
+150,Bebida Natural de Fresa,Bebidas,1500.0,9,Activo,prod_NaturalFresa.png
+21,Horchata,Bebidas,1300.0,8,Activo,prod_NaturalOrchata.png
+87,Pescado Frito,Comidas,4800.0,3,Activo,prod_PescadoFrito.png
 44,Queque de Chocolate,Postres,2000.0,6,Activo,prod_QuequeChocolate.png
 52,Queque de Vainilla,Postres,2000.0,6,Activo,prod_QuequeVainilla.png
-11,Sopa de Pollo,Sopas,3000.0,7,Activo,prod_SopaPollo.png
-19,Sopa de Tomate,Sopas,2500.0,4,Activo,prod_SopaTomate.png
+11,Sopa de Pollo,Comidas,3000.0,7,Activo,prod_SopaPollo.png
+19,Sopa de Tomate,Comidas,2500.0,4,Activo,prod_SopaTomate.png
 73,Sprite,Bebidas,1200.0,13,Activo,prod_Sprite.png
-6,Taco de Carne,Comida_Rapida,1800.0,10,Activo,prod_TacoCarnitas.png
-8,Taco de Pollo,Comida_Rapida,1700.0,10,Activo,prod_TacoPollo.png
-95,Tamal de Cerdo,Desayunos,2000.0,4,Activo,prod_TamalCerdo.png
+6,Taco de Carne,Comidas,1800.0,10,Activo,prod_TacoCarnitas.png
+8,Taco de Pollo,Comidas,1700.0,10,Activo,prod_TacoPollo.png
+95,Tamal de Cerdo,Comidas,2000.0,4,Activo,prod_TamalCerdo.png
 1,Cafe Negro,Cafe,1200.0,16,Activo,prod_TazaCafe.png
 3,Cafe Espresso,Cafe,1400.0,15,Activo,prod_TazaCafeExpresso.png
 4,Cafe Frio,Cafe,1600.0,10,Activo,prod_TazaCafeFrio.png
 12,Capuccino,Cafe,1700.0,11,Activo,prod_TazaCapuccino.png
-27,Tortillas Palmeadas,Desayunos,1800.0,7,Activo,prod_TortillasPalmeadas.png
+27,Tortillas Palmeadas,Comidas,1800.0,7,Activo,prod_TortillasPalmeadas.png
 16,Yogurt de Fresa,Lacteos,1300.0,5,Activo,prod_YogurtFresa.png
-003,cas,Bebidas_Naturales,900.0,0,Activo,prod_NaturalOrchata.png
+003,cas,Bebidas,900.0,0,Activo,prod_NaturalOrchata.png
 54,Capuccino Vainilla,Lacteos,1200.0,0,Activo,prod_TazaCapuccino.png

@@ -17,7 +17,7 @@ public class Reportes extends javax.swing.JFrame {
      */
     public Reportes() {
         initComponents();
-        new Control.reloj().iniciar(getLblDay1(), getLblTime1());
+       
     }
 
     public JLabel getLblDay1() {
