@@ -72,17 +72,17 @@ public class ControllerGestionMesas {
 
         if (num == 3) {
             vista.getjPanelMesa3().setBackground(color);
-            vista.getjLabelNumPersonas3().setText(String.valueOf(personas));
+            
         }
 
         if (num == 4) {
             vista.getjPanelMesa4().setBackground(color);
-            vista.getjLabelNumPersonas5().setText(String.valueOf(personas));
+            
         }
 
         if (num == 5) {
             vista.getjPanelMesa5().setBackground(color);
-            vista.getjLabelNumPersonas7().setText(String.valueOf(personas));
+            
         }
     }
 }
