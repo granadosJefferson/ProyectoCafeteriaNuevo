@@ -158,9 +158,13 @@ public class FacturacionDAO {
                 }
             }
         } catch (IOException e) {
+            
             e.printStackTrace();
         }
 
         return res;
     }
+    
+   
+    
 }

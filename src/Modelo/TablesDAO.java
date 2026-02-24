@@ -23,7 +23,7 @@ public class TablesDAO {
         return instancia;
     }
 
-    // 🔥 Crea archivo si no existe y agrega mesas por defecto
+    
     private void inicializarArchivo() {
         try {
             Path path = Paths.get(ARCHIVO);

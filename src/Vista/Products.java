@@ -122,6 +122,8 @@ new Control.reloj().iniciar(getLblDay(), getLblTime());
 
         setBackground(new java.awt.Color(215, 227, 225));
         setFocusable(false);
+        setMaximumSize(null);
+        setMinimumSize(null);
         setPreferredSize(new java.awt.Dimension(1000, 700));
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));

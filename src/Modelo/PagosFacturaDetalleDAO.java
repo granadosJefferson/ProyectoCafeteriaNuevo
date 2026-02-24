@@ -4,13 +4,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PagosFacturaDAO {
+public class PagosFacturaDetalleDAO {
 
-    private static final String ARCHIVO = "pagos_factura.txt";
-    private static final String HEADER = "ID_FACTURA|METODO|MONTO|REFERENCIA|CEDULA_PAGADOR";
+    private static final String ARCHIVO = "pagos_factura_detalle.txt";
+    private static final String HEADER =
+            "ID_FACTURA|ID_PEDIDO|METODO|REFERENCIA|CEDULA_PAGADOR|PRODUCTO|CANTIDAD|PRECIO|TOTAL_LINEA";
 
-    public PagosFacturaDAO() {
-        // estilo productosDAO: carga/asegura recursos al construir
+    public PagosFacturaDetalleDAO() {
         crearArchivoSiNoExiste();
     }
 
@@ -21,37 +21,39 @@ public class PagosFacturaDAO {
                 bw.write(HEADER);
                 bw.newLine();
             } catch (IOException e) {
-                System.out.println("Error creando pagos_factura.txt: " + e.getMessage());
+                System.out.println("Error creando pagos_factura_detalle.txt: " + e.getMessage());
             }
         }
     }
 
-    // ✅ Guarda pago con cédula del pagador
-    public boolean guardarPago(int idFactura, String metodo, int monto, String referencia, String cedulaPagador) {
-        crearArchivoSiNoExiste(); // ✅ clave: si borras el archivo, se recrea aquí
+    public boolean guardarDetalle(int idFactura, int idPedido, String metodo, String referencia,
+                                  String cedulaPagador, String producto, int cantidad, int precio, int totalLinea) {
+        crearArchivoSiNoExiste();
 
         if (metodo == null) metodo = "";
         if (referencia == null) referencia = "";
         if (cedulaPagador == null) cedulaPagador = "";
+        if (producto == null) producto = "";
 
-        String linea = idFactura + "|"
-                + metodo + "|"
-                + monto + "|"
-                + referencia + "|"
-                + cedulaPagador;
+        String linea = idFactura + "|" + idPedido + "|"
+                + metodo + "|" + referencia + "|"
+                + cedulaPagador + "|"
+                + producto + "|"
+                + cantidad + "|"
+                + precio + "|"
+                + totalLinea;
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO, true))) {
             bw.write(linea);
             bw.newLine();
             return true;
         } catch (IOException e) {
-            System.out.println("Error guardando pago: " + e.getMessage());
+            System.out.println("Error guardando detalle pago: " + e.getMessage());
             return false;
         }
     }
 
-    // ✅ Lista pagos por factura (incluye cédula en partes[4])
-    public List<String[]> listarPagosPorFactura(int idFacturaBuscada) {
+    public List<String[]> listarDetallePorFactura(int idFacturaBuscada) {
         crearArchivoSiNoExiste();
 
         List<String[]> res = new ArrayList<>();
@@ -60,28 +62,22 @@ public class PagosFacturaDAO {
 
         try (BufferedReader br = new BufferedReader(new FileReader(f))) {
             String linea;
-
-            // saltar header
-            br.readLine();
+            br.readLine(); // header
 
             while ((linea = br.readLine()) != null) {
                 linea = linea.trim();
                 if (linea.isEmpty()) continue;
 
                 String[] partes = linea.split("\\|", -1);
-
-                // Formato esperado: 0 ID_FACTURA | 1 METODO | 2 MONTO | 3 REFERENCIA | 4 CEDULA_PAGADOR
-                if (partes.length >= 5) {
+                if (partes.length >= 9) {
                     try {
-                        int id = Integer.parseInt(partes[0].trim());
-                        if (id == idFacturaBuscada) {
-                            res.add(partes);
-                        }
+                        int idFactura = Integer.parseInt(partes[0].trim());
+                        if (idFactura == idFacturaBuscada) res.add(partes);
                     } catch (NumberFormatException ignored) {}
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error leyendo pagos_factura.txt: " + e.getMessage());
+            System.out.println("Error leyendo detalle pagos: " + e.getMessage());
         }
 
         return res;
