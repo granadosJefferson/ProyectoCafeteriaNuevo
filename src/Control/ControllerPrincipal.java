@@ -17,7 +17,7 @@ public class ControllerPrincipal {
         conectar(vista.getBtnPedidos(), "order");
         conectar(vista.getBtnMesas(), "mesas");
         conectar(vista.getBtnReportes(), "reportes");
-        conectar(vista.getBtnStart(), "vacio");
+       
         conectar(vista.getBtnFacturacion(), "facturacion");
     }
 
@@ -33,7 +33,7 @@ public class ControllerPrincipal {
         desactive(vista.getBtnPedidos());
         desactive(vista.getBtnMesas());
         desactive(vista.getBtnFacturacion());
-        desactive(vista.getBtnStart());
+   
         desactive(vista.getBtnReportes());
 
         active.setOpaque(true);
@@ -55,7 +55,6 @@ public class ControllerPrincipal {
         desactive(vista.getBtnPedidos());
         desactive(vista.getBtnMesas());
         desactive(vista.getBtnFacturacion());
-        desactive(vista.getBtnStart());
         desactive(vista.getBtnReportes());
         
         // Activar el botón correspondiente
@@ -68,7 +67,8 @@ public class ControllerPrincipal {
             case "mesas": botonActivo = vista.getBtnMesas(); break;
             case "facturacion": botonActivo = vista.getBtnFacturacion(); break;
             case "reportes": botonActivo = vista.getBtnReportes(); break;
-            case "vacio": botonActivo = vista.getBtnStart(); break;
+
+            
         }
         
         if (botonActivo != null) {

@@ -4,7 +4,8 @@
  */
 package Vista;
 
-
+import Control.ControllerReports;
+import Vista.Reports;
 import Control.ControllerGestionMesas;
 import Control.ControllerClients;
 import Control.ControllerInventario;
@@ -22,6 +23,7 @@ import Vista.orders;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+
 /**
  *
  * @author dh057
@@ -35,7 +37,6 @@ public class Principal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
         JPanel vacio = new JPanel();
-
         orders ord = new orders();
         Products p = new Products();
         GestionInventario inv = new GestionInventario();
@@ -43,16 +44,17 @@ public class Principal extends javax.swing.JFrame {
         GestionFacturacion fact = new GestionFacturacion();
         ClientsPanel clientsPanel = new ClientsPanel();
         GestionCliente gestionCliente = new GestionCliente();
-    
+        Reports reportes = new Reports();
 
-        panelContenido.add(vacio, "vacio");
+panelContenido.add(p, "products");
         panelContenido.add(ord, "order");
-        panelContenido.add(p, "products");
+        
         panelContenido.add(inv, "inventario");
         panelContenido.add(mesas, "mesas");
         panelContenido.add(fact, "facturacion");
         panelContenido.add(clientsPanel, "clients");
-     
+        panelContenido.add(reportes, "reportes");
+   
 
         productosDAO prodDao = productosDAO.getInstancia();
         ClientsDAO clientsDao = new ClientsDAO();
@@ -69,7 +71,8 @@ public class Principal extends javax.swing.JFrame {
         // clients
         new ControllerClients(clientsPanel, clientsDao, gestionCliente);
         
-     
+        new ControllerReports(reportes);
+
     }
 
 //        panelContenido.add(new Reportes(), "reportes");
@@ -89,7 +92,6 @@ public class Principal extends javax.swing.JFrame {
         btnProducts = new javax.swing.JButton();
         btnClients = new javax.swing.JButton();
         btnInventario = new javax.swing.JButton();
-        btnStart = new javax.swing.JButton();
         btnMesas = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
         btnPedidos = new javax.swing.JButton();
@@ -155,18 +157,6 @@ public class Principal extends javax.swing.JFrame {
         btnInventario.setPreferredSize(new java.awt.Dimension(70, 22));
         btnInventario.addActionListener(this::btnInventarioActionPerformed);
 
-        btnStart.setBackground(new java.awt.Color(33, 150, 243));
-        btnStart.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        btnStart.setForeground(new java.awt.Color(255, 255, 255));
-        btnStart.setText("Inicio");
-        btnStart.setBorder(null);
-        btnStart.setContentAreaFilled(false);
-        btnStart.setDefaultCapable(false);
-        btnStart.setFocusPainted(false);
-        btnStart.setOpaque(true);
-        btnStart.setPreferredSize(new java.awt.Dimension(70, 22));
-        btnStart.addActionListener(this::btnStartActionPerformed);
-
         btnMesas.setBackground(new java.awt.Color(33, 150, 243));
         btnMesas.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         btnMesas.setForeground(new java.awt.Color(255, 255, 255));
@@ -227,7 +217,6 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(btnInventario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnClients, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                     .addComponent(btnProducts, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnStart, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnReportes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -252,9 +241,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(73, 73, 73)
                 .addComponent(btnProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnClients, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -268,7 +255,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btnFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(174, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
 
         panelContenido.setBackground(new java.awt.Color(215, 227, 225));
@@ -326,9 +313,7 @@ public class Principal extends javax.swing.JFrame {
         return btnReportes;
     }
 
-    public JButton getBtnStart() {
-        return btnStart;
-    }
+  
 
 
     private void btnProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductsActionPerformed
@@ -343,10 +328,6 @@ public class Principal extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnInventarioActionPerformed
-
-    private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
-
-    }//GEN-LAST:event_btnStartActionPerformed
 
     private void btnMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesasActionPerformed
 
@@ -379,7 +360,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnPedidos;
     private javax.swing.JButton btnProducts;
     private javax.swing.JButton btnReportes;
-    private javax.swing.JButton btnStart;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
