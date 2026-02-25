@@ -14,9 +14,8 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author dh057
  * @author Jefferson Granados
- * @author Dilan En esta clase se implementa la interfaz de Gestión de
+ * En esta clase se implementa la interfaz de Gestión de
  * Productos. Permite ingresar datos del producto, seleccionar categoría y
  * mostrar/filtrar imágenes desde la carpeta /img según la categoría elegida.
  */

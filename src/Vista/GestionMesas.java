@@ -116,7 +116,6 @@ public class GestionMesas extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(215, 227, 225));
         setMaximumSize(new java.awt.Dimension(0, 0));
-        setPreferredSize(new java.awt.Dimension(900, 700));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -132,6 +131,7 @@ public class GestionMesas extends javax.swing.JPanel {
         lblTime.setBackground(new java.awt.Color(215, 227, 225));
         lblTime.setForeground(new java.awt.Color(0, 0, 0));
         lblTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hora.png"))); // NOI18N
         lblTime.setText("hora");
         lblTime.setOpaque(true);
 
@@ -184,7 +184,7 @@ public class GestionMesas extends javax.swing.JPanel {
         jLabelNumeroMesa1.setForeground(new java.awt.Color(38, 169, 93));
         jLabelNumeroMesa1.setText("1");
 
-        jLabelMesaIcon.setText("jLabel9");
+        jLabelMesaIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mesas.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanelMesa1Layout = new javax.swing.GroupLayout(jPanelMesa1);
         jPanelMesa1.setLayout(jPanelMesa1Layout);
@@ -200,20 +200,18 @@ public class GestionMesas extends javax.swing.JPanel {
                     .addGroup(jPanelMesa1Layout.createSequentialGroup()
                         .addGap(77, 77, 77)
                         .addGroup(jPanelMesa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelMesaIcon)
-                            .addGroup(jPanelMesa1Layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabelNumeroMesa1)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabelNumeroMesa1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelMesaIcon))))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
         jPanelMesa1Layout.setVerticalGroup(
             jPanelMesa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMesa1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelNumeroMesa1)
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(jLabelMesaIcon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addGap(46, 46, 46)
                 .addGroup(jPanelMesa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNumPersonas1)
                     .addComponent(jLabelPersonasMesa1))
@@ -227,34 +225,32 @@ public class GestionMesas extends javax.swing.JPanel {
         jLabelNumeroMesa00.setForeground(new java.awt.Color(38, 169, 93));
         jLabelNumeroMesa00.setText("2");
 
-        jLabelMesa2Icon.setText("jLabel9");
+        jLabelMesa2Icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mesas.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanelMesa2Layout = new javax.swing.GroupLayout(jPanelMesa2);
         jPanelMesa2.setLayout(jPanelMesa2Layout);
         jPanelMesa2Layout.setHorizontalGroup(
             jPanelMesa2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelMesa2Layout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addGroup(jPanelMesa2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelMesa2Icon)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMesa2Layout.createSequentialGroup()
-                        .addComponent(jLabelNumeroMesa00)
-                        .addGap(14, 14, 14)))
-                .addContainerGap(81, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMesa2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelMesa2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelMesa2Icon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelNumeroMesa00, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(98, 98, 98))
         );
         jPanelMesa2Layout.setVerticalGroup(
             jPanelMesa2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMesa2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelNumeroMesa00)
-                .addGap(35, 35, 35)
+                .addGap(40, 40, 40)
                 .addComponent(jLabelMesa2Icon)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         jPanelMesa3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabelMesa3Icon.setText("jLabel9");
+        jLabelMesa3Icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mesas.png"))); // NOI18N
 
         jLabelNumeroMesa3.setBackground(new java.awt.Color(255, 255, 255));
         jLabelNumeroMesa3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -265,19 +261,17 @@ public class GestionMesas extends javax.swing.JPanel {
         jPanelMesa3.setLayout(jPanelMesa3Layout);
         jPanelMesa3Layout.setHorizontalGroup(
             jPanelMesa3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelMesa3Layout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addGroup(jPanelMesa3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelMesa3Icon)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMesa3Layout.createSequentialGroup()
-                        .addComponent(jLabelNumeroMesa3)
-                        .addGap(12, 12, 12)))
-                .addContainerGap(81, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMesa3Layout.createSequentialGroup()
+                .addContainerGap(84, Short.MAX_VALUE)
+                .addGroup(jPanelMesa3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelMesa3Icon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelNumeroMesa3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(79, 79, 79))
         );
         jPanelMesa3Layout.setVerticalGroup(
             jPanelMesa3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMesa3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(14, 14, 14)
                 .addComponent(jLabelNumeroMesa3)
                 .addGap(35, 35, 35)
                 .addComponent(jLabelMesa3Icon)
@@ -291,20 +285,18 @@ public class GestionMesas extends javax.swing.JPanel {
         jLabelNumeroMesa7.setForeground(new java.awt.Color(38, 169, 93));
         jLabelNumeroMesa7.setText("5");
 
-        jLabelMesa5Icon.setText("jLabel9");
+        jLabelMesa5Icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mesas.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanelMesa5Layout = new javax.swing.GroupLayout(jPanelMesa5);
         jPanelMesa5.setLayout(jPanelMesa5Layout);
         jPanelMesa5Layout.setHorizontalGroup(
             jPanelMesa5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelMesa5Layout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addGroup(jPanelMesa5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelMesa5Icon)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMesa5Layout.createSequentialGroup()
-                        .addComponent(jLabelNumeroMesa7)
-                        .addGap(12, 12, 12)))
-                .addContainerGap(79, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMesa5Layout.createSequentialGroup()
+                .addContainerGap(87, Short.MAX_VALUE)
+                .addGroup(jPanelMesa5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelNumeroMesa7, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelMesa5Icon))
+                .addGap(76, 76, 76))
         );
         jPanelMesa5Layout.setVerticalGroup(
             jPanelMesa5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -323,7 +315,7 @@ public class GestionMesas extends javax.swing.JPanel {
         jLabelNumeroMesa5.setForeground(new java.awt.Color(38, 169, 93));
         jLabelNumeroMesa5.setText("4");
 
-        jLabelMesa4Icon.setText("jLabel9");
+        jLabelMesa4Icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mesas.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanelMesa4Layout = new javax.swing.GroupLayout(jPanelMesa4);
         jPanelMesa4.setLayout(jPanelMesa4Layout);
@@ -331,25 +323,26 @@ public class GestionMesas extends javax.swing.JPanel {
             jPanelMesa4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMesa4Layout.createSequentialGroup()
                 .addGap(75, 75, 75)
-                .addGroup(jPanelMesa4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelMesa4Icon)
-                    .addGroup(jPanelMesa4Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabelNumeroMesa5)))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addComponent(jLabelMesa4Icon)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMesa4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelNumeroMesa5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(80, 80, 80))
         );
         jPanelMesa4Layout.setVerticalGroup(
             jPanelMesa4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMesa4Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabelNumeroMesa5)
-                .addGap(41, 41, 41)
+                .addGap(35, 35, 35)
                 .addComponent(jLabelMesa4Icon)
                 .addContainerGap(77, Short.MAX_VALUE))
         );
 
         jPanelLLevar.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabelMesaLlevarIcon.setText("jLabel9");
+        jLabelMesaLlevarIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pedidosHoy.png"))); // NOI18N
 
         jLabelNumMesaLLevar.setBackground(new java.awt.Color(255, 255, 255));
         jLabelNumMesaLLevar.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -361,20 +354,20 @@ public class GestionMesas extends javax.swing.JPanel {
         jPanelLLevarLayout.setHorizontalGroup(
             jPanelLLevarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLLevarLayout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addGroup(jPanelLLevarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelNumMesaLLevar)
-                    .addComponent(jLabelMesaLlevarIcon))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(89, 89, 89)
+                .addGroup(jPanelLLevarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelMesaLlevarIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelNumMesaLLevar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
         jPanelLLevarLayout.setVerticalGroup(
             jPanelLLevarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLLevarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelNumMesaLLevar)
-                .addGap(31, 31, 31)
+                .addGap(42, 42, 42)
                 .addComponent(jLabelMesaLlevarIcon)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -482,7 +475,7 @@ public class GestionMesas extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -491,7 +484,7 @@ public class GestionMesas extends javax.swing.JPanel {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

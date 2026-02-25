@@ -15,6 +15,14 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 
+/**
+ *
+ * Controlador del panel Products.
+ * Se encarga de cargar productos en la tabla, abrir el formulario para crear/modificar,
+ * eliminar productos y filtrar por ID. También recarga inventario cuando hay cambios de stock.
+ *
+ * @author Jefferson
+ */
 public class controladorProductosPanel {
 
     private final Products vista;
@@ -24,14 +32,17 @@ public class controladorProductosPanel {
     private boolean cargandoTabla = false;
     private boolean cambioProgramatico = false;
 
+    /**
+     * Constructor: configura listeners, modelo de tabla, renderers y carga inicial.
+     * También se suscribe a cambios de stock para recargar la tabla automáticamente.
+     */
     public controladorProductosPanel(Products vista, ControllerInventario invCtrl) {
         this.vista = vista;
         this.dao = productosDAO.getInstancia();
         this.invCtrl = invCtrl;
-        
-          this.dao.addStockChangeCallback(() -> {
+
+        this.dao.addStockChangeCallback(() -> {
             javax.swing.SwingUtilities.invokeLater(() -> {
-              
                 recargarSinFiltro();
             });
         });
@@ -105,7 +116,10 @@ public class controladorProductosPanel {
         );
     }
 
-   
+    /**
+     * Abre la ventana de Gestión de Productos en modo "nuevo".
+     * Al cerrar, recarga la tabla.
+     */
     private void nuevoProducto(ActionEvent e) {
         GestionProductos gp = new GestionProductos();
         new controladorProductos(gp);
@@ -127,6 +141,10 @@ public class controladorProductosPanel {
         gp.setVisible(true);
     }
 
+    /**
+     * Abre la ventana de Gestión de Productos con el producto seleccionado cargado,
+     * para permitir modificarlo. Al cerrar, recarga la tabla.
+     */
     private void modificarProducto(ActionEvent e) {
         int fila = vista.getTableProductos().getSelectedRow();
 
@@ -181,6 +199,10 @@ public class controladorProductosPanel {
         }
     }
 
+    /**
+     * Elimina el producto seleccionado, pidiendo confirmación al usuario.
+     * Si se elimina, recarga la tabla.
+     */
     private void eliminarProducto(ActionEvent e) {
         int fila = vista.getTableProductos().getSelectedRow();
 
@@ -221,10 +243,17 @@ public class controladorProductosPanel {
         }
     }
 
+    /**
+     * Recarga la tabla (alias público) volviendo a cargar los productos.
+     */
     public void recargarTabla() {
         cargarProductosEnTabla();
     }
 
+    /**
+     * Carga todos los productos del DAO en la JTable.
+     * Limpia filas, agrega filas con icono y refresca la vista.
+     */
     private void cargarProductosEnTabla() {
         cargandoTabla = true;
 
@@ -252,6 +281,10 @@ public class controladorProductosPanel {
 
     }
 
+    /**
+     * Carga un Icon desde /img/ y lo escala para mostrarlo en la tabla.
+     * Si no existe imagen, retorna null.
+     */
     private Icon cargarIcono(String nombreImg) {
         if (nombreImg == null || nombreImg.isBlank()) {
             return null;
@@ -268,6 +301,10 @@ public class controladorProductosPanel {
         return new ImageIcon(img);
     }
 
+    /**
+     * Filtra la tabla por el texto escrito en TxtProductoSeleccionado (ID parcial).
+     * Evita ejecutar si se está cargando tabla o si el cambio fue programático.
+     */
     private void filtrarPorId() {
 
         if (cargandoTabla) {
@@ -313,6 +350,10 @@ public class controladorProductosPanel {
         }
     }
 
+    /**
+     * Recarga productos limpiando el filtro del textbox y refrescando tabla.
+     * Si existe controlador de inventario, también le pide recargar.
+     */
     private void recargarSinFiltro() {
 
         cargandoTabla = true;
@@ -329,6 +370,9 @@ public class controladorProductosPanel {
 
     }
 
+    /**
+     * Aplica un filtro desde código (sin disparar el filtrado por listener).
+     */
     public void setFiltroProgramatico(String txt) {
         cambioProgramatico = true;
         vista.getTxtProductoSeleccionado().setText(txt);
