@@ -1,6 +1,6 @@
 101,Arroz con Camarones,PlatoFuerte,4500.0,3,Activo,prod_ArrozCamarones.png
 58,Arroz con Atun,PlatoFuerte,3800.0,2,Activo,prod_ArrozConAtun.png
-7,Batido de Chocolate,Lacteos,1500.0,4,Activo,prod_BatidoChocolate.png
+7,Batido de Chocolate,Lacteos,1500.0,3,Activo,prod_BatidoChocolate.png
 203,Brownie,Postres,1200.0,13,Activo,prod_Brownie.png
 89,Casado,PlatoFuerte,4000.0,7,Activo,prod_Casado.png
 14,Cheesecake de Fresa,Postres,2300.0,4,Activo,prod_CheeseCakeFresa.png

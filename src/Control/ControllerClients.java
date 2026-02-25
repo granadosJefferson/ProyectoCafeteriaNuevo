@@ -8,6 +8,10 @@ import Modelo.ClientsDAO;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AbstractDocument;
+import Utils.SoloNumerosFilter;
+import Utils.SoloNumerosDecimalesFilter;
+import Utils.SoloLetrasEspaciosFilter;
 
 public class ControllerClients {
 
@@ -17,7 +21,6 @@ public class ControllerClients {
 
     private final Mensajes msj = new Mensajes();
 
-    // Control simple para saber si es NUEVO o MODIFICAR
     private boolean editando = false;
     private String cedulaEditando = "";
 
@@ -26,9 +29,11 @@ public class ControllerClients {
         this.cdao = cdao;
         this.gestioncliente = gestioncliente;
 
+        // ✅ solo números en ID y Visitas
+        aplicarFiltros(gestioncliente);
+
         loadTabledata();
 
-        // Botones del panel
         this.clientp.getBtnNewClient().addActionListener(e -> openGestionClienteNuevo());
         this.clientp.getBtnModificar().addActionListener(e -> openGestionClienteModificar());
         this.clientp.getBtnEliminar().addActionListener(e -> eliminarCliente());
@@ -38,12 +43,15 @@ public class ControllerClients {
         try {
             gc.getTxtId().setText("");
             gc.getTxtNombre().setText("");
-            gc.getTxtTipo().setText("");
+
+            if (gc.getCmbTipo() != null && gc.getCmbTipo().getItemCount() > 0) {
+                gc.getCmbTipo().setSelectedItem("INFRECUENTE");
+            }
+
             gc.getTxtVisitas().setText("");
             gc.getTxtUltimaVisita().setText("");
             gc.getTxtTotalGastado().setText("");
         } catch (Exception ex) {
-            // no reventar
         }
     }
 
@@ -67,7 +75,9 @@ public class ControllerClients {
 
         try {
             for (Clients c : ListCliente) {
-                if (c == null) continue;
+                if (c == null) {
+                    continue;
+                }
                 model.addRow(new Object[]{
                     c.getCedula(),
                     c.getName(),
@@ -101,10 +111,20 @@ public class ControllerClients {
             // ID editable en nuevo
             gestioncliente.getTxtId().setEditable(true);
 
-            // Quitar listeners viejos (para no duplicar)
+            // Tipo por defecto INFRECUENTE y bloqueado en NUEVO
+            gestioncliente.getCmbTipo().setSelectedItem("INFRECUENTE");
+            gestioncliente.getCmbTipo().setEnabled(false);
+
+            // Visitas = 1 por defecto y NO editable en NUEVO
+            gestioncliente.getTxtVisitas().setText("1");
+            gestioncliente.getTxtVisitas().setEditable(false);
+
+            // Fecha automática y NO editable en NUEVO
+            gestioncliente.getTxtUltimaVisita().setText(obtenerFechaActual());
+            gestioncliente.getTxtUltimaVisita().setEditable(false);
+
             limpiarListenersVentana();
 
-            // Listeners correctos
             gestioncliente.getBtnCancelar().addActionListener(e -> cerrarVentana(gestioncliente));
             gestioncliente.getBtnGuardar().addActionListener(e -> guardarCliente(gestioncliente));
 
@@ -122,7 +142,9 @@ public class ControllerClients {
     // ==========================
     private void openGestionClienteModificar() {
         Clients c = seleccionarClienteDeTabla();
-        if (c == null) return;
+        if (c == null) {
+            return;
+        }
 
         try {
             editando = true;
@@ -130,13 +152,18 @@ public class ControllerClients {
 
             setValoresModificar(gestioncliente, c);
 
-            // ID NO editable en modificar (para evitar enredos)
+            // ID NO editable en modificar
             gestioncliente.getTxtId().setEditable(false);
 
-            // Quitar listeners viejos
+            // En modificar sí se puede editar tipo y visitas
+            gestioncliente.getCmbTipo().setEnabled(true);
+            gestioncliente.getTxtVisitas().setEditable(true);
+
+            // En modificar sí puede cambiar fecha si quiere
+            gestioncliente.getTxtUltimaVisita().setEditable(true);
+
             limpiarListenersVentana();
 
-            // Listeners correctos
             gestioncliente.getBtnCancelar().addActionListener(e -> cerrarVentana(gestioncliente));
             gestioncliente.getBtnGuardar().addActionListener(e -> guardarCliente(gestioncliente));
 
@@ -153,7 +180,10 @@ public class ControllerClients {
         try {
             gc.getTxtId().setText(c.getCedula());
             gc.getTxtNombre().setText(c.getName());
-            gc.getTxtTipo().setText(c.getType());
+
+            String tipo = (c.getType() == null) ? "INFRECUENTE" : c.getType().trim();
+            gc.getCmbTipo().setSelectedItem(tipo);
+
             gc.getTxtVisitas().setText(String.valueOf(c.getVisits()));
             gc.getTxtUltimaVisita().setText(c.getFecha());
             gc.getTxtTotalGastado().setText(String.valueOf(c.getTotal()));
@@ -167,7 +197,9 @@ public class ControllerClients {
     // ==========================
     private void eliminarCliente() {
         Clients c = seleccionarClienteDeTabla();
-        if (c == null) return;
+        if (c == null) {
+            return;
+        }
 
         try {
             boolean ok = cdao.eliminarDeLista(c.getCedula());
@@ -191,7 +223,7 @@ public class ControllerClients {
                 return null;
             }
 
-            Object val = clientp.getJtbMostrarCliente().getValueAt(row, 0); // cedula
+            Object val = clientp.getJtbMostrarCliente().getValueAt(row, 0);
             if (val == null) {
                 msj.message("Selección inválida.");
                 return null;
@@ -203,7 +235,6 @@ public class ControllerClients {
                 return null;
             }
 
-            // buscar en lista
             ArrayList<Clients> ListCliente = cdao.getAll();
             for (Clients c : ListCliente) {
                 if (c != null && cedula.equals(c.getCedula())) {
@@ -224,7 +255,7 @@ public class ControllerClients {
         try {
             String cedula = gestioncliente.getTxtId().getText().trim();
             String name = gestioncliente.getTxtNombre().getText().trim();
-            String type = gestioncliente.getTxtTipo().getText().trim();
+            String type = String.valueOf(gestioncliente.getCmbTipo().getSelectedItem()).trim();
 
             if (cedula.isEmpty() || name.isEmpty() || type.isEmpty()) {
                 msj.message("Cédula, Nombre y Tipo son obligatorios.");
@@ -236,7 +267,9 @@ public class ControllerClients {
 
             try {
                 String v = gestioncliente.getTxtVisitas().getText().trim();
-                if (!v.isEmpty()) visitas = Integer.parseInt(v);
+                if (!v.isEmpty()) {
+                    visitas = Integer.parseInt(v);
+                }
             } catch (Exception ex) {
                 msj.message("Visitas debe ser número entero.");
                 return;
@@ -246,7 +279,9 @@ public class ControllerClients {
 
             try {
                 String t = gestioncliente.getTxtTotalGastado().getText().trim();
-                if (!t.isEmpty()) total = Double.parseDouble(t);
+                if (!t.isEmpty()) {
+                    total = Double.parseDouble(t);
+                }
             } catch (Exception ex) {
                 msj.message("Total debe ser número.");
                 return;
@@ -294,6 +329,38 @@ public class ControllerClients {
             for (var al : gestioncliente.getBtnCancelar().getActionListeners()) {
                 gestioncliente.getBtnCancelar().removeActionListener(al);
             }
+        } catch (Exception ex) {
+        }
+    }
+
+    private String obtenerFechaActual() {
+        return new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+    }
+
+    // ✅ Filtros para ID y Visitas
+    private void aplicarFiltros(GestionCliente gc) {
+
+        try {
+            AbstractDocument docId = (AbstractDocument) gc.getTxtId().getDocument();
+            docId.setDocumentFilter(new SoloNumerosFilter());
+        } catch (Exception ex) {
+        }
+
+        try {
+            AbstractDocument docVisitas = (AbstractDocument) gc.getTxtVisitas().getDocument();
+            docVisitas.setDocumentFilter(new SoloNumerosFilter());
+        } catch (Exception ex) {
+        }
+
+        try {
+            AbstractDocument docTotal = (AbstractDocument) gc.getTxtTotalGastado().getDocument();
+            docTotal.setDocumentFilter(new SoloNumerosDecimalesFilter());
+        } catch (Exception ex) {
+        }
+
+        try {
+            AbstractDocument docNombre = (AbstractDocument) gc.getTxtNombre().getDocument();
+            docNombre.setDocumentFilter(new SoloLetrasEspaciosFilter());
         } catch (Exception ex) {
         }
     }
