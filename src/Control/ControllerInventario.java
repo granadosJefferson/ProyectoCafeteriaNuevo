@@ -3,7 +3,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Control;
-
+/**
+ *
+ * @author Jefferson Granados
+ * @author Dilan Gonzalez
+ * @author Daniel Araya
+ *
+ * En esta clase se controla la lógica del módulo de inventario.
+ *
+ * Responsabilidades principales:
+ * - Cargar y mostrar productos en el panel GestionInventario.
+ * - Filtrar productos por categoría.
+ * - Abrir la gestión de productos (agregar/editar) cuando corresponda.
+ * - Refrescar la vista cuando hay cambios de stock (callbacks del DAO).
+ *
+ * Notas:
+ * - Los mensajes al usuario se muestran mediante la clase Mensajes.
+ * - Las actualizaciones visuales deben ejecutarse en el hilo de Swing (EDT) cuando aplique.
+ */
 import Modelo.Product;
 import Modelo.productosDAO;
 import Vista.GestionInventario;

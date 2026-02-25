@@ -1,9 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package Vista;
 
+package Vista;
+/**
+ *
+ * @author Jefferson Granados
+ * @author Dilan Gonzalez
+ * @author Daniel Araya
+ *
+ * Esta clase es la ventana principal del sistema.
+ *
+ * Responsabilidades principales:
+ * - Mostrar el menú principal y contener los módulos en un CardLayout.
+ * - Servir como contenedor de paneles (inventario, pedidos, clientes, etc.).
+ * - Permitir la navegación visual entre módulos.
+ *
+ * Notas:
+ * - La lógica de navegación (botones -> panel) debe estar en ControllerPrincipal.
+ * - Esta clase debe enfocarse en estructura visual y contención de vistas.
+ */
 import Control.ControllerReports;
 import Vista.Reports;
 import Control.ControllerGestionMesas;

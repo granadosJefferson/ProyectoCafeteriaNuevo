@@ -1,5 +1,21 @@
 package Control;
-
+/**
+ *
+ * @author Jefferson Granados
+ * @author Dilan Gonzalez
+ * @author Daniel Araya
+ *
+ * En esta clase se controla la navegación del menú principal.
+ *
+ * Responsabilidades principales:
+ * - Asociar cada botón del menú con un panel del CardLayout.
+ * - Cambiar de módulo dentro de la ventana Principal (show del CardLayout).
+ * - Manejar el estado visual de botones activos (resaltado).
+ *
+ * Notas:
+ * - No debe contener lógica de módulos (inventario, pedidos, etc.), solo navegación.
+ * - Los nombres (keys) deben coincidir con los usados al agregar paneles al CardLayout.
+ */
 import Vista.Principal;
 import java.awt.CardLayout;
 import javax.swing.JButton;

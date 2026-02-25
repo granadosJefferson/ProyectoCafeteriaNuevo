@@ -3,15 +3,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package Vista;
-
+/**
+ *
+ * @author Jefferson Granados
+ * @author Dilan Gonzalez
+ * @author Daniel Araya
+ *
+ * Esta clase representa el panel de gestión de inventario.
+ *
+ * Responsabilidades principales:
+ * - Mostrar el inventario en un grid/lista de productos.
+ * - Proveer controles de filtro por categoría y botón para agregar productos.
+ * - Exponer componentes (combo, botón, panel contenedor) mediante getters.
+ *
+ * Notas:
+ * - No contiene lógica de carga/filtrado; eso lo maneja ControllerInventario.
+ * - initComponents() es generado por NetBeans y no se recomienda modificarlo manualmente.
+ */
 import java.awt.BorderLayout;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /**
  *
@@ -31,8 +44,6 @@ public class GestionInventario extends javax.swing.JPanel {
         wrapper.add(jpanelProducts, BorderLayout.NORTH);
 
         jScroll.setViewportView(wrapper);
-
-        // Para que no aparezca barra horizontal (y obligue a bajar)
         jScroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScroll.getVerticalScrollBar().setUnitIncrement(16);
 
