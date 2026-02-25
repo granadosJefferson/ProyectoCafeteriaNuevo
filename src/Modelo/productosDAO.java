@@ -4,6 +4,24 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author Jefferson Granados
+ * En esta clase se gestiona la persistencia y administración de productos.
+ * Se implementa el patrón Singleton para garantizar una única instancia.
+ * 
+ * Funciones principales:
+ * - Insertar productos
+ * - Actualizar productos
+ * - Eliminar productos
+ * - Buscar productos por ID
+ * - Listar productos
+ * - Cargar y guardar productos en archivo (products.txt)
+ * - Notificar cambios de stock mediante callbacks
+ * 
+ * La información se almacena en un archivo de texto y se mantiene
+ * una lista en memoria para las operaciones CRUD.
+ */
 public class productosDAO {
 
     private static productosDAO instancia;
@@ -64,7 +82,6 @@ public class productosDAO {
                 lista.add(new Product(id, nombre, categoria, precio, cantidad, estado, imagen));
             }
         } catch (Exception e) {
-            System.out.println("Error leyendo productos: " + e.getMessage());
         }
 
         return lista;
@@ -113,13 +130,11 @@ public class productosDAO {
             if (actual.getIdProduct() != null && actual.getIdProduct().trim().equalsIgnoreCase(id)) {
                 list.set(i, producto);
                 guardarProductos();
-                System.out.println("Producto actualizado: " + producto.getNameProduct());
                 notificarStockCambiado();
                 return true;
             }
         }
 
-        System.out.println("Producto con ID " + id + " no encontrado.");
         return false;
     }
 
@@ -130,9 +145,8 @@ public class productosDAO {
         for (int i = 0; i < list.size(); i++) {
             Product p = list.get(i);
             if (p.getIdProduct() != null && p.getIdProduct().trim().equalsIgnoreCase(target)) {
-                Product eliminado = list.remove(i);
+                list.remove(i);
                 guardarProductos();
-                System.out.println("Producto eliminado: " + eliminado.getNameProduct());
                 notificarStockCambiado();
                 return true;
             }
@@ -155,9 +169,7 @@ public class productosDAO {
                 bw.write(linea);
                 bw.newLine();
             }
-            System.out.println("Archivo guardado correctamente.");
         } catch (IOException e) {
-            System.out.println("Error al guardar el archivo: " + e.getMessage());
         }
     }
 
@@ -182,7 +194,6 @@ public class productosDAO {
                 }
             }
         } catch (IOException | NumberFormatException e) {
-            System.out.println("Error al cargar productos: " + e.getMessage());
         }
     }
 

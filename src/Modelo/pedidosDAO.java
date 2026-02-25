@@ -23,7 +23,7 @@ public class pedidosDAO {
     }
 
     public void imprimirRutaArchivoEnUso() {
-        System.out.println("USANDO pedidos.txt EN: " + rutaArchivoEnUso());
+        
     }
 
     public int siguienteId() {
@@ -51,7 +51,7 @@ public class pedidosDAO {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error leyendo pedidos: " + e.getMessage());
+           
             return maxId > 0 ? (maxId + 1) : 1;
         }
 
@@ -62,12 +62,12 @@ public class pedidosDAO {
         linea = safeTrim(linea);
 
         if (linea.isEmpty()) {
-            System.out.println("guardarLinea: línea vacía, no se guarda.");
+          
             return false;
         }
 
         if (!isLineaPedidoValidaMinima(linea)) {
-            System.out.println("guardarLinea: formato inválido, no se guarda. Linea=" + linea);
+            
             return false;
         }
 
@@ -81,7 +81,7 @@ public class pedidosDAO {
             bw.newLine();
             return true;
         } catch (IOException e) {
-            System.out.println("Error guardando pedido: " + e.getMessage());
+            
             return false;
         }
     }
@@ -107,9 +107,9 @@ public class pedidosDAO {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error buscando pedido: " + e.getMessage());
+         
         } catch (Exception e) {
-            System.out.println("Error inesperado buscando pedido: " + e.getMessage());
+           
         }
 
         return null;
@@ -117,8 +117,6 @@ public class pedidosDAO {
 
     public List<String> obtenerPedidosLineasPorMesa(int mesa) {
         
-        
-         System.out.println("USANDO pedidos.txt EN: " + Paths.get(ARCHIVO).toAbsolutePath());
         
         Path path = Paths.get(ARCHIVO);
         if (!Files.exists(path)) {
@@ -155,9 +153,9 @@ public class pedidosDAO {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error buscando pedidos por mesa: " + e.getMessage());
+            
         } catch (Exception e) {
-            System.out.println("Error inesperado buscando pedidos por mesa: " + e.getMessage());
+         
         }
 
         return res;

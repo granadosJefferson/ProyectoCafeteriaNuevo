@@ -26,7 +26,6 @@ public class ControllerInventario {
         
          this.dao.addStockChangeCallback(() -> {
         SwingUtilities.invokeLater(() -> {
-            System.out.println("Stock actualizado - Recargando inventario");
             filtrarPorCategoria();
         });
     });

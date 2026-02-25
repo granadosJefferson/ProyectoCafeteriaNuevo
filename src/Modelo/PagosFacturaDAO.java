@@ -10,7 +10,7 @@ public class PagosFacturaDAO {
     private static final String HEADER = "ID_FACTURA|METODO|MONTO|REFERENCIA|CEDULA_PAGADOR";
 
     public PagosFacturaDAO() {
-        // estilo productosDAO: carga/asegura recursos al construir
+        
         crearArchivoSiNoExiste();
     }
 
@@ -21,14 +21,13 @@ public class PagosFacturaDAO {
                 bw.write(HEADER);
                 bw.newLine();
             } catch (IOException e) {
-                System.out.println("Error creando pagos_factura.txt: " + e.getMessage());
+               
             }
         }
     }
 
-    // ✅ Guarda pago con cédula del pagador
     public boolean guardarPago(int idFactura, String metodo, int monto, String referencia, String cedulaPagador) {
-        crearArchivoSiNoExiste(); // ✅ clave: si borras el archivo, se recrea aquí
+        crearArchivoSiNoExiste(); 
 
         if (metodo == null) metodo = "";
         if (referencia == null) referencia = "";
@@ -45,12 +44,12 @@ public class PagosFacturaDAO {
             bw.newLine();
             return true;
         } catch (IOException e) {
-            System.out.println("Error guardando pago: " + e.getMessage());
+            
             return false;
         }
     }
 
-    // ✅ Lista pagos por factura (incluye cédula en partes[4])
+   
     public List<String[]> listarPagosPorFactura(int idFacturaBuscada) {
         crearArchivoSiNoExiste();
 
@@ -61,7 +60,7 @@ public class PagosFacturaDAO {
         try (BufferedReader br = new BufferedReader(new FileReader(f))) {
             String linea;
 
-            // saltar header
+           
             br.readLine();
 
             while ((linea = br.readLine()) != null) {
@@ -81,7 +80,7 @@ public class PagosFacturaDAO {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error leyendo pagos_factura.txt: " + e.getMessage());
+ 
         }
 
         return res;

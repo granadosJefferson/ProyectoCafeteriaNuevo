@@ -115,6 +115,7 @@ panelContenido.add(p, "products");
         btnProducts.setBackground(new java.awt.Color(33, 150, 243));
         btnProducts.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         btnProducts.setForeground(new java.awt.Color(255, 255, 255));
+        btnProducts.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/productos.png"))); // NOI18N
         btnProducts.setText("Productos");
         btnProducts.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnProducts.setBorderPainted(false);
@@ -134,6 +135,7 @@ panelContenido.add(p, "products");
         btnClients.setBackground(new java.awt.Color(33, 150, 243));
         btnClients.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         btnClients.setForeground(new java.awt.Color(255, 255, 255));
+        btnClients.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/clientes.png"))); // NOI18N
         btnClients.setText("Clientes");
         btnClients.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnClients.setBorderPainted(false);
@@ -148,6 +150,7 @@ panelContenido.add(p, "products");
         btnInventario.setBackground(new java.awt.Color(33, 150, 243));
         btnInventario.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         btnInventario.setForeground(new java.awt.Color(255, 255, 255));
+        btnInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/inventario.png"))); // NOI18N
         btnInventario.setText("Inventario");
         btnInventario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnInventario.setBorderPainted(false);
@@ -160,6 +163,7 @@ panelContenido.add(p, "products");
         btnMesas.setBackground(new java.awt.Color(33, 150, 243));
         btnMesas.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         btnMesas.setForeground(new java.awt.Color(255, 255, 255));
+        btnMesas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mesas.png"))); // NOI18N
         btnMesas.setText("Mesas");
         btnMesas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnMesas.setBorderPainted(false);
@@ -172,6 +176,7 @@ panelContenido.add(p, "products");
         btnReportes.setBackground(new java.awt.Color(33, 150, 243));
         btnReportes.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
+        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pedidosHoy.png"))); // NOI18N
         btnReportes.setText("Reportes");
         btnReportes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnReportes.setBorderPainted(false);
@@ -184,6 +189,7 @@ panelContenido.add(p, "products");
         btnPedidos.setBackground(new java.awt.Color(33, 150, 243));
         btnPedidos.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         btnPedidos.setForeground(new java.awt.Color(255, 255, 255));
+        btnPedidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pedido.png"))); // NOI18N
         btnPedidos.setText("Pedidos");
         btnPedidos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnPedidos.setBorderPainted(false);
@@ -196,6 +202,7 @@ panelContenido.add(p, "products");
         btnFacturacion.setBackground(new java.awt.Color(33, 150, 243));
         btnFacturacion.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         btnFacturacion.setForeground(new java.awt.Color(255, 255, 255));
+        btnFacturacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/factura.png"))); // NOI18N
         btnFacturacion.setText("Facturación");
         btnFacturacion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnFacturacion.setBorderPainted(false);

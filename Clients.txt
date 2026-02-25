@@ -1,3 +1,4 @@
 21312,Daniel,sexi,3,waaiwaaa,67757.0
 1,Dilan,Visitante,1,hoy,1250.0
-119,Jefferson,casual,2,martes,5000.0
+119,Jefferson,casual,3,martes,5000.0
+223344,Miguel,casual,1,viernes,0.0

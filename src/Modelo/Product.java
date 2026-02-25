@@ -4,7 +4,20 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author dh057
+ * @author Jefferson Granados
+ * Esta clase representa la entidad Producto del sistema.
+ * 
+ * Contiene los atributos principales del producto como:
+ * - ID
+ * - Nombre
+ * - Categoría
+ * - Precio
+ * - Cantidad
+ * - Estado
+ * - Ruta de imagen
+ * 
+ * También gestiona la carga y escalado de imágenes mediante ImageIcon
+ * para su visualización en la interfaz gráfica.
  */
 public class Product {
 
@@ -38,10 +51,8 @@ public class Product {
     private void cargarImageIcon() {
         if (image != null && !image.isEmpty()) {
             try {
-                // Intentar cargar desde recursos
                 java.net.URL imgURL = getClass().getResource(image);
                 if (imgURL == null) {
-                    // Intentar como ruta absoluta
                     java.io.File file = new java.io.File(image);
                     if (file.exists()) {
                         imgURL = file.toURI().toURL();
@@ -50,27 +61,23 @@ public class Product {
 
                 if (imgURL != null) {
                     ImageIcon imgOriginal = new ImageIcon(imgURL);
-                    // Escalar a tamaño estándar para vista previa (ej: 100x100)
                     java.awt.Image imgEscalada = imgOriginal.getImage()
                             .getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
                     this.imageIcon = new ImageIcon(imgEscalada);
                 }
             } catch (Exception e) {
-                System.err.println("Error cargando imagen: " + image);
                 this.imageIcon = null;
             }
         }
     }
 
-    // Getter para el ImageIcon
     public ImageIcon getImageIcon() {
         if (imageIcon == null && image != null && !image.isEmpty()) {
-            cargarImageIcon(); // Reintentar si es necesario
+            cargarImageIcon();
         }
         return imageIcon;
     }
 
-    // Getter para imagen escalada a tamaño específico
     public ImageIcon getImageIconScaled(int width, int height) {
         if (getImageIcon() != null) {
             java.awt.Image img = imageIcon.getImage();
@@ -138,5 +145,4 @@ public class Product {
     public void setStatus(String status) {
         this.status = status;
     }
-
 }

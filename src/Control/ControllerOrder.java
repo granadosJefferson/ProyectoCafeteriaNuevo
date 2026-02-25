@@ -6,6 +6,7 @@ import Modelo.ItemPedido;
 import Modelo.Product;
 import Modelo.pedidosDAO;
 import Modelo.productosDAO;
+import Vista.Mensajes;
 import Vista.OrderItemCard;
 import Vista.ProductCard;
 import Vista.orders;
@@ -13,6 +14,25 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
+/**
+ *
+ * @author Jefferson Granados
+ * En esta clase se controla la lógica del módulo de pedidos (Orders).
+ *
+ * Responsabilidades principales:
+ * - Cargar y filtrar productos por categoría/búsqueda.
+ * - Gestionar carrito de compras (agregar, aumentar, disminuir, eliminar).
+ * - Controlar selección de mesas y su capacidad (máx. 4 personas por mesa).
+ * - Buscar y mostrar información del cliente.
+ * - Generar pedidos y persistirlos en "pedidos.txt".
+ * - Descontar stock y notificar cambios mediante callbacks del DAO.
+ *
+ * Notas de arquitectura:
+ * - No se utilizan salidas directas a consola (System.out/System.err).
+ * - Los avisos al usuario se muestran mediante la clase Mensajes.
+ * - Los diálogos de confirmación (YES/NO) se mantienen con JOptionPane
+ *   porque requieren interacción explícita del usuario.
+ */
 public class ControllerOrder {
 
     private orders vista;
@@ -28,12 +48,21 @@ public class ControllerOrder {
     private String mesaActual = null;
     private boolean bloqueoMesas = false;
     private String mesaPermitida = null;
+
+    private final Mensajes mensajes = new Mensajes();
+
     private java.awt.Color COLOR_MESA_NORMAL = new java.awt.Color(153, 153, 153); // gris
     private java.awt.Color COLOR_MESA_SEL = new java.awt.Color(0, 140, 255);     // azul
     private java.awt.Color COLOR_MESA_LLENA = new java.awt.Color(220, 60, 60);   // rojo
 
     private java.util.List<JButton> botonesMesa = new java.util.ArrayList<>();
 
+    /**
+     * Constructor: inicializa el controlador con la vista Orders,
+     * registra listeners y carga información inicial de pedidos/productos.
+     *
+     * @param vista panel Orders
+     */
     public ControllerOrder(orders vista) {
         for (int i = 0; i < cedulasPorMesa.length; i++) {
             cedulasPorMesa[i] = new java.util.ArrayList<>();
@@ -43,8 +72,8 @@ public class ControllerOrder {
         this.clientsDAO = new ClientsDAO();
         this.dao = productosDAO.getInstancia();
 
+        // Callback: cuando cambia stock, recargar productos y resumen (sin imprimir en consola)
         this.dao.addStockChangeCallback(() -> SwingUtilities.invokeLater(() -> {
-            System.out.println("Stock actualizado - Recargando productos en pedidos");
             cargarProductos();
             recargarResumen();
         }));
@@ -94,6 +123,7 @@ public class ControllerOrder {
             categoriaActual = "Comidas";
             cargarProductos();
         });
+
         cargarCedulasDesdePedidosTxt();
         refrescarColoresMesas();
         cargarProductos();
@@ -101,6 +131,10 @@ public class ControllerOrder {
         ocultarCliente();
     }
 
+    /**
+     * Carga cédulas asociadas a mesas leyendo el archivo "pedidos.txt".
+     * Se usa para validar capacidad y bloquear mesa según el cliente.
+     */
     private void cargarCedulasDesdePedidosTxt() {
         java.io.File f = new java.io.File("pedidos.txt");
         if (!f.exists()) {
@@ -141,7 +175,7 @@ public class ControllerOrder {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Error leyendo pedidos.txt: " + e.getMessage());
+            // Sin salida a consola; se omite para no generar ruido.
         }
     }
 
@@ -217,18 +251,12 @@ public class ControllerOrder {
 
     private void marcarMesaLlena(String mesa) {
         JButton b = switch (mesa) {
-            case "1" ->
-                vista.getBtnTable1();
-            case "2" ->
-                vista.getBtnTable2();
-            case "3" ->
-                vista.getBtnTable3();
-            case "4" ->
-                vista.getBtnTable4();
-            case "5" ->
-                vista.getBtnTable5();
-            default ->
-                null;
+            case "1" -> vista.getBtnTable1();
+            case "2" -> vista.getBtnTable2();
+            case "3" -> vista.getBtnTable3();
+            case "4" -> vista.getBtnTable4();
+            case "5" -> vista.getBtnTable5();
+            default -> null;
         };
         if (b != null) {
             b.setBackground(COLOR_MESA_LLENA);
@@ -249,16 +277,11 @@ public class ControllerOrder {
                 vista.getBtnLlevar().setBackground(COLOR_MESA_SEL);
             } else if (!mesaLlena(mesaActual)) {
                 switch (mesaActual.trim()) {
-                    case "1" ->
-                        vista.getBtnTable1().setBackground(COLOR_MESA_SEL);
-                    case "2" ->
-                        vista.getBtnTable2().setBackground(COLOR_MESA_SEL);
-                    case "3" ->
-                        vista.getBtnTable3().setBackground(COLOR_MESA_SEL);
-                    case "4" ->
-                        vista.getBtnTable4().setBackground(COLOR_MESA_SEL);
-                    case "5" ->
-                        vista.getBtnTable5().setBackground(COLOR_MESA_SEL);
+                    case "1" -> vista.getBtnTable1().setBackground(COLOR_MESA_SEL);
+                    case "2" -> vista.getBtnTable2().setBackground(COLOR_MESA_SEL);
+                    case "3" -> vista.getBtnTable3().setBackground(COLOR_MESA_SEL);
+                    case "4" -> vista.getBtnTable4().setBackground(COLOR_MESA_SEL);
+                    case "5" -> vista.getBtnTable5().setBackground(COLOR_MESA_SEL);
                 }
             }
         }
@@ -274,8 +297,7 @@ public class ControllerOrder {
         if (bloqueoMesas && mesaPermitida != null) {
             // LLEVAR siempre permitido
             if (!esLlevar(mesa) && !mesa.equals(mesaPermitida)) {
-                JOptionPane.showMessageDialog(vista,
-                        "No puede elegir esa mesa. El cliente se encuentra en la mesa " + mesaPermitida + ".");
+                mensajes.message("No puede elegir esa mesa. El cliente se encuentra en la mesa " + mesaPermitida + ".");
                 return;
             }
         }
@@ -283,7 +305,7 @@ public class ControllerOrder {
         // mesa llena (no aplica para llevar)
         if (mesaLlena(mesa)) {
             marcarMesaLlena(mesa);
-            JOptionPane.showMessageDialog(vista, "Mesa " + mesa + " está llena (máx 4 personas).");
+            mensajes.message("Mesa " + mesa + " está llena (máx 4 personas).");
             return;
         }
 
@@ -399,15 +421,14 @@ public class ControllerOrder {
         int stock = p.getCant();
 
         if (stock <= 0) {
-            JOptionPane.showMessageDialog(vista, "No hay stock disponible de: " + p.getNameProduct());
+            mensajes.message("No hay stock disponible de: " + p.getNameProduct());
             return;
         }
 
         for (ItemPedido it : carrito) {
             if (it.getPro().getIdProduct().equals(p.getIdProduct())) {
                 if (it.getCant() >= stock) {
-                    JOptionPane.showMessageDialog(vista,
-                            "Stock máximo alcanzado (" + stock + ") para: " + p.getNameProduct());
+                    mensajes.message("Stock máximo alcanzado (" + stock + ") para: " + p.getNameProduct());
                     return;
                 }
                 it.setCant(it.getCant() + 1);
@@ -425,8 +446,7 @@ public class ControllerOrder {
             if (it.getPro().getIdProduct().equals(id)) {
                 int stock = it.getPro().getCant();
                 if (it.getCant() >= stock) {
-                    JOptionPane.showMessageDialog(vista,
-                            "No puede superar el stock (" + stock + ") de: " + it.getPro().getNameProduct());
+                    mensajes.message("No puede superar el stock (" + stock + ") de: " + it.getPro().getNameProduct());
                     return;
                 }
                 it.setCant(it.getCant() + 1);
@@ -506,14 +526,14 @@ public class ControllerOrder {
 
         String ced = vista.getTxtCed().getText().trim();
         if (ced.isEmpty()) {
-            JOptionPane.showMessageDialog(vista, "Ingrese la cédula.");
+            mensajes.message("Ingrese la cédula.");
             return;
         }
 
         clienteActual = clientsDAO.buscarPorCedula(ced);
 
         if (clienteActual == null) {
-            JOptionPane.showMessageDialog(vista, "Cliente no encontrado.");
+            mensajes.message("Cliente no encontrado.");
             ocultarCliente();
             return;
         }
@@ -587,16 +607,11 @@ public class ControllerOrder {
 
             // Mesa donde está el cliente: gris
             switch (mesaPermitida) {
-                case "1" ->
-                    vista.getBtnTable1().setBackground(COLOR_MESA_NORMAL);
-                case "2" ->
-                    vista.getBtnTable2().setBackground(COLOR_MESA_NORMAL);
-                case "3" ->
-                    vista.getBtnTable3().setBackground(COLOR_MESA_NORMAL);
-                case "4" ->
-                    vista.getBtnTable4().setBackground(COLOR_MESA_NORMAL);
-                case "5" ->
-                    vista.getBtnTable5().setBackground(COLOR_MESA_NORMAL);
+                case "1" -> vista.getBtnTable1().setBackground(COLOR_MESA_NORMAL);
+                case "2" -> vista.getBtnTable2().setBackground(COLOR_MESA_NORMAL);
+                case "3" -> vista.getBtnTable3().setBackground(COLOR_MESA_NORMAL);
+                case "4" -> vista.getBtnTable4().setBackground(COLOR_MESA_NORMAL);
+                case "5" -> vista.getBtnTable5().setBackground(COLOR_MESA_NORMAL);
             }
 
             // LLEVAR azul
@@ -650,17 +665,17 @@ public class ControllerOrder {
     private void realizarPedido() {
 
         if (clienteActual == null) {
-            JOptionPane.showMessageDialog(vista, "Debe buscar un cliente primero");
+            mensajes.message("Debe buscar un cliente primero");
             return;
         }
 
         if (mesaActual == null) {
-            JOptionPane.showMessageDialog(vista, "Debe seleccionar una mesa o Para llevar");
+            mensajes.message("Debe seleccionar una mesa o Para llevar");
             return;
         }
 
         if (carrito.isEmpty()) {
-            JOptionPane.showMessageDialog(vista, "El pedido está vacío");
+            mensajes.message("El pedido está vacío");
             return;
         }
 
@@ -680,7 +695,7 @@ public class ControllerOrder {
         if (!esLlevar(mesaActual)) {
             int idx = idMesa(mesaActual);
             if (idx < 0) {
-                JOptionPane.showMessageDialog(vista, "Mesa inválida.");
+                mensajes.message("Mesa inválida.");
                 return;
             }
 
@@ -689,7 +704,7 @@ public class ControllerOrder {
             boolean yaEsta = lista.contains(ced);
 
             if (!yaEsta && lista.size() >= 4) {
-                JOptionPane.showMessageDialog(vista, "Mesa " + mesaActual + " está llena (máx 4 personas).");
+                mensajes.message("Mesa " + mesaActual + " está llena (máx 4 personas).");
                 marcarMesaLlena(mesaActual);
                 return;
             }
@@ -753,8 +768,10 @@ public class ControllerOrder {
         ocultarCliente();
         mesaActual = null;
         refrescarColoresMesas();
-        JOptionPane.showMessageDialog(vista, "Pedido realizado con éxito\nID Pedido: " + idPedido);
 
+        mensajes.message("Pedido realizado con éxito\nID Pedido: " + idPedido);
+
+        // ✅ Confirmación: se mantiene con JOptionPane (acción del usuario)
         int respuesta = JOptionPane.showConfirmDialog(vista,
                 "¿Desea generar la factura para este pedido?",
                 "Facturar",

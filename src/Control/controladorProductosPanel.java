@@ -31,7 +31,7 @@ public class controladorProductosPanel {
         
           this.dao.addStockChangeCallback(() -> {
             javax.swing.SwingUtilities.invokeLater(() -> {
-                System.out.println("Stock actualizado - Recargando tabla de productos");
+              
                 recargarSinFiltro();
             });
         });

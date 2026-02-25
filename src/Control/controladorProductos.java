@@ -3,28 +3,49 @@ package Control;
 import Modelo.Product;
 import Modelo.productosDAO;
 import Vista.GestionProductos;
+import Vista.Mensajes;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author Jefferson granados
+ * @author Jefferson Granados
+ * En esta clase se controla la lógica de guardado/modificación de productos.
+ * Se validan campos, se consulta el DAO y se muestran mensajes usando la clase Mensajes.
  */
 public class controladorProductos {
 
-    private GestionProductos vista;
-    private productosDAO dao;
+    private final GestionProductos vista;
+    private final productosDAO dao;
+    private final Mensajes mensajes;
 
+    /**
+     * Constructor: recibe la vista, obtiene la instancia del DAO y registra eventos.
+     *
+     * @param vista formulario GestionProductos
+     */
     public controladorProductos(GestionProductos vista) {
         this.vista = vista;
         this.dao = productosDAO.getInstancia();
+        this.mensajes = new Mensajes();
 
         // Registrar eventos
         this.vista.getBtnGuardar().addActionListener(this::guardarProducto);
         this.vista.getBtnCancelar().addActionListener(e -> vista.dispose());
 
+        // Filtrar imágenes cuando cambia la categoría
+        this.vista.getComboCategoria().addActionListener(ev -> {
+            String cat = this.vista.getComboCategoria().getSelectedItem().toString();
+            this.vista.filtrarImagenesPorCategoria(cat);
+        });
     }
 
+    /**
+     * Guarda un producto nuevo o modifica uno existente.
+     * Valida campos obligatorios, convierte tipos y usa el DAO para persistencia.
+     *
+     * @param e evento del botón Guardar
+     */
     private void guardarProducto(ActionEvent e) {
 
         try {
@@ -38,10 +59,7 @@ public class controladorProductos {
                     || vista.getTxtCantidad().getText().trim().isEmpty()
                     || vista.getTxtImagen().getText().trim().isEmpty()) {
 
-                JOptionPane.showMessageDialog(vista,
-                        "Complete todos los campos obligatorios",
-                        "Error",
-                        JOptionPane.WARNING_MESSAGE);
+                mensajes.message("Complete todos los campos obligatorios");
                 return;
             }
 
@@ -51,15 +69,16 @@ public class controladorProductos {
             String categoria = vista.getComboCategoria().getSelectedItem().toString();
             double precio = Double.parseDouble(vista.getTxtPrecio().getText().trim());
             int cantidad = Integer.parseInt(vista.getTxtCantidad().getText().trim());
-            //String descripcion = vista.getTxtDescripcion().getText().trim();
             String imagen = vista.getTxtImagen().getText().trim();
             String estado = (cantidad > 0) ? "Activo" : "Inactivo";
 
             Product nuevo = new Product(id, nombre, categoria, precio, cantidad, estado, imagen);
+
             // Verificar si el producto ya existe
             Product existente = dao.buscarProductoPorId(id);
 
             if (existente != null) {
+
                 // Producto existe → preguntar si desea modificar
                 int confirmacion = JOptionPane.showConfirmDialog(vista,
                         "Ya existe un producto con ID: " + id + "\n"
@@ -70,24 +89,16 @@ public class controladorProductos {
                         JOptionPane.WARNING_MESSAGE);
 
                 if (confirmacion == JOptionPane.YES_OPTION) {
+
                     // Actualizar producto
                     boolean actualizado = dao.actualizarProducto(nuevo);
 
                     if (actualizado) {
-                        JOptionPane.showMessageDialog(vista,
-                                "Producto modificado correctamente",
-                                "Éxito",
-                                JOptionPane.INFORMATION_MESSAGE);
-
+                        mensajes.message("Producto modificado correctamente");
                         vista.limpiarFormulario();
                         vista.dispose();
-
                     } else {
-
-                        JOptionPane.showMessageDialog(vista,
-                                "No se pudo modificar el producto",
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE);
+                        mensajes.message("No se pudo modificar el producto");
                     }
                 }
 
@@ -96,26 +107,16 @@ public class controladorProductos {
                 boolean guardado = dao.insertarProducto(nuevo);
 
                 if (guardado) {
-                    JOptionPane.showMessageDialog(vista,
-                            "Producto guardado correctamente",
-                            "Éxito",
-                            JOptionPane.INFORMATION_MESSAGE);
-
+                    mensajes.message("Producto guardado correctamente");
                     vista.limpiarFormulario();
                     vista.dispose();
-
                 } else {
-                    JOptionPane.showMessageDialog(vista,
-                            "Error al guardar el producto",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
+                    mensajes.message("Error al guardar el producto");
                 }
             }
+
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(vista,
-                    "Precio y cantidad deben ser números válidos",
-                    "Error de formato",
-                    JOptionPane.ERROR_MESSAGE);
+            mensajes.message("Precio y cantidad deben ser números válidos");
         }
     }
 

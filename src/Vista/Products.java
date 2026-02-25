@@ -1,6 +1,5 @@
 package Vista;
 
-
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -11,32 +10,46 @@ import javax.swing.table.TableColumn;
 
 /**
  *
- * @author dh057
+ * @author Jefferson Granados Esta clase representa el panel de gestión y
+ * visualización de productos.
+ *
+ * Se encarga de: - Inicializar los componentes gráficos - Mostrar fecha y hora
+ * mediante la clase reloj - Configurar la tabla de productos - Ajustar la
+ * visualización de imágenes dentro de la tabla
  */
 public class Products extends javax.swing.JPanel {
 
     /**
-     * Creates new form Start
+     * Constructor del panel Products. Inicializa los componentes gráficos,
+     * activa el reloj y configura la visualización de la tabla.
      */
     public Products() {
         initComponents();
-new Control.reloj().iniciar(getLblDay(), getLblTime());
-        
+        new Control.reloj().iniciar(getLblDay(), getLblTime());
+
         TableProductos.setRowHeight(80);
-         configurarColumnaImagen();
-      
+        configurarColumnaImagen();
     }
 
+    /**
+     * Devuelve la etiqueta que muestra el día actual.
+     */
     public JLabel getLblDay() {
         return lblDay;
     }
 
+    /**
+     * Devuelve la etiqueta que muestra la hora actual.
+     */
     public JLabel getLblTime() {
         return lblTime;
     }
 
-    
-
+    /**
+     * Configura la columna de imágenes en la tabla de productos. Ajusta el
+     * tamaño de la columna y define un renderer personalizado para mostrar
+     * correctamente los íconos centrados.
+     */
     private void configurarColumnaImagen() {
         TableColumn colImg = TableProductos.getColumnModel().getColumn(6);
 
@@ -53,9 +66,6 @@ new Control.reloj().iniciar(getLblDay(), getLblTime());
             }
         });
     }
-
-    
-    
 
     public JTable getTableProductos() {
         return TableProductos;
@@ -271,7 +281,7 @@ new Control.reloj().iniciar(getLblDay(), getLblTime());
                     .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(208, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,6 +341,5 @@ new Control.reloj().iniciar(getLblDay(), getLblTime());
     private javax.swing.JLabel lblTime3;
     private javax.swing.JTextField txtProductoSeleccionado;
     // End of variables declaration//GEN-END:variables
-
 
 }

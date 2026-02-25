@@ -8,7 +8,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -16,34 +15,83 @@ import javax.swing.JTextField;
 /**
  *
  * @author dh057
+ * @author Jefferson Granados
+ * @author Dilan En esta clase se implementa la interfaz de Gestión de
+ * Productos. Permite ingresar datos del producto, seleccionar categoría y
+ * mostrar/filtrar imágenes desde la carpeta /img según la categoría elegida.
  */
 public class GestionProductos extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GestionProductos.class.getName());
-    
+
+    private final Mensajes mensajes = new Mensajes();
+
+    private DefaultListModel<ItemImagen> modeloImagenes;
+
+    private static final java.util.Map<String, String> IMG_CAT = new java.util.HashMap<>();
+
+    static {
+
+        IMG_CAT.put("prod_ArrozCamarones.png", "Comidas");
+        IMG_CAT.put("prod_ArrozConAtun.png", "Comidas");
+        IMG_CAT.put("prod_Casado.png", "Comidas");
+        IMG_CAT.put("prod_DesayunoAmericano.png", "Comidas");
+        IMG_CAT.put("prod_EmpanadaCarne.png", "Comidas");
+        IMG_CAT.put("prod_HuevoFrito.png", "Comidas");
+        IMG_CAT.put("prod_PescadoFrito.png", "Comidas");
+        IMG_CAT.put("prod_SopaPollo.png", "Comidas");
+        IMG_CAT.put("prod_SopaTomate.png", "Comidas");
+        IMG_CAT.put("prod_TacoCarnitas.png", "Comidas");
+        IMG_CAT.put("prod_TacoPollo.png", "Comidas");
+        IMG_CAT.put("prod_TamalCerdo.png", "Comidas");
+        IMG_CAT.put("prod_TortillasPalmeadas.png", "Comidas");
+
+        IMG_CAT.put("prod_Brownie.png", "Postres");
+        IMG_CAT.put("prod_CheeseCakeFresa.png", "Postres");
+        IMG_CAT.put("prod_CheeseCakeLimon.png", "Postres");
+        IMG_CAT.put("prod_DonaCaramelo.png", "Postres");
+        IMG_CAT.put("prod_QuequeChocolate.png", "Postres");
+        IMG_CAT.put("prod_QuequeVainilla.png", "Postres");
+
+        IMG_CAT.put("prod_TazaCafe.png", "Cafe");
+        IMG_CAT.put("prod_TazaCafeExpresso.png", "Cafe");
+        IMG_CAT.put("prod_TazaCafeFrio.png", "Cafe");
+        IMG_CAT.put("prod_TazaCapuccino.png", "Cafe");
+
+        IMG_CAT.put("prod_CocaColaGod.png", "Bebidas");
+        IMG_CAT.put("prod_CocaColaNoGod.png", "Bebidas");
+        IMG_CAT.put("prod_Fanta.png", "Bebidas");
+        IMG_CAT.put("prod_GaseosaDrpepper.png", "Bebidas");
+        IMG_CAT.put("prod_Sprite.png", "Bebidas");
+        IMG_CAT.put("prod_Naranjada.png", "Bebidas");
+        IMG_CAT.put("prod_NaturalFresa.png", "Bebidas");
+        IMG_CAT.put("prod_NaturalOrchata.png", "Bebidas");
+
+        IMG_CAT.put("prod_BatidoChocolate.png", "Lacteos");
+        IMG_CAT.put("prod_YogurtFresa.png", "Lacteos");
+        IMG_CAT.put("prod_BatidoMora.png", "Lacteos");
+        IMG_CAT.put("prod_BatidoOreo.png", "Lacteos");
+
+    }
+
     /**
-     * Creates new form GestionProducto
+     * Creates new form GestionProducto Constructor: inicializa componentes y
+     * configura el formulario. Se ocultan campos internos y se prepara la lista
+     * de imágenes.
      */
     public GestionProductos() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        //tamaño fijo para el panel, que no sea editable y aparezca centrado
         setSize(789, 580);
-      
 
-        
-        //Hacer que el txtImagen no sea editable a mano, solo al tocar las imageness
         txtImagen.setEditable(false);
         txtImagen.setVisible(false);
         lblImgPro.setVisible(false);
 
-        //Siempre visible la lista de imagenes 
         jScrollPane1.setVisible(true);
 
         configurarListaImagenes();
-
-    
 
     }
 
@@ -268,12 +316,12 @@ public class GestionProductos extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(74, 74, 74)
-                                .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(168, 168, 168)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -296,9 +344,13 @@ public class GestionProductos extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -353,7 +405,6 @@ public class GestionProductos extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         limpiarFormulario();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
 
     public javax.swing.JTextField getTxtImagen() {
         return txtImagen;
@@ -447,6 +498,13 @@ public class GestionProductos extends javax.swing.JFrame {
         return jListImagenes;
     }
 
+    /**
+     * Escala una imagen manteniendo proporción y evitando deformación. Se setea
+     * el tamaño de los iconos aparte de editarse desde el navegador de archivos
+     * para evitar deformaciones
+     *
+     * @return ImageIcon escalado proporcionalmente
+     */
     private ImageIcon escalarProporcional(ImageIcon icono, int maxW, int maxH) {
         int w = icono.getIconWidth();
         int h = icono.getIconHeight();
@@ -463,6 +521,9 @@ public class GestionProductos extends javax.swing.JFrame {
         return new ImageIcon(img);
     }
 
+    /**
+     * Limpia el formulario y deja los campos listos para un nuevo registro.
+     */
     public void limpiarFormulario() {
         txtIDProduct.setText("");
         txtNombre.setText("");
@@ -473,6 +534,10 @@ public class GestionProductos extends javax.swing.JFrame {
         comboCategoria.setSelectedIndex(0);
     }
 
+    /**
+     * Clase interna: representa un item de la lista de imágenes. Guarda el
+     * nombre del archivo y su icono.
+     */
     private static class ItemImagen {
 
         private String nombre;
@@ -498,10 +563,34 @@ public class GestionProductos extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Filtra las imágenes del JList según la categoría seleccionada. Reinicia
+     * selección y preview.
+     */
+    public void filtrarImagenesPorCategoria(String categoria) {
+        if (modeloImagenes == null) {
+            return;
+        }
+
+        cargarImagenesPNGEnModelo(modeloImagenes, categoria);
+
+        jListImagenes.clearSelection();
+        txtImagen.setText("");
+        lblPreviewImg.setIcon(null);
+        lblImgPro.setVisible(false);
+
+        revalidate();
+        repaint();
+    }
+
+    /**
+     * Configura el modelo del JList, su renderer y el listener de selección.
+     * También aplica el filtro inicial usando la categoría actual.
+     */
     private void configurarListaImagenes() {
 
-        DefaultListModel<ItemImagen> modelo = new DefaultListModel<>();
-        jListImagenes.setModel((javax.swing.ListModel) modelo);
+        modeloImagenes = new DefaultListModel<>();
+        jListImagenes.setModel((javax.swing.ListModel) modeloImagenes);
 
         jListImagenes.setCellRenderer(new javax.swing.DefaultListCellRenderer() {
             @Override
@@ -527,10 +616,8 @@ public class GestionProductos extends javax.swing.JFrame {
             }
         });
 
-        // Cargar imágenes del /img
-        cargarImagenesPNGEnModelo(modelo);
+        filtrarImagenesPorCategoria(comboCategoria.getSelectedItem().toString());
 
-        // Selección: guardar nombre en txtImagen
         jListImagenes.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 Object sel = jListImagenes.getSelectedValue();
@@ -548,47 +635,64 @@ public class GestionProductos extends javax.swing.JFrame {
     }
 
     /**
-     * Metodo para mostrar las imagenes en el JlistImagenes, el cual solo
-     * mostrará los archivos en la carpeta img que comiencen con prod_ y
-     * terminen en png
-     *
-     * @param modelo
+     * Carga las imágenes desde /img, filtra por categoría y las agrega al
+     * modelo. Si falta la carpeta, muestra mensaje usando la clase Mensajes.
      */
-    private void cargarImagenesPNGEnModelo(DefaultListModel<ItemImagen> modelo) {
+    /**
+     * Carga las imágenes desde /img, filtra por categoría y las agrega al
+     * modelo. Si falta la carpeta o ocurre un error, se notifica usando la
+     * clase Mensajes.
+     */
+    private void cargarImagenesPNGEnModelo(DefaultListModel<ItemImagen> modelo, String categoriaFiltro) {
         modelo.clear();
 
         try {
             URL url = getClass().getResource("/img");
             if (url == null) {
-                JOptionPane.showMessageDialog(this, "No existe la carpeta /img en resources");
+                mensajes.message("No existe la carpeta /img en resources");
                 return;
             }
 
             java.io.File carpeta = new java.io.File(url.toURI());
             java.io.File[] archivos = carpeta.listFiles();
-
             if (archivos == null) {
                 return;
             }
 
             for (java.io.File archivo : archivos) {
-                String nombre = archivo.getName().toLowerCase();
+                String nombre = archivo.getName();
+                String lower = nombre.toLowerCase();
 
-                if (nombre.endsWith(".png") && nombre.startsWith("prod_")) {
+                // Solo toma archivos PNG que empiecen con "prod_"
+                if (!lower.endsWith(".png") || !lower.startsWith("prod_")) {
+                    continue;
+                }
 
-                    URL imgUrl = getClass().getResource("/img/" + archivo.getName());
-                    if (imgUrl != null) {
-                        ImageIcon icono = new ImageIcon(imgUrl);
-                        modelo.addElement(new ItemImagen(archivo.getName(), icono));
+                // Obtiene la categoría de la imagen según el mapa
+                String catImg = IMG_CAT.get(nombre);
+
+                // Si la imagen tiene categoría asignada, se filtra por la categoría seleccionada
+                if (catImg != null) {
+                    if (categoriaFiltro != null
+                            && !categoriaFiltro.isBlank()
+                            && !catImg.equalsIgnoreCase(categoriaFiltro)) {
+                        continue;
                     }
                 }
+
+                // Carga la imagen y la agrega al modelo del JList
+                URL imgUrl = getClass().getResource("/img/" + nombre);
+                if (imgUrl != null) {
+                    ImageIcon icono = new ImageIcon(imgUrl);
+                    modelo.addElement(new ItemImagen(nombre, icono));
+                }
             }
+
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.log(java.util.logging.Level.SEVERE, "Error cargando imágenes", ex);
+            mensajes.message("Ocurrió un error cargando las imágenes.");
         }
     }
-
-    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

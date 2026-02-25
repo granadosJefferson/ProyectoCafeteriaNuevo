@@ -21,7 +21,7 @@ public class PagosFacturaDetalleDAO {
                 bw.write(HEADER);
                 bw.newLine();
             } catch (IOException e) {
-                System.out.println("Error creando pagos_factura_detalle.txt: " + e.getMessage());
+              
             }
         }
     }
@@ -48,7 +48,7 @@ public class PagosFacturaDetalleDAO {
             bw.newLine();
             return true;
         } catch (IOException e) {
-            System.out.println("Error guardando detalle pago: " + e.getMessage());
+           
             return false;
         }
     }
@@ -62,7 +62,7 @@ public class PagosFacturaDetalleDAO {
 
         try (BufferedReader br = new BufferedReader(new FileReader(f))) {
             String linea;
-            br.readLine(); // header
+            br.readLine(); 
 
             while ((linea = br.readLine()) != null) {
                 linea = linea.trim();
@@ -77,7 +77,7 @@ public class PagosFacturaDetalleDAO {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error leyendo detalle pagos: " + e.getMessage());
+            
         }
 
         return res;
