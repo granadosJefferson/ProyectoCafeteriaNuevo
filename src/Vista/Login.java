@@ -1,9 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Vista;
-
+/**
+ *
+ * @author Jefferson Granados
+ * @author Dilan Gonzalez
+ * @author Daniel Araya
+ *
+ * Esta clase representa la pantalla de Login del sistema.
+ *
+ * Responsabilidades principales:
+ * - Mostrar campos de usuario y contraseña.
+ * - Mostrar botones de iniciar sesión, ir a registro y salir.
+ * - Exponer los componentes con getters para que el controller controle la lógica.
+ *
+ * Notas:
+ * - No contiene lógica de validación ni acceso a datos.
+ * - initComponents() es generado por NetBeans y no se recomienda modificarlo manualmente.
+ */
 import javax.swing.JButton;
 import javax.swing.JTextField;
 

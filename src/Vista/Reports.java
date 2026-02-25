@@ -14,12 +14,15 @@ import javax.swing.Timer;
 
 /**
  *
- * @author Daniel Araya
+ * Panel de reportes.
+ * Inicializa los componentes y muestra fecha/hora en pantalla actualizándose cada segundo.
+ *
+ * @author Jefferson Granados
  */
 public class Reports extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Reports
+        /**
+     * Constructor: crea el panel, inicializa componentes, arranca el reloj y aplica estilo básico.
      */
     public Reports() {
         initComponents();
@@ -29,6 +32,12 @@ public class Reports extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(820, 700));
     }
 
+    /**
+     * Inicia un Timer que actualiza la fecha y hora en los labels cada 1 segundo.
+     * Formatea:
+     * - Fecha: "dd de MMMM de yyyy"
+     * - Hora: "hh:mm:ss am/pm"
+     */
     public void iniciarReloj() {
 
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy");

@@ -15,41 +15,114 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
+/**
+ *
+ * Clase controladora del módulo de facturación.
+ * Se encarga de:
+ * - Cargar pedidos por ID o por mesa (uniendo varios pedidos).
+ * - Mostrar el detalle del pedido en la tabla de facturación.
+ * - Gestionar pagos (efectivo / tarjeta / sinpe) en modo completo o por productos.
+ * - Validar montos, referencias, cédulas autorizadas y reglas de vuelto.
+ * - Generar o actualizar una factura asociada a un pedido y registrar pagos y sus detalles.
+ *
+ * @author Jefferson granados
+ */
 public class ControllerFacturacion {
 
+    /**
+     * Registro débil de controladores por vista, para poder recuperar el controlador
+     * asociado a una instancia específica de GestionFacturacion sin fugas de memoria.
+     */
     private static final Map<GestionFacturacion, ControllerFacturacion> REGISTRY = new WeakHashMap<>();
 
+    /**
+     * Obtiene el controlador asociado a la vista indicada (si existe en el registro).
+     *
+     * @param vista instancia de la vista GestionFacturacion.
+     * @return controlador asociado o null si no existe.
+     */
     public static ControllerFacturacion getFor(GestionFacturacion vista) {
         return REGISTRY.get(vista);
     }
 
+    /** Vista principal del módulo de facturación (UI). */
     private final GestionFacturacion vista;
+
+    /** DAO para operaciones de factura (crear, buscar, siguiente ID, etc.). */
     private final FacturacionDAO facturaDAO;
+
+    /** DAO para registrar pagos de factura. */
     private final PagosFacturaDAO pagosDAO;
+
+    /** DAO para leer pedidos desde almacenamiento (ej: pedidos.txt). */
     private final pedidosDAO pedidosDAO;
+
+    /** DAO singleton para consulta de productos (nombre, etc.). */
     private final productosDAO productosDao;
+
+    /** DAO para registrar detalle por producto pagado (cuando es modo por productos). */
     private final PagosFacturaDetalleDAO pagosDetalleDAO;
+
+    /**
+     * Set con índices de filas (tabla factura) que ya fueron pagadas (modo por productos).
+     * Sirve para bloquear selección/edición de dichas filas.
+     */
     private final Set<Integer> filasPagadas = new HashSet<>();
+
+    /**
+     * Lista paralela a la tabla de pagos: por cada pago agregado, guarda el conjunto de filas
+     * de factura que se liquidaron con ese pago (solo aplica en modo por productos).
+     */
     private final List<Set<Integer>> filasPagadasPorPago = new ArrayList<>();
+
+    /**
+     * En búsqueda por mesa, se guardan las cédulas válidas provenientes de los pedidos de esa mesa.
+     * Luego se valida que el pagador pertenezca a esas cédulas.
+     */
     private final Set<String> cedulasPermitidas = new HashSet<>();
+
+    /**
+     * Bandera para indicar que se cargó información por mesa (unificando pedidos),
+     * y no un pedido individual.
+     */
     private boolean modoMesaCargado = false;
 
+    /** Modelo de tabla para la factura (detalle de productos/cantidades/precios). */
     private DefaultTableModel modeloFactura;
+
+    /** Modelo de tabla para pagos (método, monto, referencia, cédula). */
     private DefaultTableModel modeloPagos;
 
+    /**
+     * ID del pedido cargado actualmente.
+     * - >0 : pedido individual.
+     * - 0  : sin pedido cargado.
+     * - <0 : modo mesa (se usa -mesa como marcador).
+     */
     private int idPedidoActual = 0;
+
+    /** Método de pago seleccionado actualmente en UI (EFECTIVO/TARJETA/SINPE). */
     private String metodoPagoSeleccionado = null;
 
+    /** Montos totales del pedido cargado. */
     private int subtotalPedido = 0;
     private int ivaPedido = 0;
     private int totalPedido = 0;
 
+    /** Montos que se van a pagar según el modo (completo o por productos seleccionados). */
     private int subtotalAPagar = 0;
     private int ivaAPagar = 0;
     private int totalAPagar = 0;
 
+    /** Formateador para montos (separadores de miles). */
     private final DecimalFormat df = new DecimalFormat("#,##0");
 
+    /**
+     * Constructor del controlador. Inicializa DAOs, configura tablas, listeners,
+     * carga fecha/hora y deja la UI lista con montos en cero.
+     *
+     * @param vista instancia de la UI GestionFacturacion.
+     */
     public ControllerFacturacion(GestionFacturacion vista) {
         this.vista = vista;
         this.facturaDAO = new FacturacionDAO();
@@ -60,7 +133,15 @@ public class ControllerFacturacion {
 
         configurarTablaFactura();
         configurarTablaPagos();
+
+        ocultarTablaPagos();
+
         configurarListeners();
+
+        vista.getTblPagos().setVisible(false);
+        vista.getTblPagos().getParent().setVisible(false);
+        vista.revalidate();
+        vista.repaint();
 
         cargarDatosIniciales();
         limpiarPagosUI();
@@ -69,6 +150,12 @@ public class ControllerFacturacion {
         REGISTRY.put(vista, this);
     }
 
+    /**
+     * Configura la tabla principal de facturación:
+     * - Define columnas y tipos.
+     * - Controla edición de selección (col 0) solo en modo por productos y si no está pagada.
+     * - Agrega listener para recalcular montos al cambiar selección.
+     */
     private void configurarTablaFactura() {
         modeloFactura = new DefaultTableModel(
                 new String[]{"Sel", "Cantidad", "Producto", "Precio", "Total"}, 0
@@ -76,12 +163,9 @@ public class ControllerFacturacion {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return switch (columnIndex) {
-                    case 0 ->
-                        Boolean.class;
-                    case 1, 3, 4 ->
-                        Integer.class;
-                    default ->
-                        String.class;
+                    case 0 -> Boolean.class;
+                    case 1, 3, 4 -> Integer.class;
+                    default -> String.class;
                 };
             }
 
@@ -95,6 +179,8 @@ public class ControllerFacturacion {
 
         vista.getjTableFacturacion().setModel(modeloFactura);
 
+        // Cuando cambia la selección (columna 0) en modo por productos,
+        // se recalcula el monto a pagar y el estado pagado/saldo.
         modeloFactura.addTableModelListener(e -> {
             if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 0) {
                 recalcularMontoAPagarSegunModo();
@@ -103,6 +189,13 @@ public class ControllerFacturacion {
         });
     }
 
+    /**
+     * Normaliza una cédula dejando únicamente dígitos, y eliminando espacios/símbolos.
+     * Si viene null retorna "".
+     *
+     * @param c cédula original ingresada.
+     * @return cédula normalizada solo con números.
+     */
     private String normalizarCedula(String c) {
         if (c == null) {
             return "";
@@ -110,6 +203,43 @@ public class ControllerFacturacion {
         return c.trim().replaceAll("[^0-9]", "");
     }
 
+    /**
+     * Oculta visualmente la tabla de pagos y su contenedor (JScrollPane si existe).
+     * Se usa para mantener la UI limpia según el diseño.
+     */
+    private void ocultarTablaPagos() {
+        JTable t = vista.getTblPagos();
+        if (t == null) return;
+
+        // Oculta la tabla
+        t.setVisible(false);
+
+        // Busca y oculta el JScrollPane que la contiene
+        java.awt.Component c = t;
+        while (c != null && !(c instanceof javax.swing.JScrollPane)) {
+            c = c.getParent();
+        }
+        if (c != null) {
+            c.setVisible(false);
+        } else {
+            // Fallback: al menos oculta los padres inmediatos
+            java.awt.Container p = t.getParent();
+            if (p != null) p.setVisible(false);
+        }
+
+        vista.revalidate();
+        vista.repaint();
+    }
+
+    /**
+     * Procesa el pago final:
+     * - Valida que haya un pedido cargado y al menos un pago agregado.
+     * - En modo por productos: exige que no queden productos pendientes.
+     * - En modo completo: valida monto suficiente y reglas de vuelto (solo con efectivo).
+     * - Crea o reutiliza factura (si ya existía para el pedido).
+     * - Guarda cada pago y, si aplica, el detalle de productos pagados por pago.
+     * - Muestra confirmación y limpia la factura completa.
+     */
     private void procesarPago() {
         vista.getBtnRealizarPedido().setEnabled(false);
 
@@ -124,6 +254,7 @@ public class ControllerFacturacion {
                 return;
             }
 
+            // Validaciones según modo
             if (isModoPorProductos()) {
                 int subPend = subtotalPendienteNoPagado();
                 if (subPend > 0) {
@@ -134,11 +265,13 @@ public class ControllerFacturacion {
                     return;
                 }
 
+                // Si no quedan pendientes, se registra como pago total del pedido.
                 subtotalAPagar = subtotalPedido;
                 ivaAPagar = ivaPedido;
                 totalAPagar = totalPedido;
 
             } else {
+                // Modo completo: valida monto pagado vs total y reglas de vuelto
                 int pagado = pagadoTotalEnTabla();
                 int saldo = totalPedido - pagado;
 
@@ -167,11 +300,13 @@ public class ControllerFacturacion {
             int idFactura;
             boolean facturaNueva = false;
 
+            // Busca factura existente si el pedido es individual (>0)
             String[] facturaExistente = null;
             if (idPedidoActual > 0) {
                 facturaExistente = facturaDAO.buscarFacturaPorIdPedido(idPedidoActual);
             }
 
+            // Si existe factura -> se reutiliza el idFactura, si no -> se crea nueva
             if (facturaExistente != null) {
                 idFactura = Integer.parseInt(facturaExistente[0].trim());
             } else {
@@ -182,10 +317,12 @@ public class ControllerFacturacion {
                 String hora = vista.getTxtHora().getText().trim();
                 String mesa = vista.getTxtMesaTipo().getText().trim();
 
+                // En este flujo, se usa el texto del cliente como cédula y nombre (según implementación actual).
                 String clienteInfo = vista.getTxtCliente().getText().trim();
                 String cedulaCliente = clienteInfo;
                 String nombreCliente = clienteInfo;
 
+                // Si solo hay un pago, el método es ese; si no, MIXTO.
                 String metodoFactura = (modeloPagos.getRowCount() == 1)
                         ? String.valueOf(modeloPagos.getValueAt(0, 0))
                         : "MIXTO";
@@ -199,6 +336,7 @@ public class ControllerFacturacion {
                 );
             }
 
+            // Guarda cada pago y su detalle por producto (si aplica)
             for (int i = 0; i < modeloPagos.getRowCount(); i++) {
                 String met = String.valueOf(modeloPagos.getValueAt(i, 0));
                 int monto = ((Number) modeloPagos.getValueAt(i, 1)).intValue();
@@ -207,6 +345,8 @@ public class ControllerFacturacion {
 
                 pagosDAO.guardarPago(idFactura, met, monto, ref, cedulaPagador);
 
+                // En modo por productos, si hay filas asociadas a este pago,
+                // se registra el detalle para auditoría / trazabilidad.
                 if (isModoPorProductos() && i < filasPagadasPorPago.size()) {
                     Set<Integer> filas = filasPagadasPorPago.get(i);
                     if (filas != null && !filas.isEmpty()) {
@@ -246,6 +386,7 @@ public class ControllerFacturacion {
 
             JOptionPane.showMessageDialog(vista, msg);
 
+            // Limpieza total de UI/estado luego de completar
             limpiarFacturaCompleta();
 
         } catch (Exception e) {
@@ -256,6 +397,11 @@ public class ControllerFacturacion {
         }
     }
 
+    /**
+     * Configura la tabla de pagos:
+     * - Define columnas y tipos (monto como Integer).
+     * - Evita edición directa de celdas.
+     */
     private void configurarTablaPagos() {
 
         modeloPagos = new DefaultTableModel(
@@ -275,6 +421,15 @@ public class ControllerFacturacion {
         vista.getTblPagos().setModel(modeloPagos);
     }
 
+    /**
+     * Enlaza acciones de UI (botones, combos, inputs) con métodos del controlador:
+     * - Selección de método de pago.
+     * - Agregar/eliminar pagos.
+     * - Procesar pago.
+     * - Buscar/cargar pedido.
+     * - Limpiar pedido.
+     * - Cambios de modo de pago (completo vs por productos).
+     */
     private void configurarListeners() {
         vista.getBtnEfectivo().addActionListener(e -> seleccionarMetodoPago("EFECTIVO"));
         vista.getBtnTarjeta().addActionListener(e -> seleccionarMetodoPago("TARJETA"));
@@ -297,6 +452,10 @@ public class ControllerFacturacion {
         });
     }
 
+    /**
+     * Carga fecha y hora actual al iniciar el controlador.
+     * Se usa para precargar campos en la UI.
+     */
     private void cargarDatosIniciales() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
@@ -306,6 +465,9 @@ public class ControllerFacturacion {
         vista.getTxtHora().setText(timeFormat.format(now));
     }
 
+    /**
+     * Deja todos los montos visibles en cero (subtotal, IVA, total, pagado, etc.).
+     */
     private void setMontosCeroUI() {
         vista.getTxtSubTotal().setText("₡0");
         vista.getTxtIVA().setText("₡0");
@@ -319,7 +481,18 @@ public class ControllerFacturacion {
        ID_PEDIDO, FECHA, HORA, MESA, CEDULA_CLIENTE, ITEMS, SUBTOTAL, IVA, TOTAL
        indices: 0      1      2     3     4              5     6        7   8
     ----------------------------------------------------------------- */
-    // ControllerFacturacion.java (reemplazar método completo)
+
+    /**
+     * Busca y carga un pedido en la UI ya sea por:
+     * - ID de pedido (vista.txtIFIDFactura), o
+     * - número de mesa (vista.txtMesaTipo) uniendo varios pedidos.
+     *
+     * Flujo:
+     * 1) Limpia cédulas permitidas y estado de modoMesa.
+     * 2) Si hay ID: valida, busca línea de pedido, parsea y carga productos/valores.
+     * 3) Si no hay ID y hay mesa: busca todas las líneas de esa mesa, une items y suma montos.
+     * 4) Recalcula UI y muestra mensajes según tenga factura previa o no.
+     */
     private void buscarYCargarPedido() {
         cedulasPermitidas.clear();
         modoMesaCargado = false;
@@ -327,6 +500,7 @@ public class ControllerFacturacion {
         String txtId = vista.getTxtIFIDFactura().getText().trim();
         String txtMesa = vista.getTxtMesaTipo().getText().trim();
 
+        // Búsqueda por ID de pedido
         if (!txtId.isEmpty()) {
             int idPedido;
             try {
@@ -360,6 +534,7 @@ public class ControllerFacturacion {
                 vista.getTxtMesaTipo().setText(partes[3].trim());
                 vista.getTxtCliente().setText(partes[4].trim());
 
+                // Items vienen codificados como: id|cant|precio|total;id|cant|precio|total;...
                 cargarItemsDesdeLineaPedido(partes[5].trim());
 
                 subtotalPedido = Integer.parseInt(partes[6].trim());
@@ -376,6 +551,7 @@ public class ControllerFacturacion {
                 return;
             }
 
+            // En modo ID, solo se permite pagar con la cédula del pedido
             cedulasPermitidas.add(normalizarCedula(partes[4].trim()));
             modoMesaCargado = false;
 
@@ -389,6 +565,7 @@ public class ControllerFacturacion {
             limpiarPagosUI();
             recalcularPagadoYSaldo();
 
+            // Mensaje informativo si ya existe factura para el pedido
             String[] factura = facturaDAO.buscarFacturaPorIdPedido(idPedido);
             if (factura != null) {
                 JOptionPane.showMessageDialog(vista,
@@ -401,6 +578,7 @@ public class ControllerFacturacion {
             return;
         }
 
+        // Búsqueda por mesa (unifica varios pedidos)
         if (!txtMesa.isEmpty()) {
             int mesa;
             try {
@@ -433,6 +611,7 @@ public class ControllerFacturacion {
             int iva = 0;
             int total = 0;
 
+            // Recorre los pedidos de la mesa para unir items y sumar montos
             for (String linea : lineas) {
                 if (linea == null || linea.isBlank()) {
                     continue;
@@ -471,6 +650,7 @@ public class ControllerFacturacion {
                 }
             }
 
+            // Marca el estado como "mesa cargada"
             this.idPedidoActual = -mesa;
             modoMesaCargado = true;
 
@@ -504,6 +684,12 @@ public class ControllerFacturacion {
         JOptionPane.showMessageDialog(vista, "Ingrese el ID del pedido o el número de mesa.");
     }
 
+    /**
+     * Carga items codificados en un string (formato: id|cant|precio|total;...),
+     * los convierte en filas de la tabla de factura y consulta el nombre real del producto.
+     *
+     * @param itemsStr string de items codificados.
+     */
     private void cargarItemsDesdeLineaPedido(String itemsStr) {
         modeloFactura.setRowCount(0);
 
@@ -532,6 +718,7 @@ public class ControllerFacturacion {
                 int precio = Integer.parseInt(p[2].trim());
                 int total = Integer.parseInt(p[3].trim());
 
+                // Nombre por defecto si no se encuentra en catálogo
                 String nombre = "Producto " + idProd;
                 Product prod = productosDao.buscarProductoPorId(idProd);
                 if (prod != null) {
@@ -544,11 +731,22 @@ public class ControllerFacturacion {
         }
     }
 
+    /**
+     * Determina si el modo de pago seleccionado en el combo es "por productos".
+     * Se basa en texto del item (contiene "por").
+     *
+     * @return true si es modo por productos, false si es modo completo.
+     */
     private boolean isModoPorProductos() {
         String sel = String.valueOf(vista.getCmbModoPago().getSelectedItem()).trim().toLowerCase();
         return sel.contains("por");
     }
 
+    /**
+     * Ajusta la selección de la columna "Sel" según modo:
+     * - Modo completo: selecciona todo.
+     * - Modo por productos: solo marca como seleccionadas las filas ya pagadas; las demás quedan desmarcadas.
+     */
     private void aplicarModoPagoUI() {
         if (modeloFactura.getRowCount() == 0) {
             return;
@@ -569,6 +767,12 @@ public class ControllerFacturacion {
         }
     }
 
+    /**
+     * Recalcula el monto a pagar dependiendo del modo:
+     * - Si no hay filas: todo en cero.
+     * - Modo completo: monto a pagar = total del pedido.
+     * - Modo por productos: monto a pagar = total (subtotal seleccionado + IVA proporcional).
+     */
     private void recalcularMontoAPagarSegunModo() {
         if (modeloFactura.getRowCount() == 0) {
             subtotalAPagar = 0;
@@ -594,6 +798,22 @@ public class ControllerFacturacion {
         vista.getTxtMontoaPagar().setText("₡" + df.format(totalAPagar));
     }
 
+    /**
+     * Agrega un pago a la tabla de pagos:
+     * - Valida que exista pedido cargado.
+     * - Valida método de pago seleccionado.
+     * - Valida referencia si no es efectivo.
+     * - Solicita cédula del pagador y valida formato y pertenencia (si es búsqueda por mesa).
+     *
+     * Modo por productos:
+     * - Solo permite pagar productos seleccionados no pagados.
+     * - Calcula IVA proporcional del subtotal seleccionado.
+     * - Marca filas como pagadas y las asocia al pago en filasPagadasPorPago.
+     *
+     * Modo completo:
+     * - Solicita monto, permite excedente solo si hay efectivo (se valida luego en saldo/vuelto).
+     * - No asocia filas al pago (usa set vacío).
+     */
     private void agregarPago() {
         if (modeloFactura.getRowCount() == 0) {
             JOptionPane.showMessageDialog(vista, "Primero cargue un pedido o una mesa con productos.");
@@ -608,6 +828,7 @@ public class ControllerFacturacion {
         boolean esBusquedaPorMesa = vista.getTxtIFIDFactura().getText().trim().isEmpty()
                 && !vista.getTxtMesaTipo().getText().trim().isEmpty();
 
+        // MODO POR PRODUCTOS
         if (isModoPorProductos()) {
             int subSel = subtotalSeleccionadoNoPagado();
             if (subSel <= 0) {
@@ -649,6 +870,7 @@ public class ControllerFacturacion {
                 return;
             }
 
+            // En búsqueda por mesa: solo se acepta cédula si pertenece a alguno de los pedidos encontrados
             if (esBusquedaPorMesa) {
                 if (cedulasPermitidas.isEmpty()) {
                     JOptionPane.showMessageDialog(vista, "No se encontraron cédulas válidas en los pedidos de esta mesa.");
@@ -660,6 +882,7 @@ public class ControllerFacturacion {
                 }
             }
 
+            // Marca filas seleccionadas como pagadas y las asocia a este pago
             Set<Integer> filasDeEstePago = new HashSet<>();
             for (int i = 0; i < modeloFactura.getRowCount(); i++) {
                 Boolean sel = (Boolean) modeloFactura.getValueAt(i, 0);
@@ -673,6 +896,7 @@ public class ControllerFacturacion {
             modeloPagos.addRow(new Object[]{metodoPagoSeleccionado, totalSel, referencia, cedNorm});
             filasPagadasPorPago.add(filasDeEstePago);
 
+            // Limpia selección de filas pendientes para el siguiente pago
             for (int i = 0; i < modeloFactura.getRowCount(); i++) {
                 if (!filaEstaPagada(i)) {
                     modeloFactura.setValueAt(Boolean.FALSE, i, 0);
@@ -684,6 +908,7 @@ public class ControllerFacturacion {
             return;
         }
 
+        // MODO COMPLETO
         if (totalAPagar <= 0) {
             JOptionPane.showMessageDialog(vista, "No hay monto a pagar.");
             return;
@@ -759,6 +984,11 @@ public class ControllerFacturacion {
         recalcularPagadoYSaldo();
     }
 
+    /**
+     * Elimina un pago seleccionado de la tabla de pagos.
+     * - Si es modo por productos: desmarca como pagadas las filas asociadas a ese pago.
+     * - Luego elimina la fila del modelo y recalcula montos/estado.
+     */
     private void eliminarPago() {
         int row = vista.getTblPagos().getSelectedRow();
         if (row < 0) {
@@ -788,6 +1018,17 @@ public class ControllerFacturacion {
         recalcularPagadoYSaldo();
     }
 
+    /**
+     * Recalcula:
+     * - Total pagado (sumatoria tabla pagos).
+     * - Estado de saldo en UI (pendiente, pagado, vuelto, excedente no permitido).
+     *
+     * En modo completo:
+     * - Se valida vuelto solo si existe pago en efectivo.
+     *
+     * En modo por productos:
+     * - Se calcula pendiente a partir de productos no pagados con IVA proporcional.
+     */
     private void recalcularPagadoYSaldo() {
         int pagado = pagadoTotalEnTabla();
         vista.getTxtPagado().setText("₡" + df.format(pagado));
@@ -840,6 +1081,13 @@ public class ControllerFacturacion {
         }
     }
 
+    /**
+     * Limpia el estado de pagos:
+     * - Vacía la tabla de pagos y estructuras asociadas.
+     * - Reinicia campos pagado/saldo.
+     * - Limpia selección de método y estilos.
+     * - Reinicia filas pagadas y recalcula UI según modo.
+     */
     private void limpiarPagosUI() {
         modeloPagos.setRowCount(0);
         filasPagadasPorPago.clear();
@@ -854,6 +1102,12 @@ public class ControllerFacturacion {
         recalcularMontoAPagarSegunModo();
     }
 
+    /**
+     * Selecciona un método de pago y resalta el botón correspondiente.
+     * También reinicia estilos para evitar múltiples botones “activos”.
+     *
+     * @param metodo "EFECTIVO", "TARJETA" o "SINPE".
+     */
     private void seleccionarMetodoPago(String metodo) {
         this.metodoPagoSeleccionado = metodo;
         resetearEstilosBotones();
@@ -883,6 +1137,10 @@ public class ControllerFacturacion {
         }
     }
 
+    /**
+     * Restaura colores/bordes por defecto de los botones de método de pago.
+     * Se usa antes de resaltar el método seleccionado.
+     */
     private void resetearEstilosBotones() {
         vista.getBtnEfectivo().setBackground(new java.awt.Color(76, 175, 80));
         vista.getBtnEfectivo().setForeground(java.awt.Color.BLACK);
@@ -897,6 +1155,14 @@ public class ControllerFacturacion {
         vista.getBtnSinpeMovil().setBorder(BorderFactory.createLineBorder(java.awt.Color.GRAY, 1));
     }
 
+    /**
+     * Limpia completamente la factura en la UI y reinicia el estado interno:
+     * - Tablas (factura y pagos).
+     * - Campos de texto (cliente, mesa, id).
+     * - IDs y montos.
+     * - Estructuras de filas pagadas/cédulas.
+     * - Reaplica fecha/hora actual y estilos de botones.
+     */
     private void limpiarFacturaCompleta() {
         modeloFactura.setRowCount(0);
         modeloPagos.setRowCount(0);
@@ -926,20 +1192,45 @@ public class ControllerFacturacion {
         cargarDatosIniciales();
     }
 
+    /**
+     * Carga un pedido por ID (helper para flujos externos):
+     * - Pone el ID en el campo correspondiente.
+     * - Ejecuta búsqueda/carga normal.
+     *
+     * @param idPedido id del pedido a cargar.
+     */
     public void cargarPedidoPorId(int idPedido) {
         vista.getTxtIFIDFactura().setText(String.valueOf(idPedido));
         buscarYCargarPedido();
     }
 
+    /**
+     * Indica si una fila del detalle de factura ya está pagada (modo por productos).
+     *
+     * @param row índice de fila.
+     * @return true si está pagada, false si no.
+     */
     private boolean filaEstaPagada(int row) {
         return filasPagadas.contains(row);
     }
 
+    /**
+     * Obtiene el total de una línea (columna 4) de la tabla factura.
+     *
+     * @param row índice de fila.
+     * @return total de la línea como int (0 si no es Number).
+     */
     private int totalLinea(int row) {
         Object val = modeloFactura.getValueAt(row, 4);
         return (val instanceof Number) ? ((Number) val).intValue() : 0;
     }
 
+    /**
+     * Calcula subtotal de productos seleccionados que aún NO han sido pagados.
+     * Se usa en modo por productos para determinar el monto base a pagar.
+     *
+     * @return suma de totales de filas seleccionadas no pagadas.
+     */
     private int subtotalSeleccionadoNoPagado() {
         int sub = 0;
         for (int i = 0; i < modeloFactura.getRowCount(); i++) {
@@ -951,6 +1242,12 @@ public class ControllerFacturacion {
         return sub;
     }
 
+    /**
+     * Calcula subtotal pendiente (sumatoria de líneas no pagadas).
+     * Se usa para validar pendientes en modo por productos.
+     *
+     * @return subtotal pendiente (sin IVA) de filas no pagadas.
+     */
     private int subtotalPendienteNoPagado() {
         int sub = 0;
         for (int i = 0; i < modeloFactura.getRowCount(); i++) {
@@ -961,6 +1258,13 @@ public class ControllerFacturacion {
         return sub;
     }
 
+    /**
+     * Calcula IVA proporcional al subtotal base, según proporción del subtotal base
+     * respecto al subtotal total del pedido.
+     *
+     * @param subtotalBase subtotal al que se le quiere aplicar IVA proporcional.
+     * @return IVA proporcional redondeado.
+     */
     private int ivaProporcional(int subtotalBase) {
         if (subtotalPedido <= 0) {
             return 0;
@@ -969,6 +1273,11 @@ public class ControllerFacturacion {
         return (int) Math.round(ivaPedido * proporcion);
     }
 
+    /**
+     * Suma todos los montos en la tabla de pagos (columna 1).
+     *
+     * @return total pagado actualmente.
+     */
     private int pagadoTotalEnTabla() {
         int pagado = 0;
         for (int i = 0; i < modeloPagos.getRowCount(); i++) {

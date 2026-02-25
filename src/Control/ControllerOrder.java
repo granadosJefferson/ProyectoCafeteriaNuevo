@@ -177,7 +177,7 @@ public class ControllerOrder {
                 }
             }
         } catch (Exception e) {
-            // Sin salida a consola; se omite para no generar ruido.
+           
         }
     }
 
@@ -203,7 +203,7 @@ public class ControllerOrder {
         mesaPermitida = null;
         mesaActual = null;
 
-        // todo gris (como pediste)
+       
         vista.getBtnTable1().setBackground(COLOR_MESA_NORMAL);
         vista.getBtnTable2().setBackground(COLOR_MESA_NORMAL);
         vista.getBtnTable3().setBackground(COLOR_MESA_NORMAL);
@@ -295,16 +295,16 @@ public class ControllerOrder {
             return;
         }
 
-        // ✅ bloqueo primero (antes de tocar mesaActual)
+       
         if (bloqueoMesas && mesaPermitida != null) {
-            // LLEVAR siempre permitido
+           
             if (!esLlevar(mesa) && !mesa.equals(mesaPermitida)) {
                 mensajes.message("No puede elegir esa mesa. El cliente se encuentra en la mesa " + mesaPermitida + ".");
                 return;
             }
         }
 
-        // mesa llena (no aplica para llevar)
+       
         if (mesaLlena(mesa)) {
             marcarMesaLlena(mesa);
             mensajes.message("Mesa " + mesa + " está llena (máx 4 personas).");
@@ -313,7 +313,7 @@ public class ControllerOrder {
 
         mesaActual = esLlevar(mesa) ? "LLEVAR" : mesa;
         aplicarBloqueoColores();
-        // marcar la que se eligió (si fue llevar)
+     
         if (esLlevar(mesaActual)) {
             vista.getBtnLlevar().setBackground(COLOR_MESA_SEL);
         }
@@ -338,7 +338,7 @@ public class ControllerOrder {
         vista.getBtnTable4().addActionListener(e -> seleccionarMesa(vista.getBtnTable4(), "4"));
         vista.getBtnTable5().addActionListener(e -> seleccionarMesa(vista.getBtnTable5(), "5"));
 
-        // aunque en diseño el texto sea "6", acá lo tratamos como LLEVAR
+       
         vista.getBtnLlevar().addActionListener(e -> seleccionarMesa(vista.getBtnLlevar(), "LLEVAR"));
 
         refrescarColoresMesas();
@@ -347,7 +347,7 @@ public class ControllerOrder {
     private void configurarProductos() {
         JPanel cont = vista.getPanelProductos();
 
-        // Grid tipo cards
+        
         cont.setBorder(BorderFactory.createEmptyBorder(14, 14, 14, 14));
 
         JScrollPane sp = vista.getScrollProductos();
@@ -546,9 +546,9 @@ public class ControllerOrder {
         if (mesaAsignada != null) {
             bloqueoMesas = true;
             mesaPermitida = mesaAsignada;
-            mesaActual = mesaAsignada;  // para que se pinte azul su mesa al buscar
+            mesaActual = mesaAsignada;  
         } else {
-            // si el cliente no está sentado, no arrastres mesa anterior
+            
             mesaActual = null;
         }
 
@@ -577,7 +577,6 @@ public class ControllerOrder {
             return;
         }
 
-        // Intenta diferentes nombres de métodos (por si tu modelo usa otro)
         String nombre = getValorCliente(clienteActual, "getNombre", "getName", "getNameClient", "getNombreCliente");
         String tipo = getValorCliente(clienteActual, "getTipo", "getType", "getTipoCliente", "getTypeClient");
         String visitas = getValorCliente(clienteActual, "getVisitas", "getVisits", "getCantVisitas", "getCantidadVisitas");
