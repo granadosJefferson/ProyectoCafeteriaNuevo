@@ -13,15 +13,13 @@ import java.util.ArrayList;
  *
  * Clase DAO (Data Access Object) encargada de la persistencia de clientes.
  *
- * Se encarga de:
- * - Cargar los clientes desde el archivo "Clients.txt".
- * - Agregar nuevos clientes al archivo y a la lista en memoria.
- * - Modificar clientes existentes.
- * - Eliminar clientes.
- * - Reescribir el archivo completo cuando hay cambios.
+ * Se encarga de: - Cargar los clientes desde el archivo "Clients.txt". -
+ * Agregar nuevos clientes al archivo y a la lista en memoria. - Modificar
+ * clientes existentes. - Eliminar clientes. - Reescribir el archivo completo
+ * cuando hay cambios.
  *
- * Implementa una persistencia simple basada en archivo de texto
- * con formato CSV:
+ * Implementa una persistencia simple basada en archivo de texto con formato
+ * CSV:
  *
  * cedula,nombre,tipo,visitas,fecha,total
  *
@@ -40,9 +38,8 @@ public class ClientsDAO {
     private final String FILE_NAME = "Clients.txt";
 
     /**
-     * Constructor:
-     * - Inicializa la lista en memoria.
-     * - Carga los datos desde el archivo.
+     * Constructor: - Inicializa la lista en memoria. - Carga los datos desde el
+     * archivo.
      */
     public ClientsDAO() {
         ListCliente = new ArrayList<>();
@@ -50,13 +47,11 @@ public class ClientsDAO {
     }
 
     /**
-     * Carga todos los clientes desde el archivo "Clients.txt" hacia la lista en memoria.
+     * Carga todos los clientes desde el archivo "Clients.txt" hacia la lista en
+     * memoria.
      *
-     * Flujo:
-     * - Limpia la lista actual.
-     * - Lee cada línea del archivo.
-     * - Separa por coma (CSV).
-     * - Crea objetos Clients y los agrega a la lista.
+     * Flujo: - Limpia la lista actual. - Lee cada línea del archivo. - Separa
+     * por coma (CSV). - Crea objetos Clients y los agrega a la lista.
      */
     public void cargarDesdeTxt() {
         ListCliente.clear();
@@ -75,18 +70,18 @@ public class ClientsDAO {
                     int visits = 0;
                     double total = 0;
 
-                    try { 
-                        visits = Integer.parseInt(parts[3]); 
-                    } catch (Exception e) { 
-                        visits = 0; 
+                    try {
+                        visits = Integer.parseInt(parts[3]);
+                    } catch (Exception e) {
+                        visits = 0;
                     }
 
                     String fecha = parts[4];
 
-                    try { 
-                        total = Double.parseDouble(parts[5]); 
-                    } catch (Exception e) { 
-                        total = 0; 
+                    try {
+                        total = Double.parseDouble(parts[5]);
+                    } catch (Exception e) {
+                        total = 0;
                     }
 
                     ListCliente.add(new Clients(type, visits, fecha, total, cedula, name));
@@ -108,6 +103,65 @@ public class ClientsDAO {
         return ListCliente;
     }
 
+    /* * Suma una visita y un monto al cliente indicado por cédula.
+     *
+     * Se debe usar cuando una compra se confirma (al pagar / facturar),
+     * porque ahí ya existe un total real.
+     *
+     * Flujo:
+     * - Busca el cliente en la lista en memoria (ListCliente).
+     * - Si lo encuentra:
+     *   - visits = visits + 1
+     *   - total = total + monto
+     *   - fecha = fechaUltimaVisita
+     *   - (opcional) ajusta el tipo según visitas
+     * - Luego reescribe el archivo "Clients.txt" para persistir cambios.
+     *
+     * @param cedula cédula del cliente que realizó la compra
+     * @param monto total pagado en la compra
+     * @param fechaUltimaVisita fecha que se guardará como última visita
+     * @return true si se actualizó y guardó correctamente; false si no se encontró o falló
+     */
+
+    public boolean sumarVisitaYTotal(String cedula, double monto, String fechaUltimaVisita) {
+
+        boolean found = false;
+
+        try {
+            for (Clients c : ListCliente) {
+                if (c != null && c.getCedula().equals(cedula)) {
+
+                    
+                    c.setVisits(c.getVisits() + 1);
+
+                    
+                    c.setTotal(c.getTotal() + monto);
+
+                    
+                    c.setFecha(fechaUltimaVisita);
+
+                    
+                    if (c.getVisits() >= 5) {
+                        c.setType("FRECUENTE");
+                    } else {
+                        c.setType("INFRECUENTE");
+                    }
+
+                    found = true;
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            return false;
+        }
+
+        if (!found) {
+            return false;
+        }
+
+        return reescribirTxt();
+    }
+
     /**
      * Busca un cliente por cédula leyendo directamente el archivo.
      *
@@ -121,19 +175,25 @@ public class ClientsDAO {
 
             while ((linea = br.readLine()) != null) {
 
-                if (linea.trim().isEmpty()) continue;
+                if (linea.trim().isEmpty()) {
+                    continue;
+                }
 
                 String[] p = linea.split(",");
-                if (p.length < 6) continue;
+                if (p.length < 6) {
+                    continue;
+                }
 
                 String cedula = p[0].trim();
-                if (!cedula.equals(cedulaBuscada)) continue;
+                if (!cedula.equals(cedulaBuscada)) {
+                    continue;
+                }
 
-                String name   = p[1].trim();
-                String type   = p[2].trim();
-                int visits    = Integer.parseInt(p[3].trim());
-                String fecha  = p[4].trim();
-                double total  = Double.parseDouble(p[5].trim());
+                String name = p[1].trim();
+                String type = p[2].trim();
+                int visits = Integer.parseInt(p[3].trim());
+                String fecha = p[4].trim();
+                double total = Double.parseDouble(p[5].trim());
 
                 return new Clients(type, visits, fecha, total, cedula, name);
             }
@@ -166,12 +226,11 @@ public class ClientsDAO {
     /**
      * Agrega un nuevo cliente.
      *
-     * Flujo:
-     * - Verifica que la cédula no exista.
-     * - Escribe el nuevo cliente al final del archivo.
-     * - Lo agrega también a la lista en memoria.
+     * Flujo: - Verifica que la cédula no exista. - Escribe el nuevo cliente al
+     * final del archivo. - Lo agrega también a la lista en memoria.
      *
-     * @return true si se agregó correctamente; false si hubo error o cédula repetida
+     * @return true si se agregó correctamente; false si hubo error o cédula
+     * repetida
      */
     public boolean addLista(String type, int visits, String fecha, double total, String cedula, String name) {
 
@@ -192,7 +251,8 @@ public class ClientsDAO {
     }
 
     /**
-     * Modifica un cliente existente en la lista y reescribe el archivo completo.
+     * Modifica un cliente existente en la lista y reescribe el archivo
+     * completo.
      *
      * @return true si se modificó correctamente; false si no se encontró
      */
@@ -216,7 +276,9 @@ public class ClientsDAO {
             return false;
         }
 
-        if (!found) return false;
+        if (!found) {
+            return false;
+        }
 
         return reescribirTxt();
     }
@@ -243,14 +305,16 @@ public class ClientsDAO {
             return false;
         }
 
-        if (!removed) return false;
+        if (!removed) {
+            return false;
+        }
 
         return reescribirTxt();
     }
 
     /**
-     * Reescribe completamente el archivo "Clients.txt"
-     * usando la lista en memoria.
+     * Reescribe completamente el archivo "Clients.txt" usando la lista en
+     * memoria.
      *
      * @return true si la operación fue exitosa
      */
@@ -258,7 +322,9 @@ public class ClientsDAO {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME, false))) {
 
             for (Clients c : ListCliente) {
-                if (c == null) continue;
+                if (c == null) {
+                    continue;
+                }
 
                 bw.write(c.getCedula() + "," + c.getName() + "," + c.getType() + ","
                         + c.getVisits() + "," + c.getFecha() + "," + c.getTotal());
