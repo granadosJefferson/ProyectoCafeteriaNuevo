@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-
 /**
  *
  * @author Personal
@@ -222,7 +221,9 @@ public class ObjetoMesa extends javax.swing.JPanel {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
-
+    /*
+     *metodos getter y setter para obtener acceso.
+     */
     public JTable getTableInformacionMesa() {
         return TableInformacionMesa;
     }
@@ -303,5 +304,4 @@ public class ObjetoMesa extends javax.swing.JPanel {
         this.jBtnSacarMesa = jBtnSacarMesa;
     }
 
-    
 }

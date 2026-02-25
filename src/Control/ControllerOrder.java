@@ -17,6 +17,8 @@ import javax.swing.*;
 /**
  *
  * @author Jefferson Granados
+ * @author Dilan Gonzalez
+ * @author Daniel Araya
  * En esta clase se controla la lógica del módulo de pedidos (Orders).
  *
  * Responsabilidades principales:

@@ -13,32 +13,87 @@ import Utils.SoloNumerosFilter;
 import Utils.SoloNumerosDecimalesFilter;
 import Utils.SoloLetrasEspaciosFilter;
 
+/**
+ *
+ * @author Daniel Araya
+ *
+ * En esta clase se controla la lógica del módulo de clientes.
+ * Se encarga de:
+ * - Cargar y mostrar la lista de clientes en la tabla del panel ClientsPanel.
+ * - Abrir la ventana GestionCliente para crear (NUEVO) o modificar (MODIFICAR) clientes.
+ * - Guardar, modificar y eliminar clientes usando ClientsDAO.
+ * - Aplicar filtros de entrada (DocumentFilter) en los campos del formulario:
+ *   - ID: solo números.
+ *   - Visitas: solo números.
+ *   - Total Gastado: números con decimales.
+ *   - Nombre: solo letras y espacios.
+ *
+ * Funciona como controlador de la vista ClientsPanel y la ventana GestionCliente,
+ * manejando eventos y actualizando componentes.
+ */
 public class ControllerClients {
 
+    /**
+     * Vista principal del módulo de clientes (tabla y botones).
+     */
     private final ClientsPanel clientp;
+
+    /**
+     * DAO para persistencia y lectura de clientes desde Clients.txt.
+     */
     private final ClientsDAO cdao;
+
+    /**
+     * Ventana de gestión de cliente (nuevo/modificar).
+     */
     private final GestionCliente gestioncliente;
 
+    /**
+     * Clase para mostrar mensajes emergentes al usuario.
+     */
     private final Mensajes msj = new Mensajes();
 
+    /**
+     * Bandera para identificar si se está creando (false) o modificando (true).
+     */
     private boolean editando = false;
+
+    /**
+     * Cédula del cliente que se está modificando.
+     */
     private String cedulaEditando = "";
 
+    /**
+     * Constructor: recibe la vista ClientsPanel, el DAO y la ventana GestionCliente.
+     * Carga la tabla inicial, aplica filtros de entrada y registra listeners
+     * para los botones de Nuevo, Modificar y Eliminar.
+     *
+     * @param clientp panel ClientsPanel
+     * @param cdao DAO de clientes
+     * @param gestioncliente ventana GestionCliente
+     */
     public ControllerClients(ClientsPanel clientp, ClientsDAO cdao, GestionCliente gestioncliente) {
         this.clientp = clientp;
         this.cdao = cdao;
         this.gestioncliente = gestioncliente;
 
-        // ✅ solo números en ID y Visitas
+        // Aplicar filtros de entrada para restringir datos inválidos.
         aplicarFiltros(gestioncliente);
 
+        // Carga inicial de datos en tabla.
         loadTabledata();
 
+        // Eventos del panel principal.
         this.clientp.getBtnNewClient().addActionListener(e -> openGestionClienteNuevo());
         this.clientp.getBtnModificar().addActionListener(e -> openGestionClienteModificar());
         this.clientp.getBtnEliminar().addActionListener(e -> eliminarCliente());
     }
 
+    /**
+     * Limpia los campos del formulario GestionCliente y reinicia valores por defecto.
+     *
+     * @param gc ventana GestionCliente
+     */
     private void limpiarCampos(GestionCliente gc) {
         try {
             gc.getTxtId().setText("");
@@ -55,6 +110,15 @@ public class ControllerClients {
         }
     }
 
+    /**
+     * Carga la lista de clientes desde el DAO y la muestra en la JTable del panel.
+     *
+     * Flujo:
+     * - Crea un DefaultTableModel con columnas: Cedula, Nombre, Tipo, Visitas, Fecha, Total.
+     * - Obtiene la lista desde ClientsDAO.getAll().
+     * - Recorre y agrega filas al modelo.
+     * - Asigna el modelo a la tabla de ClientsPanel.
+     */
     private void loadTabledata() {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Cedula");
@@ -98,9 +162,17 @@ public class ControllerClients {
         }
     }
 
-    // ==========================
-    // NUEVO
-    // ==========================
+    /**
+     * Abre la ventana GestionCliente en modo NUEVO.
+     *
+     * Configuración:
+     * - editando = false
+     * - Cédula editable
+     * - Tipo por defecto INFRECUENTE y bloqueado
+     * - Visitas por defecto 1 y no editable
+     * - Última visita se llena automáticamente con la fecha actual y no editable
+     * - Registra listeners de Guardar/Cancelar evitando duplicados
+     */
     private void openGestionClienteNuevo() {
         try {
             editando = false;
@@ -137,9 +209,17 @@ public class ControllerClients {
         }
     }
 
-    // ==========================
-    // MODIFICAR
-    // ==========================
+    /**
+     * Abre la ventana GestionCliente en modo MODIFICAR.
+     *
+     * Flujo:
+     * - Obtiene el cliente seleccionado desde la tabla.
+     * - editando = true y guarda la cédula original en cedulaEditando.
+     * - Llena el formulario con los datos del cliente.
+     * - Cédula NO editable.
+     * - Tipo, visitas y fecha quedan editables.
+     * - Registra listeners de Guardar/Cancelar evitando duplicados.
+     */
     private void openGestionClienteModificar() {
         Clients c = seleccionarClienteDeTabla();
         if (c == null) {
@@ -176,6 +256,12 @@ public class ControllerClients {
         }
     }
 
+    /**
+     * Coloca en el formulario GestionCliente los valores del cliente seleccionado.
+     *
+     * @param gc ventana GestionCliente
+     * @param c cliente seleccionado
+     */
     private void setValoresModificar(GestionCliente gc, Clients c) {
         try {
             gc.getTxtId().setText(c.getCedula());
@@ -192,9 +278,14 @@ public class ControllerClients {
         }
     }
 
-    // ==========================
-    // ELIMINAR
-    // ==========================
+    /**
+     * Elimina el cliente seleccionado de la lista y actualiza la tabla.
+     *
+     * Flujo:
+     * - Obtiene el cliente seleccionado.
+     * - Llama ClientsDAO.eliminarDeLista(cedula).
+     * - Si elimina, recarga la tabla.
+     */
     private void eliminarCliente() {
         Clients c = seleccionarClienteDeTabla();
         if (c == null) {
@@ -215,6 +306,16 @@ public class ControllerClients {
         }
     }
 
+    /**
+     * Obtiene el cliente seleccionado en la tabla del panel.
+     *
+     * Reglas:
+     * - Debe haber una fila seleccionada.
+     * - La cédula (columna 0) no puede ser null ni vacía.
+     * - Busca el cliente en la lista del DAO y lo retorna.
+     *
+     * @return cliente encontrado o null si hay error/no existe
+     */
     private Clients seleccionarClienteDeTabla() {
         try {
             int row = clientp.getJtbMostrarCliente().getSelectedRow();
@@ -251,6 +352,18 @@ public class ControllerClients {
         }
     }
 
+    /**
+     * Guarda un cliente nuevo o modifica uno existente, según el estado editando.
+     *
+     * Flujo:
+     * - Lee los datos del formulario.
+     * - Convierte visitas a entero y total a double.
+     * - Si editando=false: agrega con ClientsDAO.addLista(...)
+     * - Si editando=true: modifica con ClientsDAO.modificarEnLista(...)
+     * - Recarga la tabla y cierra ventana.
+     *
+     * @param gestioncliente ventana GestionCliente
+     */
     public void guardarCliente(GestionCliente gestioncliente) {
         try {
             String cedula = gestioncliente.getTxtId().getText().trim();
@@ -316,11 +429,20 @@ public class ControllerClients {
         }
     }
 
+    /**
+     * Cierra la ventana GestionCliente y limpia sus campos.
+     *
+     * @param gc ventana GestionCliente
+     */
     private void cerrarVentana(GestionCliente gc) {
         limpiarCampos(gc);
         gc.dispose();
     }
 
+    /**
+     * Elimina ActionListeners previos de los botones Guardar y Cancelar en la ventana,
+     * para evitar duplicación de eventos al abrir varias veces el mismo formulario.
+     */
     private void limpiarListenersVentana() {
         try {
             for (var al : gestioncliente.getBtnGuardar().getActionListeners()) {
@@ -333,11 +455,26 @@ public class ControllerClients {
         }
     }
 
+    /**
+     * Retorna la fecha actual en formato yyyy-MM-dd.
+     *
+     * @return fecha actual formateada
+     */
     private String obtenerFechaActual() {
         return new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
     }
 
-    // ✅ Filtros para ID y Visitas
+    /**
+     * Aplica filtros (DocumentFilter) a los campos del formulario para validar
+     * entrada en tiempo real.
+     *
+     * - txtId: solo números.
+     * - txtVisitas: solo números.
+     * - txtTotalGastado: números con decimales.
+     * - txtNombre: solo letras y espacios.
+     *
+     * @param gc ventana GestionCliente
+     */
     private void aplicarFiltros(GestionCliente gc) {
 
         try {

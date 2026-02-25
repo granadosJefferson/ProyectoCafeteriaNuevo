@@ -74,7 +74,6 @@ public class Reports extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableReceptorPedidos = new javax.swing.JTable();
         panel1 = new java.awt.Panel();
-        btnVerDetallesPedidos = new javax.swing.JButton();
         lblMesa = new javax.swing.JLabel();
         lblClienteCedula = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
@@ -89,8 +88,10 @@ public class Reports extends javax.swing.JPanel {
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
+        btnVerDetallesPedidos = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        btnabrirReportesNegocio = new javax.swing.JButton();
 
         jButton4.setBackground(new java.awt.Color(38, 169, 93));
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -196,10 +197,6 @@ public class Reports extends javax.swing.JPanel {
 
         panel1.setBackground(new java.awt.Color(204, 204, 204));
 
-        btnVerDetallesPedidos.setBackground(new java.awt.Color(0, 51, 255));
-        btnVerDetallesPedidos.setForeground(new java.awt.Color(255, 255, 255));
-        btnVerDetallesPedidos.setText("VER DETALLE PEDIDO");
-
         lblMesa.setForeground(new java.awt.Color(0, 0, 0));
         lblMesa.setText("-");
 
@@ -253,19 +250,14 @@ public class Reports extends javax.swing.JPanel {
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("Total:");
 
+        btnVerDetallesPedidos.setBackground(new java.awt.Color(0, 51, 255));
+        btnVerDetallesPedidos.setForeground(new java.awt.Color(255, 255, 255));
+        btnVerDetallesPedidos.setText("VER DETALLE PEDIDO");
+
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
         panel1Layout.setHorizontalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel1Layout.createSequentialGroup()
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel1Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(btnVerDetallesPedidos))
-                    .addGroup(panel1Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jLabel10)))
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(panel1Layout.createSequentialGroup()
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(panel1Layout.createSequentialGroup()
@@ -299,8 +291,13 @@ public class Reports extends javax.swing.JPanel {
                                 .addGroup(panel1Layout.createSequentialGroup()
                                     .addComponent(jLabel20)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(lblEstadoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(lblEstadoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnVerDetallesPedidos)))))
                 .addContainerGap(15, Short.MAX_VALUE))
+            .addGroup(panel1Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jLabel10)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,9 +330,9 @@ public class Reports extends javax.swing.JPanel {
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
                     .addComponent(lblTotal))
-                .addGap(55, 55, 55)
+                .addGap(18, 18, 18)
                 .addComponent(btnVerDetallesPedidos)
-                .addGap(18, 18, 18))
+                .addGap(55, 55, 55))
         );
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -347,6 +344,10 @@ public class Reports extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("REPORTES DE PEDIDOS");
 
+        btnabrirReportesNegocio.setBackground(new java.awt.Color(204, 204, 204));
+        btnabrirReportesNegocio.setForeground(new java.awt.Color(255, 255, 255));
+        btnabrirReportesNegocio.setText("VER DETALLE PEDIDO");
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -357,7 +358,8 @@ public class Reports extends javax.swing.JPanel {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnabrirReportesNegocio))
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -381,7 +383,9 @@ public class Reports extends javax.swing.JPanel {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnabrirReportesNegocio)
+                        .addGap(9, 9, 9)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -414,7 +418,7 @@ public class Reports extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(13, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -429,6 +433,7 @@ public class Reports extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVerDetallesPedidos;
+    private javax.swing.JButton btnabrirReportesNegocio;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel10;
@@ -607,5 +612,14 @@ public class Reports extends javax.swing.JPanel {
         return btnVerDetallesPedidos;
     }
 
+    public JButton getBtnabrirReportesNegocio() {
+        return btnabrirReportesNegocio;
+    }
+
+    public void setBtnabrirReportesNegocio(JButton btnabrirReportesNegocio) {
+        this.btnabrirReportesNegocio = btnabrirReportesNegocio;
+    }
+    
+    
     
 }

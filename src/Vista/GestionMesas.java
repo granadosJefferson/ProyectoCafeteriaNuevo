@@ -16,29 +16,57 @@ import javax.swing.Timer;
 /**
  *
  * @author dh057
+ *
+ * Clase Vista encargada de la gestión visual de las mesas del sistema.
+ *
+ * Se encarga de:
+ * - Mostrar gráficamente las mesas disponibles y ocupadas.
+ * - Administrar la visualización de número de personas por mesa.
+ * - Mostrar la fecha y hora actual en tiempo real.
+ *
+ * Esta clase forma parte de la capa Vista dentro del patrón MVC.
+ * No contiene lógica de negocio, únicamente configuración y
+ * comportamiento visual del panel.
  */
 public class GestionMesas extends javax.swing.JPanel {
 
     /**
-     * Creates new form Start
+     * Constructor:
+     * - Inicializa todos los componentes gráficos del panel.
+     * - Configura el estado inicial de visibilidad de etiquetas.
+     * - Inicia el reloj que actualiza fecha y hora en pantalla.
      */
     public GestionMesas() {
         initComponents();
         jLabelNumPersonas1.setVisible(false);
         jLabelPersonasMesa1.setVisible(false);
 
-// Si todavía existen estos en el diseño aunque no los uses:
         jLabelNumPersonas2.setVisible(false);
         jLabelNumPersonas4.setVisible(false);
         jLabel13.setVisible(false);
         jLabel15.setVisible(false);
         new Control.reloj().iniciar(getLblDay(), getLblTime());
     }
-
+    /**
+     * Retorna la etiqueta donde se muestra el día actual.
+     *
+     * Se utiliza principalmente por la clase Control.reloj
+     * para actualizar dinámicamente la fecha en la interfaz.
+     *
+     * @return JLabel que contiene el día mostrado en pantalla
+     */
     public JLabel getLblDay() {
         return lblDay;
     }
-
+    
+    /**
+     * Retorna la etiqueta donde se muestra la hora actual.
+     *
+     * Se utiliza principalmente por la clase Control.reloj
+     * para actualizar dinámicamente la hora en la interfaz.
+     *
+     * @return JLabel que contiene la hora mostrada en pantalla
+     */
     public JLabel getLblTime() {
         return lblTime;
     }
@@ -541,7 +569,7 @@ public class GestionMesas extends javax.swing.JPanel {
     private javax.swing.JLabel lblDay;
     private javax.swing.JLabel lblTime;
     // End of variables declaration//GEN-END:variables
-
+    //getter y setter del programa
     public void setjPanelLLevar(JPanel jPanelLLevar) {
         this.jPanelLLevar = jPanelLLevar;
     }

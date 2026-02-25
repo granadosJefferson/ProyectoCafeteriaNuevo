@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package Vista;
 
 import javax.swing.JButton;
@@ -10,22 +7,45 @@ import javax.swing.JTable;
 
 /**
  *
- * @author dh057
+ * @author Daniel Araya
+ *
+ * Panel correspondiente al módulo de Gestión de Clientes.
+ *
+ * Esta clase forma parte de la capa Vista dentro del patrón MVC.
+ * Se encarga únicamente de:
+ * - Definir y mostrar los componentes gráficos.
+ * - Exponer getters para que el controlador pueda interactuar con
+ *   botones, tabla y etiquetas.
+ *
+ * No contiene lógica de negocio.
+ *
+ * Funcionalidades visuales principales:
+ * - Mostrar la lista de clientes en una tabla.
+ * - Permitir crear, modificar y eliminar clientes.
+ * - Mostrar fecha y hora actual mediante la clase reloj.
+ * - Campo de búsqueda para futuros filtros.
  */
 public class ClientsPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form Start
+     * Constructor del panel.
+     *
+     * - Inicializa los componentes gráficos.
+     * - Inicia el reloj para mostrar día y hora actual.
      */
     public ClientsPanel() {
         initComponents();
         new Control.reloj().iniciar(getLblDay(), getLblTime());
     }
-
+    /**
+     * Retorna el label que muestra el día actual.
+     */
     public JLabel getLblDay() {
         return lblDay;
     }
-
+    /**
+     * Retorna el label que muestra la hora actual.
+     */
     public JLabel getLblTime() {
         return lblTime;
     }
@@ -208,20 +228,19 @@ public class ClientsPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 801, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(193, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(24, 24, 24)
@@ -233,13 +252,13 @@ public class ClientsPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(163, 163, 163)
@@ -247,23 +266,23 @@ public class ClientsPanel extends javax.swing.JPanel {
                     .addContainerGap(476, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    //txt buscador
     private void txtBuscadorClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscadorClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscadorClienteActionPerformed
-
+    //Button Eliminar
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
-    //ni idea 
+    //Button cache
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
-
+    //Button Añadir Cliente
     private void btnNewClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewClientActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNewClientActionPerformed
-
+    //Button Modificar
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnModificarActionPerformed
@@ -289,6 +308,9 @@ public class ClientsPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtBuscadorCliente;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Retorna el botón "Nuevo Cliente".
+     */
     public JButton getBtnNewClient() {
         return btnNewClient;
     }
@@ -297,6 +319,9 @@ public class ClientsPanel extends javax.swing.JPanel {
         this.btnNewClient = btnNewClient;
     }
 
+    /**
+     * Retorna la tabla donde se muestran los clientes.
+     */
     public JTable getJtbMostrarCliente() {
         return jtbMostrarCliente;
     }
@@ -305,6 +330,9 @@ public class ClientsPanel extends javax.swing.JPanel {
         this.jtbMostrarCliente = jtbMostrarCliente;
     }
 
+    /**
+     * Retorna el botón "Eliminar".
+     */
     public JButton getBtnEliminar() {
         return btnEliminar;
     }
@@ -313,6 +341,9 @@ public class ClientsPanel extends javax.swing.JPanel {
         this.btnEliminar = btnEliminar;
     }
 
+    /**
+     * Retorna el botón "Modificar".
+     */
     public JButton getBtnModificar() {
         return btnModificar;
     }

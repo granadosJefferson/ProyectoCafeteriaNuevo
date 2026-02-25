@@ -13,16 +13,68 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ *
+ * @author Daniel Araya
+ *
+ * En esta clase se controla la lógica del detalle de mesa (ObjetoMesa).
+ * Se encarga de:
+ * - Cargar en la tabla TableInformacionMesa los pedidos asociados a una mesa desde "pedidos.txt".
+ * - Construir y mostrar un panel resumen (copia visual) en jPanelCargarMesa con:
+ *   - Título (MESA # o PARA LLEVAR), estado (LIBRE/OCUPADA/LLENA) y personas/capacidad.
+ * - Gestionar acciones de mesa:
+ *   - Cerrar mesa: elimina todos los registros de la mesa en "pedidos.txt".
+ *   - Sacar persona: elimina un registro específico (mesa + cédula) en "pedidos.txt".
+ * - Refrescar la vista de Gestión de Mesas (colores/estado) después de cambios.
+ *
+ * Funciona como controlador de la vista ObjetoMesa, manejando eventos y
+ * actualizando componentes.
+ */
 public class ControllerObjetoMesa {
 
+    /**
+     * Vista ObjetoMesa que muestra detalle de pedidos y resumen de mesa.
+     */
     private final ObjetoMesa vista;
+
+    /**
+     * Identificador de mesa usado en la navegación (por ejemplo "M1"..."M5" o "LLEVAR").
+     */
     private final String tableId;
+
+    /**
+     * Ventana que contiene el panel ObjetoMesa.
+     */
     private final JFrame ventana;
+
+    /**
+     * Referencia al controlador de Gestión de Mesas para refrescar colores/estado.
+     */
     private final ControllerGestionMesas controllerMesas;
+
+    /**
+     * DAO de mesas para buscar capacidad/metadata por tableId.
+     */
     private final TablesDAO tablesDAO;
 
+    /**
+     * Archivo base donde se almacenan los pedidos (formato CSV).
+     */
     private static final String ARCHIVO_PEDIDOS = "pedidos.txt";
 
+    /**
+     * Constructor: recibe la vista ObjetoMesa, el identificador de mesa, la ventana
+     * y el controlador de Gestión de Mesas.
+     *
+     * Registra eventos:
+     * - jBtnCerrarMesa -> cerrarMesa()
+     * - jBtnSacarMesa  -> sacarPersona()
+     *
+     * @param vista panel ObjetoMesa
+     * @param tableId identificador de mesa ("M1"... o "LLEVAR")
+     * @param ventana JFrame contenedor
+     * @param controllerMesas controlador de Gestión de Mesas para refresco
+     */
     public ControllerObjetoMesa(ObjetoMesa vista, String tableId, JFrame ventana, ControllerGestionMesas controllerMesas) {
         this.vista = vista;
         this.tableId = tableId;
@@ -30,19 +82,35 @@ public class ControllerObjetoMesa {
         this.controllerMesas = controllerMesas;
         this.tablesDAO = TablesDAO.getInstancia();
 
-        // ✅ Eventos botones
+        // Eventos botones
         this.vista.getjBtnCerrarMesa().addActionListener(e -> cerrarMesa());
         this.vista.getjBtnSacarMesa().addActionListener(e -> sacarPersona());
     }
 
+    /**
+     * Carga la información de la mesa en la vista:
+     * - Panel resumen (jPanelCargarMesa).
+     * - Tabla con pedidos (TableInformacionMesa).
+     */
     public void cargar() {
         cargarPanelMesa();
         cargarTablaInformacionMesa();
     }
 
     /**
-     * Carga SOLO lo importante en la tabla TableInformacionMesa: ID Pedido,
-     * Fecha, Cliente (cédula), TotalConIva
+     * Carga SOLO lo importante en la tabla TableInformacionMesa:
+     * - ID Pedido
+     * - Fecha (fecha + hora)
+     * - Cliente (cédula)
+     * - Total con IVA
+     *
+     * Flujo:
+     * - Asegura que exista el archivo pedidos.txt.
+     * - Lee cada línea del archivo.
+     * - Ignora líneas vacías.
+     * - Valida que existan al menos 9 columnas.
+     * - Filtra por la mesa correspondiente (numeroMesa).
+     * - Agrega filas al DefaultTableModel y lo asigna a la JTable.
      */
     private void cargarTablaInformacionMesa() {
 
@@ -92,10 +160,24 @@ public class ControllerObjetoMesa {
         vista.getTableInformacionMesa().setModel(modelo);
     }
 
-    //
+    /**
+     * Construye y carga un panel resumen dentro de jPanelCargarMesa.
+     *
+     * Lo que muestra:
+     * - Título: "MESA X" o "PARA LLEVAR"
+     * - Estado: LIBRE / OCUPADA / LLENA (calculado por personas/capacidad)
+     * - Personas: cantidad de cédulas únicas / capacidad
+     *
+     * Flujo:
+     * - Limpia el contenedor y crea una tarjeta (JPanel) con BoxLayout.
+     * - Obtiene filtro de mesa y cuenta personas (cédulas únicas).
+     * - Obtiene la capacidad desde TablesDAO (default 4 si no existe).
+     * - Calcula estado y define un color suave según estado.
+     * - Agrega etiquetas y repinta el contenedor.
+     */
     private void cargarPanelMesa() {
 
-        // ⚠️ Asegúrate que ObjetoMesa tenga este getter:
+        // Asegúrate que ObjetoMesa tenga getter:
         // public JPanel getjPanelCargarMesa()
         javax.swing.JPanel contenedor = vista.getjPanelCargarMesa();
         contenedor.removeAll();
@@ -166,6 +248,18 @@ public class ControllerObjetoMesa {
         contenedor.repaint();
     }
 
+    /**
+     * Cuenta la cantidad de cédulas únicas asociadas a una mesa en pedidos.txt.
+     *
+     * Lógica:
+     * - Lee cada línea de pedidos.txt.
+     * - Filtra por la mesa (columna 3).
+     * - Toma la cédula (columna 4).
+     * - Cuenta cédulas únicas usando una lista (sin HashSet).
+     *
+     * @param numeroMesa valor de mesa del archivo (por ejemplo "1", "2", ... o "LLEVAR")
+     * @return cantidad de cédulas únicas en esa mesa
+     */
     private int contarCedulasUnicasPorMesa(String numeroMesa) {
 
         java.util.ArrayList<String> cedulasUnicas = new java.util.ArrayList<>();
@@ -203,8 +297,13 @@ public class ControllerObjetoMesa {
     }
 
     /**
-     * jBtnCerrarMesa: Borra del TXT TODOS los registros (líneas) de esa mesa.
-     * Luego recarga la tabla (quedará vacía por lógica).
+     * Acción del botón Cerrar Mesa:
+     * - Elimina del archivo pedidos.txt todos los registros asociados a esa mesa.
+     * - Recarga la tabla y el panel resumen (quedarán vacíos por lógica si borró).
+     * - Actualiza el estado/colores en Gestión de Mesas.
+     *
+     * Confirmación:
+     * - Muestra un diálogo YES/NO antes de borrar.
      */
     private void cerrarMesa() {
 
@@ -224,23 +323,30 @@ public class ControllerObjetoMesa {
 
         boolean seBorroAlgo = reescribirPedidosExcluyendoMesa(filtroMesa);
 
-        // recargar tabla (vacía si borró)
         cargarTablaInformacionMesa();
         cargarPanelMesa();
 
-        // opcional: actualizar colores/estados en vista de mesas (si lo manejas por pedidos)
         if (controllerMesas != null) {
             controllerMesas.actualizarMesas();
         }
 
-        JOptionPane.showMessageDialog(vista, seBorroAlgo ? "Mesa cerrada. Pedidos eliminados." : "No había pedidos para esa mesa."
+        JOptionPane.showMessageDialog(
+                vista,
+                seBorroAlgo ? "Mesa cerrada. Pedidos eliminados." : "No había pedidos para esa mesa."
         );
     }
 
     /**
-     * jBtnSacarMesa: El usuario selecciona una fila (persona/cliente) en la
-     * tabla. Se elimina del TXT la línea que coincida con esa mesa y esa
-     * cédula. Luego se recarga la tabla.
+     * Acción del botón Sacar Mesa:
+     * - Requiere que el usuario seleccione una fila en la tabla (cliente/cédula).
+     * - Elimina del archivo pedidos.txt el registro que coincida con:
+     *   - Mesa (columna 3)
+     *   - Cédula (columna 4)
+     * - Recarga la tabla y el panel resumen.
+     * - Actualiza el estado/colores en Gestión de Mesas.
+     *
+     * Confirmación:
+     * - Muestra un diálogo YES/NO antes de borrar la persona.
      */
     private void sacarPersona() {
 
@@ -252,7 +358,7 @@ public class ControllerObjetoMesa {
 
         String filtroMesa = obtenerFiltroMesa();
 
-        // columna 2 = "Cliente (Cédula)" según el modelo que cargamos
+        // Columna 2 = "Cliente (Cédula)" según el modelo que cargamos
         String cedula = String.valueOf(vista.getTableInformacionMesa().getValueAt(row, 2)).trim();
 
         if (cedula.isEmpty() || cedula.equals("-")) {
@@ -287,9 +393,17 @@ public class ControllerObjetoMesa {
         );
     }
 
-    // ==========================
-    // Helpers de persistencia
-    // ==========================
+    /**
+     * Reescribe pedidos.txt excluyendo todas las líneas de la mesa indicada.
+     *
+     * Implementación:
+     * - Lee pedidos.txt y escribe a un temporal (pedidos_tmp.txt).
+     * - Omite las líneas donde la mesa coincide.
+     * - Reemplaza el archivo original por el temporal.
+     *
+     * @param filtroMesa mesa a eliminar (por ejemplo "1", "2"... o "LLEVAR")
+     * @return true si borró al menos una línea; false en caso contrario
+     */
     private boolean reescribirPedidosExcluyendoMesa(String filtroMesa) {
 
         File original = new File(ARCHIVO_PEDIDOS);
@@ -314,7 +428,7 @@ public class ControllerObjetoMesa {
                 String mesa = partes[3].trim();
                 if (mesa.equalsIgnoreCase(filtroMesa)) {
                     borro = true;
-                    continue; // ❌ no escribir
+                    continue; // no escribir
                 }
 
                 bw.write(linea);
@@ -329,6 +443,14 @@ public class ControllerObjetoMesa {
         return borro;
     }
 
+    /**
+     * Reescribe pedidos.txt excluyendo una sola persona:
+     * - Omite líneas donde mesa == filtroMesa y cliente == cedula.
+     *
+     * @param filtroMesa mesa objetivo
+     * @param cedula cédula a eliminar de la mesa
+     * @return true si borró al menos una línea; false en caso contrario
+     */
     private boolean reescribirPedidosExcluyendoMesaYCedula(String filtroMesa, String cedula) {
 
         File original = new File(ARCHIVO_PEDIDOS);
@@ -353,7 +475,6 @@ public class ControllerObjetoMesa {
                 String mesa = partes[3].trim();
                 String cliente = partes[4].trim();
 
-                // ❌ borrar solo si coincide mesa + cédula
                 if (mesa.equalsIgnoreCase(filtroMesa) && cliente.equalsIgnoreCase(cedula)) {
                     borro = true;
                     continue;
@@ -371,14 +492,23 @@ public class ControllerObjetoMesa {
         return borro;
     }
 
+    /**
+     * Reemplaza el archivo original por el temporal.
+     * Se usa delete + renameTo para evitar fallos en Windows al sobrescribir.
+     *
+     * @param original archivo original (pedidos.txt)
+     * @param temp archivo temporal (pedidos_tmp.txt)
+     */
     private void reemplazarArchivo(File original, File temp) {
-        // Windows a veces falla si intentas overwrite directo: borramos y renombramos
         if (original.exists()) {
             original.delete();
         }
         temp.renameTo(original);
     }
 
+    /**
+     * Verifica/crea el archivo pedidos.txt si no existe.
+     */
     private void asegurarArchivoPedidos() {
         try {
             File f = new File(ARCHIVO_PEDIDOS);
@@ -391,8 +521,14 @@ public class ControllerObjetoMesa {
     }
 
     /**
-     * Devuelve lo que viene en el campo "numeroMesa" del TXT: - Si es llevar:
-     * "LLEVAR" - Si es mesa: "1".."5"
+     * Obtiene el identificador real de mesa que viene guardado en pedidos.txt.
+     *
+     * Reglas:
+     * - Si tableId == "LLEVAR" retorna "LLEVAR".
+     * - Si es mesa normal ("M1"...), busca en TablesDAO y retorna tableNumber.
+     * - Si no existe en DAO, retorna tableId como fallback.
+     *
+     * @return texto de mesa usado en pedidos.txt
      */
     private String obtenerFiltroMesa() {
 
@@ -402,7 +538,6 @@ public class ControllerObjetoMesa {
 
         Tables mesa = tablesDAO.buscarPorTableId(tableId);
 
-        // fallback si por alguna razón no está en DAO
         if (mesa == null) {
             return tableId;
         }

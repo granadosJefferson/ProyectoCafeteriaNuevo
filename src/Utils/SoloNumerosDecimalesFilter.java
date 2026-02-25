@@ -1,20 +1,37 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Utils;
 
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
+
 /**
  *
- * @author dh057
+ * @author Daniel Araya
+ *
+ * Filtro de documento para permitir únicamente números decimales.
+ *
+ * Reglas:
+ * - Solo permite dígitos (0-9).
+ * - Permite un único punto decimal ('.').
+ * - Permite borrar completamente el contenido.
+ *
+ * Se utiliza principalmente en campos como:
+ * - Total gastado.
+ *
+ * Forma parte del paquete Utils y se aplica sobre JTextField
+ * mediante DocumentFilter, apoyando la validación desde la Vista.
  */
 public class SoloNumerosDecimalesFilter extends DocumentFilter {
 
+    /**
+     * Se ejecuta cuando se intenta insertar texto en el campo.
+     *
+     * - Construye el texto resultante antes de permitir la inserción.
+     * - Valida si el nuevo contenido cumple con el formato decimal.
+     */
     public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
             throws BadLocationException {
+
         if (string == null) return;
 
         String actual = fb.getDocument().getText(0, fb.getDocument().getLength());
@@ -25,8 +42,15 @@ public class SoloNumerosDecimalesFilter extends DocumentFilter {
         }
     }
 
+    /**
+     * Se ejecuta cuando se reemplaza texto en el campo.
+     *
+     * - Reconstruye el texto final después del reemplazo.
+     * - Solo permite la operación si el resultado es un decimal válido.
+     */
     public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
             throws BadLocationException {
+
         if (text == null) return;
 
         String actual = fb.getDocument().getText(0, fb.getDocument().getLength());
@@ -37,18 +61,36 @@ public class SoloNumerosDecimalesFilter extends DocumentFilter {
         }
     }
 
+    /**
+     * Valida si una cadena representa un número decimal válido.
+     *
+     * Reglas:
+     * - Puede estar vacía (para permitir borrar).
+     * - Puede contener solo un punto decimal.
+     * - El resto deben ser únicamente dígitos.
+     *
+     * @param s texto a validar
+     * @return true si cumple las reglas; false en caso contrario
+     */
     private boolean esDecimalValido(String s) {
+
         if (s.equals("")) return true; // permitir borrar
+
         int puntos = 0;
+
         for (int i = 0; i < s.length(); i++) {
+
             char c = s.charAt(i);
+
             if (c == '.') {
                 puntos++;
                 if (puntos > 1) return false;
-            } else if (!Character.isDigit(c)) {
+            } 
+            else if (!Character.isDigit(c)) {
                 return false;
             }
         }
+
         return true;
     }
 }

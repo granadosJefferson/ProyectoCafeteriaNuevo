@@ -8,42 +8,57 @@ import java.io.IOException;
 import javax.swing.table.DefaultTableModel;
 import java.io.File;
 import javax.swing.Timer;
+import Vista.ReportesNegocio;
+import javax.swing.JFrame;
+import Control.ControllerReportesNegocio;
 
 /**
  *
- * @author Jefferson Granados
- * En esta clase se controla la lógica del módulo de reportes.
- * Se encarga de:
- * - Cargar la tabla de pedidos desde el archivo "pedidos.txt".
- * - Cargar la tabla de pagos/facturas desde el archivo "pagos_factura.txt".
- * - Refrescar automáticamente las tablas cuando detecta cambios en los archivos.
- * - Permitir la búsqueda de un pedido por ID y mostrar su detalle en pantalla.
+ * @author Jefferson Granados En esta clase se controla la lógica del módulo de
+ * reportes. Se encarga de: - Cargar la tabla de pedidos desde el archivo
+ * "pedidos.txt". - Cargar la tabla de pagos/facturas desde el archivo
+ * "pagos_factura.txt". - Refrescar automáticamente las tablas cuando detecta
+ * cambios en los archivos. - Permitir la búsqueda de un pedido por ID y mostrar
+ * su detalle en pantalla.
  *
- * Funciona como controlador de la vista Reports, manejando eventos y actualizando componentes.
+ * Funciona como controlador de la vista Reports, manejando eventos y
+ * actualizando componentes.
  */
 public class ControllerReports {
 
     private final Reports vista;
     private final Mensajes mensajes;
 
-    /** Archivo base donde se almacenan los pedidos (formato CSV). */
+    /**
+     * Archivo base donde se almacenan los pedidos (formato CSV).
+     */
     private static final String ARCHIVO_PEDIDOS = "pedidos.txt";
 
-    /** Archivo donde se almacenan los pagos asociados a facturas (formato separado por '|'). */
+    /**
+     * Archivo donde se almacenan los pagos asociados a facturas (formato
+     * separado por '|').
+     */
     private static final String ARCHIVO_PAGOS_FACTURA = "pagos_factura.txt";
 
-    /** Timer para refrescar automáticamente cuando los archivos cambian. */
+    /**
+     * Timer para refrescar automáticamente cuando los archivos cambian.
+     */
     private Timer refreshTimer;
 
-    /** Marca de última modificación del archivo de pedidos para detectar cambios. */
+    /**
+     * Marca de última modificación del archivo de pedidos para detectar
+     * cambios.
+     */
     private long lastPedidos = 0;
 
-    /** Marca de última modificación del archivo de pagos para detectar cambios. */
+    /**
+     * Marca de última modificación del archivo de pagos para detectar cambios.
+     */
     private long lastPagos = 0;
 
     /**
-     * Constructor: recibe la vista Reports, carga las tablas iniciales,
-     * inicia el refresco automático y registra los eventos de búsqueda.
+     * Constructor: recibe la vista Reports, carga las tablas iniciales, inicia
+     * el refresco automático y registra los eventos de búsqueda.
      *
      * @param vista formulario Reports
      */
@@ -52,6 +67,7 @@ public class ControllerReports {
         this.mensajes = new Mensajes();
 
         // Carga inicial de datos
+        vista.getBtnabrirReportesNegocio().addActionListener(e -> abrirReportesNegocio());
         cargarTablaPedidos();
         cargarTablaPagosFactura();
 
@@ -66,8 +82,9 @@ public class ControllerReports {
     }
 
     /**
-     * Inicia un Timer que revisa cada 1 segundo si los archivos fueron modificados.
-     * Si detecta cambios en "pedidos.txt" o "pagos_factura.txt", recarga las tablas.
+     * Inicia un Timer que revisa cada 1 segundo si los archivos fueron
+     * modificados. Si detecta cambios en "pedidos.txt" o "pagos_factura.txt",
+     * recarga las tablas.
      *
      * Se apoya en lastModified() para comparar cambios.
      */
@@ -98,14 +115,32 @@ public class ControllerReports {
         refreshTimer.start();
     }
 
+    private void abrirReportesNegocio() {
+        try {
+            ReportesNegocio panel = new ReportesNegocio();
+            new ControllerReportesNegocio(panel);
+
+            JFrame ventana = new JFrame("Reportes del Negocio");
+            ventana.setSize(700, 520);
+            ventana.setLocationRelativeTo(null);
+            ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            ventana.setResizable(false);
+
+            ventana.add(panel);
+            ventana.setVisible(true);
+
+        } catch (Exception e) {
+            new Vista.Mensajes().message("No se pudo abrir ReportesNegocio.");
+        }
+    }
+
     /**
-     * Carga los pedidos desde el archivo "pedidos.txt" y los coloca en la tabla de pedidos.
+     * Carga los pedidos desde el archivo "pedidos.txt" y los coloca en la tabla
+     * de pedidos.
      *
-     * - Lee cada línea del archivo.
-     * - Ignora líneas vacías.
-     * - Separa por coma (CSV).
-     * - Si faltan campos mínimos, ignora la línea.
-     * - Arma un DefaultTableModel con columnas específicas.
+     * - Lee cada línea del archivo. - Ignora líneas vacías. - Separa por coma
+     * (CSV). - Si faltan campos mínimos, ignora la línea. - Arma un
+     * DefaultTableModel con columnas específicas.
      */
     private void cargarTablaPedidos() {
 
@@ -157,12 +192,12 @@ public class ControllerReports {
     }
 
     /**
-     * Carga los registros de pagos/facturas desde "pagos_factura.txt" y los coloca en la tabla.
+     * Carga los registros de pagos/facturas desde "pagos_factura.txt" y los
+     * coloca en la tabla.
      *
-     * - Ignora líneas vacías.
-     * - Ignora encabezado si inicia con "ID_FACTURA".
-     * - Separa por '|'.
-     * - Requiere al menos 5 campos: ID_Factura, Metodo, Monto, Referencia, Cedula.
+     * - Ignora líneas vacías. - Ignora encabezado si inicia con "ID_FACTURA". -
+     * Separa por '|'. - Requiere al menos 5 campos: ID_Factura, Metodo, Monto,
+     * Referencia, Cedula.
      */
     private void cargarTablaPagosFactura() {
 
@@ -209,14 +244,13 @@ public class ControllerReports {
     }
 
     /**
-     * Busca un pedido por ID dentro de la tabla ya cargada y muestra el detalle en labels.
+     * Busca un pedido por ID dentro de la tabla ya cargada y muestra el detalle
+     * en labels.
      *
-     * Flujo:
-     * - Toma el ID del JTextField.
-     * - Si está vacío, muestra advertencia.
-     * - Recorre el modelo de la tabla buscando coincidencia en la columna 0 (ID Pedido).
-     * - Si lo encuentra, asigna valores a los labels y selecciona la fila.
-     * - Si no lo encuentra, limpia el detalle y muestra mensaje.
+     * Flujo: - Toma el ID del JTextField. - Si está vacío, muestra advertencia.
+     * - Recorre el modelo de la tabla buscando coincidencia en la columna 0 (ID
+     * Pedido). - Si lo encuentra, asigna valores a los labels y selecciona la
+     * fila. - Si no lo encuentra, limpia el detalle y muestra mensaje.
      */
     private void mostrarDetallePedidoPorId() {
 
@@ -265,7 +299,8 @@ public class ControllerReports {
     }
 
     /**
-     * Limpia los labels del panel de detalle del pedido y los deja en valores por defecto.
+     * Limpia los labels del panel de detalle del pedido y los deja en valores
+     * por defecto.
      */
     private void limpiarDetalle() {
         vista.getLblFecha().setText("-");
